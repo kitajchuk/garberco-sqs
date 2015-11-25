@@ -1,0 +1,53 @@
+/******************************************************************************
+ * Background Images
+*******************************************************************************/
+.-cover {
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    }
+.-cover--top {
+    background-position: 50% 0;
+    }
+.-cover--right {
+    background-position: 100% 50%;
+    }
+.-cover--bottom {
+    background-position: 50% 100%;
+    }
+.-cover--left {
+    background-position: 0 50%;
+    }
+
+
+
+/******************************************************************************
+ * ProperJS ImageLoader Hooks
+*******************************************************************************/
+.-is-lazy-loading {
+    //opacity: 0;
+    }
+.-is-lazy-transition {
+    //transition: opacity $base-duration $ease-cubic;
+    }
+.-is-lazy-loaded {
+    //opacity: 1;
+    }
+.-is-lazy-handled {
+    // Just a good hook
+    }
+
+
+
+/******************************************************************************
+ * Typography
+*******************************************************************************/
+.-text--center {
+    text-align: center;
+    }
+.-text--right {
+    text-align: right;
+    }
+.-text--left {
+    text-align: left;
+    }

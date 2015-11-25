@@ -1,0 +1,42 @@
+$screen-wrap-delay: ($midi-duration / 2);
+
+
+.screen {
+    background-color: $white;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: fixed;
+    right: 0;
+    top: 0;
+    transition: opacity $midi-duration $ease-cubic;
+    z-index: ($z_layer_infront + 1);
+
+    &.is-active {
+        opacity: 1;
+        -webkit-overflow-scrolling: touch;
+        }
+    }
+.screen__wrap {
+    height: 100%;
+    opacity: 0;
+    transform: translate3d( 0, $nudge-size, 0 );
+    transition: opacity $midi-duration $ease-cubic $screen-wrap-delay,
+                transform $midi-duration $ease $screen-wrap-delay;
+    }
+.screen.is-active {
+    .screen__wrap {
+        opacity: 1;
+        transform: translate3d( 0, 0, 0 );
+        }
+}
+
+
+
+@media only screen and ( max-width: $break-mobile-full ) {
+    .screen {
+        padding: $nudge-size;
+        }
+}

@@ -1,0 +1,103 @@
+/******************************************************************************
+ * Fonts: Util
+*******************************************************************************/
+@mixin font-normal() {
+    font-stretch: normal;
+    font-style: normal;
+}
+
+
+
+/******************************************************************************
+ * Fonts: Sans-serif
+*******************************************************************************/
+@mixin font-sans-text() {
+    font-family: $sans-serif-text;
+    font-weight: 400;
+    @include font-normal();
+}
+
+
+
+/******************************************************************************
+ * Fonts: Serif
+*******************************************************************************/
+@mixin font-serif-text() {
+    font-family: $serif-text;
+    font-weight: 400;
+    @include font-normal();
+}
+
+
+
+/******************************************************************************
+ * Type
+*******************************************************************************/
+@mixin meta() {
+    color: $black;
+    font-size: $meta-size;
+    line-height: 1.444444;
+    @include font-sans-text();
+}
+@mixin b() {
+    font-weight: bold;
+}
+@mixin p() {
+    font-size: $p-size;
+    line-height: 2.22222222;
+    @include font-sans-text();
+}
+@mixin a() {
+    color: $black;
+    display: inline;
+    font-size: $p-size;
+    line-height: 2.22222222;
+    text-decoration: none;
+    @include font-sans-text();
+}
+@mixin h1() {
+    font-size: $h1-size;
+    line-height: 1.25;
+    @include font-serif-text();
+}
+@mixin h2() {
+    font-size: $h2-size;
+    line-height: 1.333333;
+    @include font-serif-text();
+}
+@mixin h3() {
+    font-size: $h3-size;
+    line-height: 1.4166666667;
+    @include font-serif-text();
+}
+@mixin h4() {
+    font-size: $h4-size;
+    line-height: 1.4166666667;
+    @include font-serif-text();
+}
+
+
+
+/******************************************************************************
+ * Layout / Spacing
+*******************************************************************************/
+@mixin layout-frame() {
+    padding: $header-fix-height $wrapper-padding 0;
+}
+
+
+
+/******************************************************************************
+ * Blocks
+*******************************************************************************/
+@mixin block-transition() {
+    opacity: 0;
+    transform: translate3d( 0, $nudge-size, 0 );
+    transition: opacity $long-duration $ease-out,
+                transform $base-duration $ease;
+
+    &.is-active {
+        opacity: 1;
+        transform: translate3d( 0, 0, 0 );
+        }
+}

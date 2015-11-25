@@ -1,0 +1,11 @@
+.page {
+    overflow: hidden;
+    width: 100%;
+    transition: opacity $base-duration $ease-cubic;
+
+    &.is-reactive {
+        }
+    &.is-inactive {
+        opacity: 0;
+        }
+    }

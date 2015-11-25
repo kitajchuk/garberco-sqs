@@ -1,0 +1,17 @@
+/******************************************************************************
+ * Icons: Base
+*******************************************************************************/
+.icon {
+    cursor: pointer;
+    display: inline-block;
+    line-height: 1;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    }
+.icon__svg {
+    fill: $white;
+    }
+.icon__svg--dark {
+    fill: $black;
+    }
