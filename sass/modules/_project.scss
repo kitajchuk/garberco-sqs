@@ -1,0 +1,206 @@
+.project {}
+.project__image,
+.project__diptych {
+    text-align: center;
+    }
+/*
+.project__image {
+    display: none;
+    }
+*/
+.project__image--full {
+    // Inherits .image native 
+}
+
+// Three-quarter centered
+.project__image--threeq {
+    .image {
+        padding-left: $wrapper-padding;
+        padding-right: $wrapper-padding;
+        width: 100%;
+        }
+}
+
+// One-half padded or flush
+.project__image--half {
+    .image {
+        width: 50%;
+        }
+}
+.project__image--half-left {
+    text-align: left;
+
+    .image {
+        width: 50%;
+        }
+}
+.project__image--half-right {
+    text-align: right;
+
+    .image {
+        width: 50%;
+        }
+}
+.project__image--half-left-pad {
+    padding-left: $wrapper-padding;
+    text-align: left;
+
+    .image {
+        width: 50%;
+        }
+}
+.project__image--half-right-pad {
+    padding-right: $wrapper-padding;
+    text-align: right;
+
+    .image {
+        width: 50%;
+        }
+}
+
+// One-thirds always padded
+.project__image--third {
+    .image {
+        width: 33.33333%;
+        }
+}
+.project__image--third-left {
+    padding-left: $wrapper-padding;
+    text-align: left;
+
+    .image {
+        width: 33.33333%;
+        }
+}
+.project__image--third-right {
+    padding-right: $wrapper-padding;
+    text-align: right;
+
+    .image {
+        width: 33.33333%;
+        }
+}
+
+// Diptychs
+.project__diptych--small-left {
+    .diptych__left {
+        padding-left: $wrapper-padding;
+        padding-right: $wrapper-padding;
+        width: 50%;
+        }
+    .diptych__right {
+        width: 50%;
+        }
+}
+.project__diptych--small-right {
+    .diptych__left {
+        width: 50%;
+        }
+    .diptych__right {
+        padding-left: $wrapper-padding;
+        padding-right: $wrapper-padding;
+        width: 50%;
+        }
+}
+.project__diptych--lean-left {
+    padding-top: ($wrapper-padding * 2);
+
+    .diptych__left {
+        margin-top: -($wrapper-padding * 2);
+        padding-right: 20px;
+        width: 50%;
+        }
+    .diptych__right {
+        padding-left: 20px;
+        width: 50%;
+        }
+}
+.project__diptych--lean-right {
+    padding-top: ($wrapper-padding * 2);
+
+    .diptych__left {
+        padding-right: 20px;
+        width: 50%;
+        }
+    .diptych__right {
+        margin-top: -($wrapper-padding);
+        padding-left: 20px;
+        width: 50%;
+        }
+}
+.project__diptych--gutter-center {
+    .diptych__left {
+        padding-right: 20px;
+        width: 50%;
+        }
+    .diptych__right {
+        padding-left: 20px;
+        width: 50%;
+        }
+}
+.project__diptych--full-center {
+    .diptych__left {
+        width: 50%;
+        }
+    .diptych__right {
+        width: 50%;
+        }
+}
+.project__diptych--overlap-left  {
+    position: relative;
+    text-align: left;
+
+    .diptych__left {
+        padding-left: $wrapper-padding;
+        position: relative;
+        width: 66.66666%
+        }
+    .diptych__right {
+        margin-left: -$wrapper-padding;
+        position: relative;
+        width: 33.33333%;
+        z-index: $z_layer_01;
+        }
+}
+.project__diptych--overlap-right  {
+    position: relative;
+    text-align: right;
+
+    .diptych__left {
+        margin-right: -$wrapper-padding;
+        position: relative;
+        width: 33.33333%;
+        z-index: $z_layer_01;
+        }
+    .diptych__right {
+        padding-right: $wrapper-padding;
+        position: relative;
+        width: 66.66666%
+        }
+}
+.project__diptych--gutter-thirds {
+    .diptych__left {
+        width: 33.33333%;
+        }
+    .diptych__right {
+        width: 33.33333%
+        }
+}
+.project__diptych--gutters-even {
+    text-align: left;
+
+    &.is-right {
+        text-align: right;
+        }
+
+    .diptych__left,
+    .diptych__right {
+        width: #{"calc( ~\"(100% - #{$wrapper-padding}) / 2\" )"};
+        }
+    .diptych__left {
+        padding-left: $wrapper-padding;
+        }
+    .diptych__right {
+        padding-right: $wrapper-padding;
+        }
+}
