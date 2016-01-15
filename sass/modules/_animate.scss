@@ -1,0 +1,29 @@
+.animate {
+    opacity: 0;
+    transform: translate3d( 0, $bump-size, 0 );
+    transition: opacity $long-duration $ease-out,
+                transform $base-duration $ease-out;
+
+    &.is-active {
+        opacity: 1;
+        transform: translate3d( 0, 0, 0 );
+        }
+    &.is-static {
+        transition-duration: 0ms;
+        }
+}
+
+
+.animate--delayed {
+    transition-delay: $base-duration;
+    }
+
+
+.animate--fade {
+    transform: translate3d( 0, 0, 0 );
+    }
+
+
+.animate--horz {
+    transform: translate3d( $bump-size, 0, 0 );
+    }

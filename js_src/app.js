@@ -7,8 +7,9 @@
  *
  */
 import * as core from "./core";
-import router from "./router";
 import intro from "./intro";
+import router from "./router";
+import projects from "./projects";
 
 
 /**
@@ -18,17 +19,19 @@ import intro from "./intro";
  *
  */
 const modInit = function () {
+    core.cache.init( false );
     core.detect.init();
     core.resizes.init();
     core.scrolls.init();
     router.init();
+    projects.init();
 
-    // Expose a `useful` global { app }
+    // Expose a global { app }
     window.app = {
+        core,
+        intro,
         router,
-        dom: core.dom,
-        util: core.util,
-        detect: core.detect
+        projects
     };
 };
 

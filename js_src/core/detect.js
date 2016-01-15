@@ -73,6 +73,20 @@ const detect = {
      */
     isDevice () {
         return (this.isTouch() && this.isMobile());
+    },
+
+
+    /**
+     *
+     * @public
+     * @method isStandalone
+     * @memberof detect
+     * @description Must be window.standalone.
+     * @returns {boolean}
+     *
+     */
+    isStandalone () {
+        return ("standalone" in window);
     }
 };
 

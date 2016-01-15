@@ -1,6 +1,16 @@
-.project {}
+.project {
+    background-color: $white;
+    margin: 0 auto;
+    padding-bottom: $header-fix-height;
+    padding-top: $header-fix-height;
+    //width: #{"calc( ~\"100% - (#{$wrapper-padding} / 2)\" )"};
+    width: 100%;
+    }
 .project__image,
 .project__diptych {
+    font-size: 0;
+    padding-bottom: $expander-padding;
+    padding-top: $expander-padding;
     text-align: center;
     }
 /*
@@ -123,7 +133,7 @@
         width: 50%;
         }
     .diptych__right {
-        margin-top: -($wrapper-padding);
+        margin-top: -($wrapper-padding * 2);
         padding-left: 20px;
         width: 50%;
         }

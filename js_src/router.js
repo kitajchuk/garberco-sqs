@@ -1,6 +1,7 @@
 import $ from "js_libs/jquery/dist/jquery";
 import PageController from "properjs-pagecontroller";
 import * as core from "./core";
+import animate from "./animate";
 
 
 const _pageDuration = core.util.getTransitionDuration( core.dom.page[ 0 ] );
@@ -48,7 +49,8 @@ const router = {
         ]);
 
         this.controller.setModules([
-            core.preload
+            core.preload,
+            animate
         ]);
 
         this.controller.on( "page-controller-router-transition-out", this.changePageOut.bind( this ) );

@@ -11,7 +11,8 @@ $screen-wrap-delay: ($midi-duration / 2);
     position: fixed;
     right: 0;
     top: 0;
-    transition: opacity $midi-duration $ease-cubic;
+    transition: opacity $midi-duration $ease,
+                transform $base-duration $ease-cubic;
     z-index: ($z_layer_infront + 1);
 
     &.is-active {
@@ -32,6 +33,19 @@ $screen-wrap-delay: ($midi-duration / 2);
         transform: translate3d( 0, 0, 0 );
         }
 }
+
+
+
+.screen--project-shim {
+    left: ($wrapper-padding / 4);
+    right: ($wrapper-padding / 4);
+    transform: translate3d( 0, 100%, 0 );
+    width: #{"calc( ~\"100% - (#{$wrapper-padding} / 2)\" )"};
+
+    &.is-active {
+        transform: translate3d( 0, 0, 0 );
+        }
+    }
 
 
 

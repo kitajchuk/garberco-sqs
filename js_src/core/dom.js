@@ -70,23 +70,12 @@ const dom = {
     /**
      *
      * @public
-     * @member nav
+     * @member shim
      * @memberof dom
-     * @description The cached nav-menu node.
+     * @description The project shim node.
      *
      */
-    nav: $( ".js-menu-nav" ),
-
-
-    /**
-     *
-     * @public
-     * @member search
-     * @memberof dom
-     * @description The cached search-menu node.
-     *
-     */
-    search: $( ".js-menu-search" ),
+    shim: $( ".js-project-shim" ),
 
 
     /**

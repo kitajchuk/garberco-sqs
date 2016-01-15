@@ -264,6 +264,15 @@ const loadImages = function ( images, handler, useVariant ) {
             vars = data.variants.split( "," ).map( map );
             variant = getClosestValue( vars, width );
 
+            // If the pixel density is higher, use a larger image ?
+            if ( window.devicePixelRatio > 1 ) {
+                // Splice off the variant that was matched
+                vars.splice( vars.indexOf( variant, 1 ) );
+
+                // Apply the new, larger variant as the format
+                variant = getClosestValue( vars, variant );
+            }
+
             $img.attr( config.lazyImageAttr, `${data.imgSrc}?format=${variant}w` );
 
         } else {

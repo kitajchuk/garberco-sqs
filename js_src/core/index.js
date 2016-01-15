@@ -14,6 +14,8 @@ import * as util from "./util";
 import config from "./config";
 import env from "./env";
 import log from "./log";
+import api from "./api";
+import cache from "./cache";
 
 
 export {
@@ -25,5 +27,7 @@ export {
     util,
     config,
     env,
-    log
+    log,
+    api,
+    cache
 };

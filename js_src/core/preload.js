@@ -106,32 +106,12 @@ const preload = {
 
             });
             _imgLoader
-                .on( "load", onImageLoad )
                 .on( "done", () => {
                     log( "preloaded", $_visible.length, "images" );
 
                     delayedLoad( callback );
                 });
         }
-    }
-};
-
-
-/**
- *
- * @private
- * @method onImageLoad
- * @memberof preload
- * @param {element} img The image node
- * @description Apply `orientation` classNames to images.
- *
- */
-const onImageLoad = function ( img ) {
-    if ( img.naturalHeight > img.naturalWidth ) {
-        img.className += " image--portrait";
-
-    } else {
-        img.className += " image--landscape";
     }
 };
 
@@ -152,7 +132,6 @@ const delayedLoad = function ( callback ) {
         _imgLoader = null;
         _imgLoader = util.loadImages( $notVisible, util.isElementLoadable );
         _imgLoader
-            .on( "load", onImageLoad )
             .on( "done", () => log( "lazyloaded", $notVisible.length, "images" ) );
     }
 
