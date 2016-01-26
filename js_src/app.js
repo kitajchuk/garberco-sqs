@@ -21,8 +21,6 @@ class App {
             _app = this;
         }
 
-        // HEY, BK, YOU ARE HERE!
-
         this.loadType = core.dom.page.data( "pageLoadType" );
         this.project = null;
         this.isProjectTileClicked = false;

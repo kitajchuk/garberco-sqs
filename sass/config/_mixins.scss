@@ -56,8 +56,11 @@
     @include font-sans-text();
 }
 @mixin h1() {
+    display: inline-block;
     font-size: $h1-size;
     line-height: 1.25;
+    max-width: 80%;
+    width: 100%;
     @include font-serif-text();
 }
 @mixin h2() {
