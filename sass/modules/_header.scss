@@ -5,6 +5,6 @@
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: $z_layer_01;
+    z-index: ($z_layer_infront + 1);
     @include layout-frame();
     }

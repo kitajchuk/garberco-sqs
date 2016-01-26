@@ -12,25 +12,6 @@ const config = {
     /**
      *
      * @public
-     * @member defaultDragBeltOptions
-     * @memberof config
-     * @description The base options for Draggable().
-     *
-     */
-    defaultDragBeltOptions: {
-        type: "x",
-        edgeResistance: 0.6,
-        dragResistance: 0.25,
-        throwProps: true,
-        cursor: "grab",
-        lockAxis: true,
-        zIndexBoost: false
-    },
-
-
-    /**
-     *
-     * @public
      * @member sqsMaxImgWidth
      * @memberof config
      * @description The max width Squarespace allows for images.
@@ -64,50 +45,6 @@ const config = {
     /**
      *
      * @public
-     * @member defaultCategory
-     * @memberof config
-     * @description The non-category that signifies "all".
-     *
-     */
-    defaultCategory: "All",
-
-
-    /**
-     *
-     * @public
-     * @member caseStudyCollection
-     * @memberof config
-     * @description The collection typeName configured for case studies.
-     *
-     */
-    caseStudyCustomType: "custom_case_study",
-
-
-    /**
-     *
-     * @public
-     * @member caseStudyCollection
-     * @memberof config
-     * @description The collection typeName configured for device video screens.
-     *
-     */
-    deviceVideoCustomType: "custom_device_video",
-
-
-    /**
-     *
-     * @public
-     * @member caseStudyCollection
-     * @memberof config
-     * @description The collection typeName configured for custom video posts.
-     *
-     */
-    customVideoCustomType: "custom_video",
-
-
-    /**
-     *
-     * @public
      * @member defaultEasing
      * @memberof config
      * @description The default easing function for javascript Tweens.
@@ -125,39 +62,6 @@ const config = {
      *
      */
     defaultDuration: 300,
-
-
-    /**
-     *
-     * @public
-     * @member defaultVideoChannel
-     * @memberof config
-     * @description The [MediaBox]{@link https://github.com/ProperJS/MediaBox} channel used for video.
-     *
-     */
-    defaultVideoChannel: "vid",
-
-
-    /**
-     *
-     * @public
-     * @member autoplayVideoChannel
-     * @memberof config
-     * @description The [MediaBox]{@link https://github.com/ProperJS/MediaBox} channel used for autoplay video.
-     *
-     */
-    autoplayVideoChannel: "vid--autoplay",
-
-
-    /**
-     *
-     * @public
-     * @member defaultAudioChannel
-     * @memberof config
-     * @description The [MediaBox]{@link https://github.com/ProperJS/MediaBox} channel used for audio.
-     *
-     */
-    defaultAudioChannel: "bgm",
 
 
     /**
@@ -191,17 +95,6 @@ const config = {
      *
      */
     imageLoaderAttr: "data-imageloader",
-
-
-    /**
-     *
-     * @public
-     * @member activateLinkAttr
-     * @memberof config
-     * @description The string attribute for link hover activation.
-     *
-     */
-    activateLinkAttr: "data-title",
 
 
     /**

@@ -5,13 +5,13 @@ module.exports = {
 
 
     entry: {
-        app: "./js_src/app.js"
+        app: "./js_src/App.js"
     },
 
 
     output: {
         path: "./sqs_template/scripts/",
-        filename: "app.js"
+        filename: "App.js"
     },
 
 

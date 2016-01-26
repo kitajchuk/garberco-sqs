@@ -2,6 +2,7 @@ import $ from "js_libs/jquery/dist/jquery";
 
 
 const $_jsHeader = $( ".js-header" );
+const $_jsOverlay = $( ".js-overlay" );
 
 
 /**
@@ -70,12 +71,34 @@ const dom = {
     /**
      *
      * @public
-     * @member shim
+     * @member project
      * @memberof dom
-     * @description The project shim node.
+     * @description The project view node.
      *
      */
-    shim: $( ".js-project-shim" ),
+    project: $( ".js-project" ),
+
+
+    /**
+     *
+     * @public
+     * @member logo
+     * @memberof dom
+     * @description The logo element.
+     *
+     */
+    logo: $( ".js-logo" ),
+
+
+    /**
+     *
+     * @public
+     * @member homepage
+     * @memberof dom
+     * @description The homepage grid element.
+     *
+     */
+    homepage: $( ".js-homepage" ),
 
 
     /**
@@ -97,7 +120,10 @@ const dom = {
      * @description The cached brand moment node.
      *
      */
-    intro: $( ".js-intro" )
+    overlay: {
+        element: $_jsOverlay,
+        elementTitle: $_jsOverlay.find( ".js-overlay-title" )
+    }
 };
 
 

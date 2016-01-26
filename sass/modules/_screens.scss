@@ -13,7 +13,7 @@ $screen-wrap-delay: ($midi-duration / 2);
     top: 0;
     transition: opacity $midi-duration $ease,
                 transform $base-duration $ease-cubic;
-    z-index: ($z_layer_infront + 1);
+    z-index: $z_layer_infront;
 
     &.is-active {
         opacity: 1;
@@ -36,11 +36,20 @@ $screen-wrap-delay: ($midi-duration / 2);
 
 
 
-.screen--project-shim {
+// Variant screens
+.index {}
+.about {}
+.overlay {
+    background-color: transparent;
+    pointer-events: none;
+    z-index: $z_layer_10;
+    }
+.project {
     left: ($wrapper-padding / 4);
     right: ($wrapper-padding / 4);
     transform: translate3d( 0, 100%, 0 );
     width: #{"calc( ~\"100% - (#{$wrapper-padding} / 2)\" )"};
+    z-index: $z_layer_09;
 
     &.is-active {
         transform: translate3d( 0, 0, 0 );

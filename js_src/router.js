@@ -19,13 +19,15 @@ const router = {
      *
      * @public
      * @method init
+     * @param {App} app Instance of the main application
      * @memberof router
      * @description Initialize the router module.
      *
      */
-    init () {
+    init ( app ) {
+        this.app = app;
         this.bindCaptureLinks();
-        this.createPageController();
+        this.initPageController();
 
         core.log( "router initialized" );
     },
@@ -34,12 +36,12 @@ const router = {
     /**
      *
      * @public
-     * @method createPageController
+     * @method initPageController
      * @memberof router
      * @description Create the PageController instance.
      *
      */
-    createPageController () {
+    initPageController () {
         this.controller = new PageController({
             transitionTime: _pageDuration
         });
@@ -107,7 +109,7 @@ const router = {
      *
      */
     getPageKey () {
-        return ((window.location.pathname === "/" ? "homepage" : window.location.pathname) + window.location.search);
+        return `${window.location.pathname}${window.location.search}`;
     },
 
     /**
@@ -268,11 +270,12 @@ const router = {
      *
      * @public
      * @method changePageOut
+     * @param {object} data The data object supplied by PageController from PushState
      * @memberof router
      * @description Trigger transition-out animation.
      *
      */
-    changePageOut () {
+    changePageOut ( /* data */ ) {
         core.util.disableMouseWheel( true );
         core.util.disableTouchMove( true );
 
@@ -326,8 +329,6 @@ const router = {
      *
      */
     changePageIn ( /* data */ ) {
-        //const collection = data.request.uri.split( "/" )[ 0 ];
-
         core.dom.page.addClass( "is-reactive" );
     },
 

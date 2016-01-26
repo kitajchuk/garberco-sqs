@@ -1,3 +1,4 @@
+/*
 .project {
     background-color: $white;
     margin: 0 auto;
@@ -6,6 +7,7 @@
     //width: #{"calc( ~\"100% - (#{$wrapper-padding} / 2)\" )"};
     width: 100%;
     }
+*/
 .project__image,
 .project__diptych {
     font-size: 0;
@@ -13,11 +15,6 @@
     padding-top: $expander-padding;
     text-align: center;
     }
-/*
-.project__image {
-    display: none;
-    }
-*/
 .project__image--full {
     // Inherits .image native 
 }

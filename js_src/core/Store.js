@@ -184,7 +184,10 @@ class Store {
      *
      */
     slug ( uri ) {
-        return uri.replace( /^\/|\/$/g, "" ).replace( /\/|\?|\&|=|\s/g, "-" ).toLowerCase();
+        uri = uri.replace( /^\/|\/$/g, "" ).replace( /\/|\?|\&|=|\s/g, "-" ).toLowerCase();
+        uri = uri === "" ? "homepage" : uri;
+
+        return uri;
     }
 
 
