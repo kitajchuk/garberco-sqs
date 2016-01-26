@@ -19,7 +19,6 @@ import projects from "./projects";
  *
  */
 const modInit = function () {
-    core.cache.init( false );
     core.detect.init();
     core.resizes.init();
     core.scrolls.init();

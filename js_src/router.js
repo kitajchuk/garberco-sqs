@@ -56,10 +56,59 @@ const router = {
         this.controller.on( "page-controller-router-transition-out", this.changePageOut.bind( this ) );
         this.controller.on( "page-controller-router-refresh-document", this.changeContent.bind( this ) );
         this.controller.on( "page-controller-router-transition-in", this.changePageIn.bind( this ) );
+        this.controller.on( "page-controller-initialized-page", ( html ) => {
+            this.cachePage( core.dom.html, $( html ).filter( ".js-page" )[ 0 ].innerHTML );
+            this.cacheStaticContext( window.Static.SQUARESPACE_CONTEXT );
+        });
 
         this.controller.initPage();
     },
 
+
+    /**
+     *
+     * @public
+     * @method cachePage
+     * @param {jQuery} $object The node for use
+     * @param {string} response The XHR responseText
+     * @memberof router
+     * @description Cache the DOM content for a page once its parsed out.
+     *
+     */
+    cachePage ( $object, response ) {
+        core.cache.set( this.getPageKey(), {
+            $object,
+            response
+        });
+    },
+
+
+    /**
+     *
+     * @public
+     * @method cacheStaticContext
+     * @param {object} json The Static.SQUARESPACE_CONTEXT ref
+     * @memberof router
+     * @description Cache the sqs context once its been parsed out.
+     *
+     */
+    cacheStaticContext ( json ) {
+        core.cache.set( `${this.getPageKey()}-context`, json );
+    },
+
+
+    /**
+     *
+     * @public
+     * @method getPageKey
+     * @memberof router
+     * @description Determine the key for local page cache storage.
+     * @returns {string}
+     *
+     */
+    getPageKey () {
+        return ((window.location.pathname === "/" ? "homepage" : window.location.pathname) + window.location.search);
+    },
 
     /**
      *
@@ -163,6 +212,11 @@ const router = {
         core.scrolls.topout( 0 );
         core.scrolls.clearStates();
 
+        setTimeout( () => {
+            core.util.emitter.fire( "app--intro-art" );
+
+        }, _pageDuration );
+
         core.util.emitter.off( "app--preload-done", this.onPreloadDone );
     },
 
@@ -179,27 +233,31 @@ const router = {
      */
     getStaticContext ( resHTML ) {
         // Match the { data } in Static.SQUARESPACE_CONTEXT
-        let ctx = resHTML.match( /Static\.SQUARESPACE_CONTEXT\s=\s(.*?)\};/ );
+        let ctx = core.cache.get( `${this.getPageKey()}-context` );
 
-        if ( ctx && ctx[ 1 ] ) {
-            ctx = ctx[ 1 ];
+        if ( !ctx ) {
+            ctx = resHTML.match( /Static\.SQUARESPACE_CONTEXT\s=\s(.*?)\};/ );
 
-            // Put the ending {object} bracket back in there :-(
-            ctx = `${ctx}}`;
+            if ( ctx && ctx[ 1 ] ) {
+                ctx = ctx[ 1 ];
 
-            // Parse the string as a valid piece of JSON content
-            try {
-                ctx = JSON.parse( ctx );
+                // Put the ending {object} bracket back in there :-(
+                ctx = `${ctx}}`;
 
-            } catch ( error ) {
-                throw error;
+                // Parse the string as a valid piece of JSON content
+                try {
+                    ctx = JSON.parse( ctx );
+
+                } catch ( error ) {
+                    throw error;
+                }
+
+                // Cache context locally
+                this.cacheStaticContext( ctx );
+
+            } else {
+                ctx = false;
             }
-
-            // We now have the new pages context for Metrics
-            //core.log( "router:getStaticContext", ctx );
-
-        } else {
-            ctx = false;
         }
 
         return ctx;
@@ -235,12 +293,24 @@ const router = {
      *
      */
     changeContent ( html ) {
-        const $doc = $( html );
-        const res = $doc.filter( ".js-page" )[ 0 ].innerHTML;
+        let $object = null;
+        let response = null;
+        const cached = core.cache.get( this.getPageKey() );
 
-        core.dom.page[ 0 ].innerHTML = res;
+        if ( cached ) {
+            $object = cached.$object;
+            response = cached.response;
 
-        this.pushTrack( html, $doc );
+        } else {
+            $object = $( html ).filter( "title, div, main, section, header, footer, span" );
+            response = $object.filter( ".js-page" )[ 0 ].innerHTML;
+
+            this.cachePage( $object, response );
+        }
+
+        core.dom.page[ 0 ].innerHTML = response;
+
+        this.pushTrack( html, $object );
 
         core.util.emitter.fire( "app--cleanup" );
     },
@@ -256,6 +326,8 @@ const router = {
      *
      */
     changePageIn ( /* data */ ) {
+        //const collection = data.request.uri.split( "/" )[ 0 ];
+
         core.dom.page.addClass( "is-reactive" );
     },
 

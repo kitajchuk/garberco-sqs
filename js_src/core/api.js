@@ -1,5 +1,6 @@
 import $ from "js_libs/jquery/dist/jquery";
 import paramalama from "paramalama";
+//import config from "./config";
 import cache from "./cache";
 
 
@@ -173,7 +174,7 @@ const api = {
         } else {
             this.request( this.endpoint( uri ) )
                 .done( ( data ) => {
-                    cache.set( data.collection.urlId, data.collection );
+                    //cache.set( data.collection.urlId, data.collection );
 
                     handle( data.collection );
 
@@ -213,10 +214,7 @@ const api = {
                 .done( ( data ) => {
                     // Resolve with `responseText`
                     if ( typeof data === "string" ) {
-                        cache.set(
-                            uri,
-                            data
-                        );
+                        //cache.set( uri, data );
 
                         def.resolve( data );
 
@@ -229,10 +227,7 @@ const api = {
                             pagination: (data.pagination || null)
                         };
 
-                        cache.set(
-                            uri,
-                            collection
-                        );
+                        //cache.set( uri, collection );
 
                         def.resolve( (data.items || data.item) ? collection : null );
                     }

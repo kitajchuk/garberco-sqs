@@ -180,7 +180,7 @@
             "always"
         ],
         "consistent-this": [
-            2,
+            1,
             "self"
         ],
         "eol-last": 0,
@@ -273,7 +273,7 @@
             "consistent-as-needed"
         ],
         "quotes": [
-            2,
+            1,
             "double"
         ],
         "semi-spacing": [

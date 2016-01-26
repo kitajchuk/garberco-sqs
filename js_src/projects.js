@@ -97,15 +97,11 @@ const onTileClick = function ( e ) {
 
     projects.openShim();
 
-    $.ajax({
-        url: this.href,
-        data: {
-            nocache: true
-        },
-        method: "GET",
-        dataType: "html"
-    })
-    .done(( response ) => {
+    const fullUrl = this.pathname;
+    const dataType = { dataType: "html" };
+    const format = { format: "full" };
+    const cached = core.cache.get( this.pathname );
+    const handler = function ( response ) {
         const $node = $( response );
         const $project = $node.filter( ".js-page" ).find( ".js-project" );
 
@@ -118,7 +114,16 @@ const onTileClick = function ( e ) {
 
             core.util.emitter.go( onUpdateEmitter );
         });
-    });
+
+        core.cache.set( fullUrl, response );
+    };
+
+    if ( cached ) {
+        handler( cached );
+
+    } else {
+        core.api.collection( fullUrl, format, dataType ).done( handler );
+    }
 };
 
 
