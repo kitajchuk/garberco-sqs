@@ -1,13 +1,3 @@
-/*
-.project {
-    background-color: $white;
-    margin: 0 auto;
-    padding-bottom: $header-fix-height;
-    padding-top: $header-fix-height;
-    //width: #{"calc( ~\"100% - (#{$wrapper-padding} / 2)\" )"};
-    width: 100%;
-    }
-*/
 .project__image,
 .project__diptych {
     font-size: 0;
@@ -17,7 +7,7 @@
     }
 .project__image--full {
     // Inherits .image native 
-}
+    }
 
 // Three-quarter centered
 .project__image--threeq {
@@ -128,11 +118,11 @@
 
     .diptych__left {
         margin-top: -($wrapper-padding * 2);
-        padding-right: 20px;
+        padding-right: ($wrapper-padding / 8);
         width: 50%;
         }
     .diptych__right {
-        padding-left: 20px;
+        padding-left: ($wrapper-padding / 8);
         width: 50%;
         }
 }
@@ -140,22 +130,23 @@
     padding-top: ($wrapper-padding * 2);
 
     .diptych__left {
-        padding-right: 20px;
+        padding-right: ($wrapper-padding / 8);
         width: 50%;
         }
     .diptych__right {
         margin-top: -($wrapper-padding * 2);
-        padding-left: 20px;
+        padding-left: ($wrapper-padding / 8);
         width: 50%;
         }
 }
 .project__diptych--gutter-center {
     .diptych__left {
-        padding-right: 20px;
+        padding-right: ($wrapper-padding / 8);
         width: 50%;
         }
     .diptych__right {
-        padding-left: 20px;
+        padding-left: ($wrapper-padding / 8);
+        ;
         width: 50%;
         }
 }
@@ -174,7 +165,7 @@
     .diptych__left {
         padding-left: $wrapper-padding;
         position: relative;
-        width: 66.66666%
+        width: 66.66666%;
         }
     .diptych__right {
         margin-left: -$wrapper-padding;
@@ -196,16 +187,18 @@
     .diptych__right {
         padding-right: $wrapper-padding;
         position: relative;
-        width: 66.66666%
+        width: 66.66666%;
         }
 }
 .project__diptych--gutter-thirds {
     .diptych__left {
+        margin-right: ($wrapper-padding / 8);
         width: 33.33333%;
-        }
+    }
     .diptych__right {
-        width: 33.33333%
-        }
+        margin-left: ($wrapper-padding / 8);
+        width: 33.33333%;
+    }
 }
 .project__diptych--gutters-even {
     text-align: left;

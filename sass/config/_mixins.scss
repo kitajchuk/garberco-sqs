@@ -13,18 +13,10 @@
 *******************************************************************************/
 @mixin font-sans-text() {
     font-family: $sans-serif-text;
-    font-weight: 400;
     @include font-normal();
 }
-
-
-
-/******************************************************************************
- * Fonts: Serif
-*******************************************************************************/
-@mixin font-serif-text() {
-    font-family: $serif-text;
-    font-weight: 400;
+@mixin font-sans-text-medium() {
+    font-family: $sans-serif-text-medium;
     @include font-normal();
 }
 
@@ -40,7 +32,7 @@
     @include font-sans-text();
 }
 @mixin b() {
-    font-weight: bold;
+    @include font-sans-text-medium();
 }
 @mixin p() {
     font-size: $p-size;
@@ -61,22 +53,17 @@
     line-height: 1.25;
     max-width: 80%;
     width: 100%;
-    @include font-serif-text();
+    @include font-sans-text-medium();
 }
 @mixin h2() {
     font-size: $h2-size;
     line-height: 1.333333;
-    @include font-serif-text();
+    @include font-sans-text-medium();
 }
 @mixin h3() {
     font-size: $h3-size;
     line-height: 1.4166666667;
-    @include font-serif-text();
-}
-@mixin h4() {
-    font-size: $h4-size;
-    line-height: 1.4166666667;
-    @include font-serif-text();
+    @include font-sans-text-medium();
 }
 
 
