@@ -1,8 +1,8 @@
-//import $ from "js_libs/jquery/dist/jquery";
 import dom from "./dom";
 import * as util from "./util";
 import log from "./log";
 import config from "./config";
+import ImageLoader from "properjs-imageloader";
 
 
 let $_images = null;
@@ -68,6 +68,8 @@ const preload = {
         $_images = null;
         $_visible = null;
 
+        ImageLoader.killInstances();
+
         _imgLoader = null;
     },
 
@@ -86,31 +88,18 @@ const preload = {
         $_images = ($images || dom.page.find( config.lazyImageSelector ));
         $_visible = util.getElementsInView( $_images );
 
-        let done = 0;
-
         if ( !$_visible.length ) {
             delayedLoad( callback );
 
         } else {
             log( "preload will load", $_visible.length, "out of", $_images.length, "images" );
 
-            _imgLoader = util.loadImages( $_visible, () => {
-                done++;
+            _imgLoader = util.loadImages( $_visible, () => util.noop );
+            _imgLoader.on( "done", () => {
+                log( "preloaded", $_visible.length, "images" );
 
-                util.emitter.fire( "app--preload-data", {
-                    total: $_visible.length,
-                    done
-                });
-
-                return true;
-
+                delayedLoad( callback );
             });
-            _imgLoader
-                .on( "done", () => {
-                    log( "preloaded", $_visible.length, "images" );
-
-                    delayedLoad( callback );
-                });
         }
     }
 };
@@ -131,8 +120,7 @@ const delayedLoad = function ( callback ) {
     if ( $notVisible.length ) {
         _imgLoader = null;
         _imgLoader = util.loadImages( $notVisible, util.isElementLoadable );
-        _imgLoader
-            .on( "done", () => log( "lazyloaded", $notVisible.length, "images" ) );
+        _imgLoader.on( "done", () => log( "lazyloaded", $notVisible.length, "images" ) );
     }
 
     util.emitter.fire( "app--preload-done" );

@@ -21,10 +21,24 @@
 
 // Three-quarter centered
 .project__image--threeq {
+    text-align: center;
+
     .image {
-        padding-left: $wrapper-padding;
-        padding-right: $wrapper-padding;
-        width: 100%;
+        width: 75%;
+        }
+}
+.project__image--threeq-left {
+    text-align: left;
+
+    .image {
+        width: 75%;
+        }
+}
+.project__image--threeq-right {
+    text-align: right;
+
+    .image {
+        width: 75%;
         }
 }
 
@@ -49,18 +63,18 @@
         }
 }
 .project__image--half-left-pad {
-    padding-left: $wrapper-padding;
     text-align: left;
 
     .image {
+        margin-left: $wrapper-padding;
         width: 50%;
         }
 }
 .project__image--half-right-pad {
-    padding-right: $wrapper-padding;
     text-align: right;
 
     .image {
+        margin-right: $wrapper-padding;
         width: 50%;
         }
 }
@@ -72,18 +86,18 @@
         }
 }
 .project__image--third-left {
-    padding-left: $wrapper-padding;
     text-align: left;
 
     .image {
+        margin-left: $wrapper-padding;
         width: 33.33333%;
         }
 }
 .project__image--third-right {
-    padding-right: $wrapper-padding;
     text-align: right;
 
     .image {
+        margin-right: $wrapper-padding;
         width: 33.33333%;
         }
 }

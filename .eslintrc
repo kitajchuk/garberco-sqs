@@ -12,11 +12,6 @@
         "modules": true
     },
     "globals": {
-        // Javascript libraries
-        "toxi": true,
-        "Prism": true,
-        "Draggable": true,
-
         // Squarespace specific
         "Y": true,
         "Static": true,
