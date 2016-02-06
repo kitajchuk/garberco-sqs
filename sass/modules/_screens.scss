@@ -44,17 +44,7 @@ $screen-wrap-delay: ($midi-duration / 2);
     pointer-events: none;
     z-index: $z_layer_10;
     }
-.project {
-    left: ($wrapper-padding / 4);
-    right: ($wrapper-padding / 4);
-    transform: translate3d( 0, 100%, 0 );
-    width: #{"calc( ~\"100% - (#{$wrapper-padding} / 2)\" )"};
-    z-index: $z_layer_09;
-
-    &.is-active {
-        transform: translate3d( 0, 0, 0 );
-        }
-    }
+.project {}
 
 
 

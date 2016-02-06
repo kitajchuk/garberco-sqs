@@ -16,7 +16,9 @@ class Project {
         this.app = app;
         this.opts = options;
         this.$plates = null;
+        this.$images = null;
         this.isLoaded = false;
+        this.isEnded = false;
 
         if ( this.opts.onLoad ) {
             this.loadCollection();
@@ -42,9 +44,8 @@ class Project {
 
 
     initCollection () {
-        this.isLoaded = true;
-        this.$plates = core.dom.project.find( ".js-project-plate" );
         this._onUpdateEmitter = this.onUpdateEmitter.bind( this );
+        this.$plates = core.dom.project.element.find( ".js-project-plate" );
         this.cycleAnimation();
     }
 
@@ -72,7 +73,7 @@ class Project {
     }
 
 
-    onUpdateEmitter () {
+    updatePlates () {
         let $plate = null;
         let i = this.$plates.length;
 
@@ -89,24 +90,53 @@ class Project {
     }
 
 
+    updatePosition () {
+        const scrollMaxY = (core.dom.project.element[ 0 ].scrollHeight - window.innerHeight);
+        const scrollCurrY = core.dom.project.element[ 0 ].scrollTop;
+
+        if ( scrollCurrY >= scrollMaxY && !this.isEnded ) {
+            core.log( "Project Ended" );
+
+            this.isEnded = true;
+
+            core.dom.project.element.addClass( "is-inactive" );
+
+            setTimeout( () => {
+                core.util.emitter.fire( "app--project-ended" );
+
+            }, core.dom.project.elementTransitionDuration );
+        }
+    }
+
+
+    onUpdateEmitter () {
+        this.updatePlates();
+        this.updatePosition();
+    }
+
+
     onLoadCollection ( response ) {
-        const $node = $( response );
+        let html = "";
         let $project = null;
 
         if ( typeof response === "object" ) {
+            html = response.response;
             $project = $( response.response );
 
         } else {
-            $project = $node.filter( ".js-page" ).find( ".js-project" );
+            html = response;
+            $project = $( response ).filter( ".js-page" ).find( ".js-project" );
         }
 
-        this.isLoaded = true;
+        core.util.emitter.fire( "app--analytics-push", html );
+
         this.$plates = $project.find( ".js-project-plate" );
-        this._onUpdateEmitter = this.onUpdateEmitter.bind( this );
+        this.$images = this.$plates.find( ".js-lazy-image" );
 
-        core.dom.project.html( this.$plates );
+        core.dom.project.elementNode.html( this.$plates );
 
-        core.util.loadImages( this.$plates.find( ".js-lazy-image" ), core.util.noop ).on( "done", () => {
+        //core.util.loadImages( this.$images, core.util.noop ).on( "done", () => {
+        core.images.handleImages( this.$images, () => {
             if ( overlay.isActive() ) {
                 overlay.close();
             }
@@ -115,6 +145,7 @@ class Project {
                 this.opts.onLoad();
             }
 
+            this._onUpdateEmitter = this.onUpdateEmitter.bind( this );
             this.cycleAnimation();
         });
 
@@ -124,25 +155,24 @@ class Project {
 
     open () {
         core.dom.html.addClass( "is-neverflow is-project-active" );
-        core.dom.page.append( core.dom.project );
+        core.dom.page.append( core.dom.project.element );
 
-        setTimeout( () => core.dom.project.addClass( "is-active" ), 10 );
+        setTimeout( () => core.dom.project.element.addClass( "is-active" ), 100 );
     }
 
 
     close () {
         core.util.emitter.stop();
 
-        core.dom.project.removeClass( "is-active" );
+        core.dom.project.element.removeClass( "is-active is-inactive" );
         core.dom.html.removeClass( "is-neverflow" );
 
         setTimeout( () => {
-            this.$plates = null;
-
             core.dom.html.removeClass( "is-project-active" );
-            core.dom.project.detach().empty();
+            core.dom.project.element.detach();
+            core.dom.project.elementNode.empty();
 
-        }, core.util.getTransitionDuration( core.dom.project[ 0 ] ) );
+        }, core.dom.project.elementTransitionDuration );
     }
 }
 

@@ -1,8 +1,9 @@
 import $ from "js_libs/jquery/dist/jquery";
+import * as util from "./util";
 
 
-const $_jsHeader = $( ".js-header" );
 const $_jsOverlay = $( ".js-overlay" );
+const $_jsProject = $( ".js-project" );
 
 
 /**
@@ -76,7 +77,11 @@ const dom = {
      * @description The project view node.
      *
      */
-    project: $( ".js-project" ),
+    project: {
+        element: $_jsProject,
+        elementNode: $_jsProject.find( ".js-project-node" ),
+        elementTransitionDuration: util.getTransitionDuration( $_jsProject[ 0 ] )
+    },
 
 
     /**
@@ -109,7 +114,7 @@ const dom = {
      * @description The cached header node.
      *
      */
-    header: $_jsHeader.data( "$util", $_jsHeader.find( ".js-header-util" ) ),
+    header: $( ".js-header" ),
 
 
     /**

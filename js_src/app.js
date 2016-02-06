@@ -29,10 +29,11 @@ class App {
         this.core = core;
         this.router = router;
         this.overlay = overlay;
+        this.analytics = new core.Analytics();
 
+        this.bindEvents();
         this.initModules();
         this.initProject();
-        this.bindEvents();
 
         core.log( "App", this );
 
@@ -41,7 +42,6 @@ class App {
 
 
     destroy () {
-        this.core.dom.page.off( "click", this._onPageClick );
         this.core.dom.body.off( "click", this._onTileClick );
         this.core.dom.page.off( "mouseenter", this._onMouseEnter );
         this.core.dom.page.off( "mouseleave", this._onMouseLeave );
@@ -50,7 +50,7 @@ class App {
 
     initProject () {
         if ( this.loadType !== "collection" ) {
-            this.core.dom.project.detach();
+            this.core.dom.project.element.detach();
 
         } else {
             this.project = new Project( this, {
@@ -84,15 +84,15 @@ class App {
 
 
     bindEvents () {
-        this._onPageClick = this.onPageClick.bind( this );
         this._onTileClick = this.onTileClick.bind( this );
         this._onPreloadDone = this.onPreloadDone.bind( this );
         this._onMouseEnter = this.onMouseEnter.bind( this );
         this._onMouseLeave = this.onMouseLeave.bind( this );
         this._onLogoClick = this.onLogoClick.bind( this );
+        this._onProjectEnded = this.onProjectEnded.bind( this );
 
+        this.core.util.emitter.on( "app--project-ended", this._onProjectEnded );
         this.core.util.emitter.on( "app--preload-done", this._onPreloadDone );
-        this.core.dom.page.on( "click", this._onPageClick );
         this.core.dom.body.on( "click", ".js-project-tile", this._onTileClick );
         this.core.dom.page.on( "mouseenter", ".js-project-tile", this._onMouseEnter );
         this.core.dom.page.on( "mouseleave", ".js-project-tile", this._onMouseLeave );
@@ -163,9 +163,7 @@ class App {
     }
 
 
-    onLogoClick ( e ) {
-        e.preventDefault();
-
+    onProjectEnded () {
         this.router.push( "/", () => {} );
 
         if ( this.project ) {
@@ -174,12 +172,12 @@ class App {
     }
 
 
-    onPageClick ( e ) {
+    onLogoClick ( e ) {
         e.preventDefault();
 
-        if ( !$( e.target ).closest( ".js-project-tile" ).length ) {
-            this.router.push( "/", () => {} );
+        this.router.push( "/", () => {} );
 
+        if ( this.project ) {
             this.destroyProject();
         }
     }

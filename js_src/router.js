@@ -51,7 +51,7 @@ const router = {
         ]);
 
         this.controller.setModules([
-            core.preload,
+            core.images,
             animate
         ]);
 
@@ -60,7 +60,6 @@ const router = {
         this.controller.on( "page-controller-router-transition-in", this.changePageIn.bind( this ) );
         this.controller.on( "page-controller-initialized-page", ( html ) => {
             this.cachePage( core.dom.html, $( html ).filter( ".js-page" )[ 0 ].innerHTML );
-            this.cacheStaticContext( window.Static.SQUARESPACE_CONTEXT );
         });
 
         this.controller.initPage();
@@ -84,33 +83,6 @@ const router = {
         });
     },
 
-
-    /**
-     *
-     * @public
-     * @method cacheStaticContext
-     * @param {object} json The Static.SQUARESPACE_CONTEXT ref
-     * @memberof router
-     * @description Cache the sqs context once its been parsed out.
-     *
-     */
-    cacheStaticContext ( json ) {
-        core.cache.set( `${this.getPageKey()}-context`, json );
-    },
-
-
-    /**
-     *
-     * @public
-     * @method getPageKey
-     * @memberof router
-     * @description Determine the key for local page cache storage.
-     * @returns {string}
-     *
-     */
-    getPageKey () {
-        return `${window.location.pathname}${window.location.search}`;
-    },
 
     /**
      *
@@ -157,48 +129,6 @@ const router = {
     /**
      *
      * @public
-     * @method track
-     * @param {string} type The object type, item or collection
-     * @param {object} data The data context to track with
-     * @memberof router
-     * @description Track Squarespace Metrics since we are ajax-routing.
-     *
-     */
-    track ( type, data ) {
-        core.log( "router:track:View", type, data );
-
-        Y.Squarespace.Analytics.view( type, data );
-    },
-
-
-    /**
-     *
-     * @public
-     * @method pushTrack
-     * @param {string} html The full responseText from an XHR request
-     * @param {jQuery} $doc Optional document node to receive and work with
-     * @memberof router
-     * @description Parse static context from responseText and track it.
-     *
-     */
-    pushTrack ( html, $doc ) {
-        let ctx = null;
-
-        $doc = ($doc || $( html ));
-
-        ctx = this.getStaticContext( html );
-
-        if ( ctx ) {
-            this.track( (ctx.item ? "item" : "collection"), (ctx.item || ctx.collection) );
-        }
-
-        this.setDocumentTitle( $doc.filter( "title" ).text() );
-    },
-
-
-    /**
-     *
-     * @public
      * @method onPreloadDone
      * @memberof router
      * @description Finish routing sequence when image pre-loading is done.
@@ -220,49 +150,6 @@ const router = {
         }, _pageDuration );
 
         core.util.emitter.off( "app--preload-done", this.onPreloadDone );
-    },
-
-
-    /**
-     *
-     * @public
-     * @method getStaticContext
-     * @param {string} resHTML The responseText HTML string from router
-     * @memberof router
-     * @description Attempt to parse the Squarespace data context from responseText.
-     * @returns {object}
-     *
-     */
-    getStaticContext ( resHTML ) {
-        // Match the { data } in Static.SQUARESPACE_CONTEXT
-        let ctx = core.cache.get( `${this.getPageKey()}-context` );
-
-        if ( !ctx ) {
-            ctx = resHTML.match( /Static\.SQUARESPACE_CONTEXT\s=\s(.*?)\};/ );
-
-            if ( ctx && ctx[ 1 ] ) {
-                ctx = ctx[ 1 ];
-
-                // Put the ending {object} bracket back in there :-(
-                ctx = `${ctx}}`;
-
-                // Parse the string as a valid piece of JSON content
-                try {
-                    ctx = JSON.parse( ctx );
-
-                } catch ( error ) {
-                    throw error;
-                }
-
-                // Cache context locally
-                this.cacheStaticContext( ctx );
-
-            } else {
-                ctx = false;
-            }
-        }
-
-        return ctx;
     },
 
 
@@ -313,7 +200,7 @@ const router = {
 
         core.dom.page[ 0 ].innerHTML = response;
 
-        this.pushTrack( html, $object );
+        core.util.emitter.fire( "app--analytics-push", html, $object );
 
         core.util.emitter.fire( "app--cleanup" );
     },
@@ -330,20 +217,6 @@ const router = {
      */
     changePageIn ( /* data */ ) {
         core.dom.page.addClass( "is-reactive" );
-    },
-
-
-    /**
-     *
-     * @public
-     * @method setDocumentTitle
-     * @param {string} title The new title for the document
-     * @memberof router
-     * @description Update the documents title.
-     *
-     */
-    setDocumentTitle ( title ) {
-        document.title = title;
     }
 };
 

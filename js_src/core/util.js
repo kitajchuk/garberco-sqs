@@ -477,6 +477,11 @@ const getDefaultHammerOptions = function () {
 };
 
 
+const getPageKey = function () {
+    return `${window.location.pathname}${window.location.search}`;
+};
+
+
 
 /******************************************************************************
  * Export
@@ -508,5 +513,6 @@ export default {
     translate3d,
     getTransitionDuration,
     safePreventDefault,
-    getDefaultHammerOptions
+    getDefaultHammerOptions,
+    getPageKey
 };

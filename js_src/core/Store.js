@@ -6,17 +6,10 @@ import log from "./log";
 let _instance = null;
 let _initialized = false;
 
-// In-Memory {object} cache
+// Session Storage
 let _cache = {};
-let _timestamp = null;
-const _cacheAccess = "instrument-cache";
-const _timeAccess = "instrument-timestamp";
-
-// 1 Week in milliseconds
-const _duration = 604800000;
-
-// (1024 * 1024 * 5) - 5MB
-const _allocated = 5242880;
+const _access = "garberco-cache";
+const _session = window.sessionStorage;
 
 
 /**
@@ -25,21 +18,6 @@ const _allocated = 5242880;
  * @class Store
  * @param {object} options The Store settings
  * @classdesc Handles how data / content is cached and stored for webapp.
- *
- *            Local Storage is synchronous - so we don't want to set
- *            every time cache is modified. Ideally we can use an app event
- *            hook to set the cache to device when we have a free moment.
- *            Ideally, we're just looking at NOT BLOCKING REQUESTS just to
- *            set some data to the device storage.
- *
- *            There are 2 places where XHR requests happen in `OUR` app:
- *            The api module and PageController.
- *            This excludes media content requests - audio and video.
- *            But that's fine I think.
- *
- *            Some stuff I was reading:
- *            http://www.sitepoint.com/html5-local-storage-revisited/
- *            http://www.html5rocks.com/en/tutorials/offline/quota-research/
  *
  */
 class Store {
@@ -57,7 +35,7 @@ class Store {
 
     /**
      *
-     * @public
+     * @private
      * @instance
      * @method _init
      * @memberof Store
@@ -71,63 +49,9 @@ class Store {
 
         _initialized = true;
 
-        if ( this._opts.enableStorage ) {
-            this.tryFlush();
-
-        } else {
-            this.tryClean();
-        }
+        this.flush();
 
         log( "Singleton Store initialized", this );
-    }
-
-
-    /**
-     *
-     * @public
-     * @instance
-     * @method tryClean
-     * @memberof Store
-     * @description If initialized with storage disabled, attempt to remove old storage if it exists
-     *
-     */
-    tryClean () {
-        window.localStorage.removeItem( _timeAccess );
-        window.localStorage.removeItem( _cacheAccess );
-    }
-
-
-    /**
-     *
-     * @public
-     * @instance
-     * @method tryFlush
-     * @memberof Store
-     * @description Flush the cache if necessary
-     *
-     */
-    tryFlush () {
-        _cache = window.localStorage.getItem( _cacheAccess );
-        _timestamp = window.localStorage.getItem( _timeAccess );
-
-        // Store exists - Timestamp exists
-        if ( _cache && _timestamp ) {
-            _cache = JSON.parse( _cache );
-            _timestamp = parseInt( _timestamp, 10 );
-
-        // Neither exist - setup the cache and timestamp
-        // Timestamp remains null for this case
-        } else {
-            _cache = {};
-            _timestamp = Date.now();
-        }
-
-        // Timestamp so check how long data has been stored
-        // This condition establishes a 1 week duration before data flush
-        // This condition also checks the size stored vs what is allocated - 5MB
-        if ( ((Date.now() - _timestamp) >= _duration) || (_allocated - JSON.stringify( window.localStorage ).length <= 0) ) {
-            this.flush();
-        }
     }
 
 
@@ -144,9 +68,6 @@ class Store {
         // New empty cache
         _cache = {};
 
-        // New Timestamp for NOW
-        _timestamp = Date.now();
-
         // Store the new cache object
         this.save();
     }
@@ -162,13 +83,12 @@ class Store {
      *
      */
     save () {
-        if ( !this._opts.enableStorage ) {
-            log( "Cache Storage disabled - Not writing to LocalStorage" );
+        if ( !this._opts.enableStorage || !Store.isStorageSupported ) {
+            log( "Cache Storage disabled - Not writing to SessionStorage" );
             return;
         }
 
-        window.localStorage.setItem( _timeAccess, _timestamp );
-        window.localStorage.setItem( _cacheAccess, JSON.stringify( _cache ) );
+        _session.setItem( _access, JSON.stringify( _cache ) );
     }
 
 
@@ -259,6 +179,31 @@ class Store {
         delete _cache[ id ];
     }
 }
+
+
+
+/**
+ *
+ * @public
+ * @static
+ * @member isStorageSupported
+ * @memberof Store
+ * @description Boolean to test local/session storage support
+ *
+ */
+Store.isStorageSupported = (function () {
+    let ret = true;
+
+    try {
+        _session.setItem( "garberco-test", 1 );
+        _session.removeItem( "garberco-test" );
+
+    } catch ( err ) {
+        ret = false;
+    }
+
+    return ret;
+})();
 
 
 

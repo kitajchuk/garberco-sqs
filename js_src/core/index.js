@@ -7,7 +7,7 @@
  */
 import detect from "./detect";
 import dom from "./dom";
-import preload from "./preload";
+import images from "./images";
 import resizes from "./resizes";
 import scrolls from "./scrolls";
 import * as util from "./util";
@@ -16,12 +16,13 @@ import env from "./env";
 import log from "./log";
 import api from "./api";
 import cache from "./cache";
+import Analytics from "./Analytics";
 
 
 export {
     detect,
     dom,
-    preload,
+    images,
     resizes,
     scrolls,
     util,
@@ -29,5 +30,6 @@ export {
     env,
     log,
     api,
-    cache
+    cache,
+    Analytics
 };
