@@ -186,7 +186,7 @@ const router = {
      *
      */
     initPage () {
-        this.root = window.location.pathname;
+        this.root = ( this.pageData.type === "menu" ) ? "/" : window.location.pathname;
 
         core.dom.nav.detach();
         core.dom.page.detach();
