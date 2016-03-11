@@ -8,3 +8,17 @@
     z-index: ($z_layer_infront + 1);
     @include layout-frame();
     }
+.header__nav--about {
+    text-align: left;
+    }
+.header__nav--index {
+    text-align: right;
+    }
+.header__nav--about,
+.header__nav--index {
+    transition: opacity $base-duration $ease;
+    width: 25%;
+    }
+.header__nav--garberco {
+    width: 50%;
+    }

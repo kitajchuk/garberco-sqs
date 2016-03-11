@@ -1,8 +1,8 @@
 import * as core from "./core";
 
 
-let _isActive = false;
-const _transTime = core.util.getTransitionDuration( core.dom.overlay.element[ 0 ] );
+let isActive = false;
+const transTime = core.util.getTransitionDuration( core.dom.overlay.element[ 0 ] );
 
 
 /**
@@ -23,7 +23,7 @@ const overlay = {
      */
     init () {
         if ( core.dom.overlay.element.is( ".is-active" ) ) {
-            _isActive = true;
+            isActive = true;
 
         } else {
             core.dom.overlay.element.detach();
@@ -32,10 +32,10 @@ const overlay = {
 
 
     open () {
-        _isActive = true;
+        isActive = true;
 
         core.dom.html.addClass( "is-overlay-active" );
-        core.dom.page.append( core.dom.overlay.element );
+        core.dom.body.append( core.dom.overlay.element );
 
         setTimeout( () => core.dom.overlay.element.addClass( "is-active" ), 10 );
     },
@@ -45,12 +45,12 @@ const overlay = {
         core.dom.overlay.element.removeClass( "is-active" );
 
         setTimeout( () => {
-            _isActive = false;
+            isActive = false;
 
             core.dom.html.removeClass( "is-overlay-active" );
-            core.dom.overlay.element.detach();
+            core.dom.overlay.element.detach().removeClass( "is-intro" );
 
-        }, _transTime );
+        }, transTime );
     },
 
 
@@ -60,7 +60,7 @@ const overlay = {
 
 
     isActive () {
-        return _isActive;
+        return isActive;
     }
 };
 

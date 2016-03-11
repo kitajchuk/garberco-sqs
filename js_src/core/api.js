@@ -1,7 +1,6 @@
 import $ from "js_libs/jquery/dist/jquery";
 import paramalama from "paramalama";
 //import config from "./config";
-import cache from "./cache";
 
 
 const _rSlash = /^\/|\/$/g;
@@ -159,7 +158,6 @@ const api = {
         let i = 0;
         const def = new $.Deferred();
         const colls = [];
-        const cached = cache.get( uri );
         const handle = function ( data ) {
             for ( i = data.collections.length; i--; ) {
                 colls.push( data.collections[ i ].urlId );
@@ -168,19 +166,12 @@ const api = {
             api.collections( colls, params, options ).done( ( items ) => def.resolve( items ) );
         };
 
-        if ( cached ) {
-            setTimeout( () => handle( cached ), 1 );
+        this.request( this.endpoint( uri ) )
+            .done( ( data ) => {
+                handle( data.collection );
 
-        } else {
-            this.request( this.endpoint( uri ) )
-                .done( ( data ) => {
-                    //cache.set( data.collection.urlId, data.collection );
-
-                    handle( data.collection );
-
-                })
-                .fail( ( xhr, status, error ) => def.reject( error ) );
-        }
+            })
+            .fail( ( xhr, status, error ) => def.reject( error ) );
 
         return def;
     },
@@ -201,42 +192,32 @@ const api = {
     collection ( uri, params, options ) {
         let collection = {};
         const def = new $.Deferred();
-        const cached = cache.get( uri );
         const seg = uri.split( "?" )[ 0 ];
 
         params = $.extend( (params || {}), paramalama( uri ) );
 
-        if ( cached ) {
-            setTimeout( () => def.resolve( cached ), 1 );
+        this.request( this.endpoint( seg ), params, options )
+            .done( ( data ) => {
+                // Resolve with `responseText`
+                if ( typeof data === "string" ) {
+                    def.resolve( data );
 
-        } else {
-            this.request( this.endpoint( seg ), params, options )
-                .done( ( data ) => {
-                    // Resolve with `responseText`
-                    if ( typeof data === "string" ) {
-                        //cache.set( uri, data );
+                } else {
+                    // Collection?
+                    collection = {
+                        collection: data.collection,
+                        item: (data.item || null),
+                        items: (data.items || null),
+                        pagination: (data.pagination || null)
+                    };
 
-                        def.resolve( data );
+                    def.resolve( (data.items || data.item) ? collection : null );
+                }
 
-                    } else {
-                        // Collection?
-                        collection = {
-                            collection: data.collection,
-                            item: (data.item || null),
-                            items: (data.items || null),
-                            pagination: (data.pagination || null)
-                        };
-
-                        //cache.set( uri, collection );
-
-                        def.resolve( (data.items || data.item) ? collection : null );
-                    }
-
-                })
-                .fail( ( xhr, status, error ) => {
-                    def.reject( error );
-                });
-        }
+            })
+            .fail( ( xhr, status, error ) => {
+                def.reject( error );
+            });
 
         return def;
     },

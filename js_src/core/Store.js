@@ -1,5 +1,6 @@
 import $ from "js_libs/jquery/dist/jquery";
 import log from "./log";
+import config from "./config";
 
 
 // Singleton
@@ -105,7 +106,7 @@ class Store {
      */
     slug ( uri ) {
         uri = uri.replace( /^\/|\/$/g, "" ).replace( /\/|\?|\&|=|\s/g, "-" ).toLowerCase();
-        uri = uri === "" ? "homepage" : uri;
+        uri = uri === "" ? config.homepageKey : uri;
 
         return uri;
     }

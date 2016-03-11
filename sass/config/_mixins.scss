@@ -17,6 +17,7 @@
 }
 @mixin font-sans-text-medium() {
     font-family: $sans-serif-text-medium;
+    font-weight: 600;
     @include font-normal();
 }
 
@@ -51,8 +52,6 @@
     display: inline-block;
     font-size: $h1-size;
     line-height: 1.25;
-    max-width: 80%;
-    width: 100%;
     @include font-sans-text-medium();
 }
 @mixin h2() {
@@ -65,6 +64,11 @@
     line-height: 1.4166666667;
     @include font-sans-text-medium();
 }
+@mixin h4() {
+    font-size: $h4-size;
+    line-height: 1;
+    @include font-sans-text-medium();
+}
 
 
 
@@ -72,7 +76,7 @@
  * Layout / Spacing
 *******************************************************************************/
 @mixin layout-frame() {
-    padding: $header-fix-height $wrapper-padding 0;
+    padding: $header-fix-height ($photos-padding / 2) 0;
 }
 
 

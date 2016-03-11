@@ -28,11 +28,12 @@ $grid-columns: 12 11 10 9 8 7 6 5 4 3 2 1;
 *******************************************************************************/
 $nudge-size: 40px;
 $bump-size: 80px;
-$mobile-padding: 30px;
 $expander-padding: 160px;
-$wrapper-padding: 8.3461538462%;
-$grid-item-padding: 5.5%;
+$photos-padding: 8.3461538462%;
+$spacer-padding: 8.3461538462%;
+$wrapper-padding: (8.3461538462% / 2);
 $header-fix-height: 90px;
+$mobile-padding: 30px;
 
 
 
@@ -50,12 +51,10 @@ $p-size: 18px;
 $p-size-small: 15px;
 $meta-size: 16px;
 $meta-size-small: 15px;
-$h1-size: 7vw;
-$h1-size-small: 30px;
-$h2-size: 40px;
-$h2-size-small: 25px;
+$h1-size: 5vw;
+$h2-size: 2.5vw;
 $h3-size: 35px;
-$h3-size-small: 22px;
+$h4-size: 30px;
 
 
 

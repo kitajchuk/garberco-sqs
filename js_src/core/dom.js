@@ -3,7 +3,7 @@ import * as util from "./util";
 
 
 const $_jsOverlay = $( ".js-overlay" );
-const $_jsProject = $( ".js-project" );
+const $_jsProject = $( ".js-project-view" );
 
 
 /**
@@ -23,17 +23,6 @@ const dom = {
      *
      */
     doc: $( document ),
-
-
-    /**
-     *
-     * @public
-     * @member win
-     * @memberof dom
-     * @description The cached window node.
-     *
-     */
-    win: $( window ),
 
 
     /**
@@ -61,6 +50,42 @@ const dom = {
     /**
      *
      * @public
+     * @member header
+     * @memberof dom
+     * @description The cached header node.
+     *
+     */
+    header: $( ".js-header" ),
+
+
+    /**
+     *
+     * @public
+     * @member nav
+     * @memberof dom
+     * @description The cached nav node.
+     *
+     */
+    nav: $( ".js-nav" ),
+
+
+    /**
+     *
+     * @public
+     * @member intro
+     * @memberof dom
+     * @description The cached brand moment node.
+     *
+     */
+    overlay: {
+        element: $_jsOverlay,
+        elementTitle: $_jsOverlay.find( ".js-overlay-title" )
+    },
+
+
+    /**
+     *
+     * @public
      * @member page
      * @memberof dom
      * @description The cached page container node.
@@ -79,7 +104,6 @@ const dom = {
      */
     project: {
         element: $_jsProject,
-        elementNode: $_jsProject.find( ".js-project-node" ),
         elementTransitionDuration: util.getTransitionDuration( $_jsProject[ 0 ] )
     },
 
@@ -87,48 +111,23 @@ const dom = {
     /**
      *
      * @public
-     * @member logo
+     * @member root
      * @memberof dom
-     * @description The logo element.
+     * @description The cached root node.
      *
      */
-    logo: $( ".js-logo" ),
+    root: $( ".js-root" ),
 
 
     /**
      *
      * @public
-     * @member homepage
+     * @member main
      * @memberof dom
-     * @description The homepage grid element.
+     * @description The cached main node.
      *
      */
-    homepage: $( ".js-homepage" ),
-
-
-    /**
-     *
-     * @public
-     * @member header
-     * @memberof dom
-     * @description The cached header node.
-     *
-     */
-    header: $( ".js-header" ),
-
-
-    /**
-     *
-     * @public
-     * @member intro
-     * @memberof dom
-     * @description The cached brand moment node.
-     *
-     */
-    overlay: {
-        element: $_jsOverlay,
-        elementTitle: $_jsOverlay.find( ".js-overlay-title" )
-    }
+    main: $( ".js-main" )
 };
 
 

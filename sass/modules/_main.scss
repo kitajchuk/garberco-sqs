@@ -1,0 +1,45 @@
+$menu-width: #{"calc( ~\"100vw - #{$photos-padding}\" )"};
+$menu-width-minus: #{"calc( ~\"-100vw + #{$photos-padding}\" )"};
+
+
+
+.main {
+    font-size: 0;
+    position: relative;
+    text-align: center;
+    transition: transform $base-duration $ease;
+    width: 100vw;
+
+    &#is-main--about {
+        transform: translate3d( $menu-width, 0, 0 );
+        }
+    &#is-main--index {
+        transform: translate3d( $menu-width-minus, 0, 0 );
+        }
+    }
+.main__panel {
+    min-height: 100vh;
+
+    &.is-active {
+        position: relative;
+        }
+    }
+.main__panel--about,
+.main__panel--index {
+    background-color: $white;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: $menu-width;
+    }
+.main__panel--about {
+    transform: translate3d( -100%, 0, 0 );
+    }
+.main__panel--index {
+    transform: translate3d( 100vw, 0, 0 );
+    }
+.main__panel--garberco {
+    background-color: $white;
+    position: relative;
+    width: 100vw;
+    }

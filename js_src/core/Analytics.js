@@ -1,4 +1,4 @@
-import $ from "js_libs/jquery/dist/jquery";
+//import $ from "js_libs/jquery/dist/jquery";
 import log from "./log";
 import * as util from "./util";
 import cache from "./cache";
@@ -24,7 +24,7 @@ class Analytics {
 
             util.emitter.on( "app--analytics-push", this.pushTrack.bind( this ) );
 
-            log( "Analytics initialized", this );
+            log( "Analytics initialized" );
 
             _instance = this;
         }
@@ -72,24 +72,20 @@ class Analytics {
      *
      * @public
      * @method pushTrack
-     * @param {string} html The full responseText from an XHR request
-     * @param {jQuery} $doc Optional document node to receive and work with
+     * @param {Hobo} $doc <html> node to receive and work with
      * @memberof core.Analytics
      * @description Parse static context from responseText and track it.
      *
      */
-    pushTrack ( html, $doc ) {
-        let ctx = null;
-
-        $doc = ($doc || $( html ));
-
-        ctx = this.getStaticContext( html );
+    pushTrack ( $doc ) {
+        const $title = $doc.find( "title" );
+        const ctx = this.getStaticContext( $doc.find( "head" )[ 0 ].innerHTML );
 
         if ( ctx ) {
             this.track( (ctx.item ? "item" : "collection"), (ctx.item || ctx.collection) );
         }
 
-        this.setDocumentTitle( $doc.filter( "title" ).text() );
+        this.setDocumentTitle( $title[ 0 ].innerText );
     }
 
 

@@ -116,9 +116,10 @@ const animate = {
 
         if ( !_isActive ) {
             this.onload();
-        }
 
-        updateAnimate();
+        } else {
+            updateAnimate();
+        }
     }
 };
 

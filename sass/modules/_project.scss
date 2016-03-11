@@ -1,33 +1,14 @@
-.project {
-    background-color: transparent;
-    transform: translate3d( 0, 100%, 0 );
-    z-index: $z_layer_09;
-
-    &.is-active {
-        transform: translate3d( 0, 0, 0 );
-        }
-    &.is-inactive {
-        opacity: 0;
-        overflow: hidden;
-        transform: translate3d( 0, -100%, 0 );
-        }
-    }
-.project__node {
-    background-color: $white;
-    margin-bottom: 50%;
-    min-height: 100%;
-    padding-bottom: $expander-padding;
-    padding-top: $expander-padding;
-    }
-
-
-
+.project {}
 .project__image,
 .project__diptych {
     font-size: 0;
     padding-bottom: $expander-padding;
     padding-top: $expander-padding;
     text-align: center;
+    }
+.project__image:first-child,
+.project__diptych:first-child {
+    padding-top: 0;
     }
 .project__image--full {
     // Inherits .image native 
@@ -80,7 +61,7 @@
     text-align: left;
 
     .image {
-        margin-left: $wrapper-padding;
+        margin-left: $photos-padding;
         width: 50%;
         }
 }
@@ -88,7 +69,7 @@
     text-align: right;
 
     .image {
-        margin-right: $wrapper-padding;
+        margin-right: $photos-padding;
         width: 50%;
         }
 }
@@ -103,7 +84,7 @@
     text-align: left;
 
     .image {
-        margin-left: $wrapper-padding;
+        margin-left: $photos-padding;
         width: 33.33333%;
         }
 }
@@ -111,7 +92,7 @@
     text-align: right;
 
     .image {
-        margin-right: $wrapper-padding;
+        margin-right: $photos-padding;
         width: 33.33333%;
         }
 }
@@ -119,8 +100,8 @@
 // Diptychs
 .project__diptych--small-left {
     .diptych__left {
-        padding-left: $wrapper-padding;
-        padding-right: $wrapper-padding;
+        padding-left: $photos-padding;
+        padding-right: $photos-padding;
         width: 50%;
         }
     .diptych__right {
@@ -132,44 +113,44 @@
         width: 50%;
         }
     .diptych__right {
-        padding-left: $wrapper-padding;
-        padding-right: $wrapper-padding;
+        padding-left: $photos-padding;
+        padding-right: $photos-padding;
         width: 50%;
         }
 }
 .project__diptych--lean-left {
-    padding-top: ($wrapper-padding * 2);
+    padding-top: ($photos-padding * 2);
 
     .diptych__left {
-        margin-top: -($wrapper-padding * 2);
-        padding-right: ($wrapper-padding / 8);
+        margin-top: -($photos-padding * 2);
+        padding-right: ($photos-padding / 8);
         width: 50%;
         }
     .diptych__right {
-        padding-left: ($wrapper-padding / 8);
+        padding-left: ($photos-padding / 8);
         width: 50%;
         }
 }
 .project__diptych--lean-right {
-    padding-top: ($wrapper-padding * 2);
+    padding-top: ($photos-padding * 2);
 
     .diptych__left {
-        padding-right: ($wrapper-padding / 8);
+        padding-right: ($photos-padding / 8);
         width: 50%;
         }
     .diptych__right {
-        margin-top: -($wrapper-padding * 2);
-        padding-left: ($wrapper-padding / 8);
+        margin-top: -($photos-padding * 2);
+        padding-left: ($photos-padding / 8);
         width: 50%;
         }
 }
 .project__diptych--gutter-center {
     .diptych__left {
-        padding-right: ($wrapper-padding / 8);
+        padding-right: ($photos-padding / 8);
         width: 50%;
         }
     .diptych__right {
-        padding-left: ($wrapper-padding / 8);
+        padding-left: ($photos-padding / 8);
         ;
         width: 50%;
         }
@@ -187,12 +168,12 @@
     text-align: left;
 
     .diptych__left {
-        padding-left: $wrapper-padding;
+        padding-left: $photos-padding;
         position: relative;
         width: 66.66666%;
         }
     .diptych__right {
-        margin-left: -$wrapper-padding;
+        margin-left: -$photos-padding;
         position: relative;
         width: 33.33333%;
         z-index: $z_layer_01;
@@ -203,24 +184,24 @@
     text-align: right;
 
     .diptych__left {
-        margin-right: -$wrapper-padding;
+        margin-right: -$photos-padding;
         position: relative;
         width: 33.33333%;
         z-index: $z_layer_01;
         }
     .diptych__right {
-        padding-right: $wrapper-padding;
+        padding-right: $photos-padding;
         position: relative;
         width: 66.66666%;
         }
 }
 .project__diptych--gutter-thirds {
     .diptych__left {
-        margin-right: ($wrapper-padding / 8);
+        margin-right: ($photos-padding / 8);
         width: 33.33333%;
     }
     .diptych__right {
-        margin-left: ($wrapper-padding / 8);
+        margin-left: ($photos-padding / 8);
         width: 33.33333%;
     }
 }
@@ -233,12 +214,12 @@
 
     .diptych__left,
     .diptych__right {
-        width: #{"calc( ~\"(100% - #{$wrapper-padding}) / 2\" )"};
+        width: #{"calc( ~\"(100% - #{$photos-padding}) / 2\" )"};
         }
     .diptych__left {
-        padding-left: $wrapper-padding;
+        padding-left: $photos-padding;
         }
     .diptych__right {
-        padding-right: $wrapper-padding;
+        padding-right: $photos-padding;
         }
 }

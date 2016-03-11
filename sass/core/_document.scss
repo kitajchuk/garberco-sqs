@@ -4,27 +4,19 @@
 ::-webkit-scrollbar {
     display: none;
     }
-::-moz-selection {
-    background-color: $black;
-    color: $white;
-    }
-::selection {
-    background-color: $black;
-    color: $white;
-    }
 
 
 /******************************************************************************
  * Document
 *******************************************************************************/
 html {
-    background-color: $grey-bg;
+    background-color: $white;
     box-sizing: border-box;
     overflow-x: hidden;
     overflow-y: auto;
     }
 body {
-    background-color: $grey-bg;
+    background-color: $white;
     color: $black;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

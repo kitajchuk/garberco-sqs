@@ -13,26 +13,9 @@ import Controller from "properjs-controller";
 import ScrollController from "properjs-scrollcontroller";
 import ResizeController from "properjs-resizecontroller";
 import ImageLoader from "properjs-imageloader";
-import MediaBox from "properjs-mediabox";
-import loadCSS from "fg-loadcss";
-import loadJS from "fg-loadjs";
 import dom from "./dom";
 import config from "./config";
 import detect from "./detect";
-
-
-/**
- *
- * @description Don't prevent default for <a /> nodes with Hammer...
- * @method safePreventDefault
- * @param {object} e The event object
- *
- */
-const safePreventDefault = function ( e ) {
-    if ( e.target.nodeName !== "A" ) {
-        e.preventDefault();
-    }
-};
 
 
 /**
@@ -77,16 +60,6 @@ const px = function ( str ) {
 const translate3d = function ( el, x, y, z ) {
     el.style[ Hammer.prefixed( el.style, "transform" ) ] = `translate3d( ${x}, ${y}, ${z} )`;
 };
-
-
-/**
- *
- * @description Single app instanceof [MediaBox]{@link https://github.com/ProperJS/MediaBox} for custom audio/video
- * @member mediabox
- * @memberof util
- *
- */
-const mediabox = new MediaBox();
 
 
 /**
@@ -226,6 +199,7 @@ const updateImages = function ( images ) {
  *
  */
 const loadImages = function ( images, handler, useVariant ) {
+    const rQuery = /\?(.*)$/;
     const map = function ( vnt ) {
         return parseInt( vnt, 10 );
     };
@@ -233,14 +207,17 @@ const loadImages = function ( images, handler, useVariant ) {
     let data = null;
     let vars = null;
     let width = null;
+    let height = null;
+    let dimension = null;
     let variant = null;
+    let source = null;
     let i = null;
 
     // Normalize the handler
     handler = (handler || isElementLoadable);
 
     // Normalize the images
-    images = (images || $( config.lazyImageSelector ));
+    images = (images || dom.page.find( config.lazyImageSelector ));
 
     // Normalize the `useVariant` flag
     if ( !useVariant && useVariant !== false ) {
@@ -256,27 +233,25 @@ const loadImages = function ( images, handler, useVariant ) {
     for ( i; i--; ) {
         $img = images.eq( i );
         data = $img.data();
-        width = ($img.parent()[ 0 ].clientWidth || window.innerWidth || config.sqsMaxImgWidth);
-
-        data.imgSrc = data.imgSrc.replace( /\?(.*)$/, "" );
+        width = ($img[ 0 ].clientWidth || $img[ 0 ].parentNode.clientWidth || window.innerWidth);
+        height = ($img[ 0 ].clientHeight || $img[ 0 ].parentNode.clientHeight || window.innerHeight);
+        dimension = Math.max( width, height );
+        source = data.imgSrc.replace( rQuery, "" );
 
         if ( useVariant && data.variants ) {
             vars = data.variants.split( "," ).map( map );
-            variant = getClosestValue( vars, width );
+            variant = getClosestValue( vars, dimension );
 
             // If the pixel density is higher, use a larger image ?
             if ( window.devicePixelRatio > 1 ) {
                 // Splice off the variant that was matched
-                vars.splice( vars.indexOf( variant, 1 ) );
+                vars.splice( vars.indexOf( variant ), 1 );
 
                 // Apply the new, larger variant as the format
                 variant = getClosestValue( vars, variant );
             }
 
-            $img.attr( config.lazyImageAttr, `${data.imgSrc}?format=${variant}w` );
-
-        } else {
-            $img.attr( config.lazyImageAttr, `${data.imgSrc}?format=original` );
+            $img[ 0 ].setAttribute( config.lazyImageAttr, `${source}?format=${variant}w` );
         }
     }
 
@@ -286,45 +261,6 @@ const loadImages = function ( images, handler, useVariant ) {
         transitionDelay: 0
 
     }).on( "data", handler );
-};
-
-
-/**
- *
- * @description Load all deps for a module
- * @method loadDependencies
- * @param {object} data The dependency data
- * @param {function} callback Function to call when all deps are loaded
- * @memberof util
- *
- */
-const loadDependencies = function ( data, callback ) {
-    let i = 0;
-    const total = data.sources.length;
-    const onload = function () {
-        i++;
-
-        if ( i === total ) {
-            console.log( "dependencies loaded", data );
-
-            if ( typeof data.callback === "function" ) {
-                data.callback();
-            }
-
-            if ( typeof callback === "function" ) {
-                callback();
-            }
-        }
-    };
-
-    data.sources.forEach(( source ) => {
-        if ( source.type === "script" ) {
-            loadJS( (config.asyncScriptPath + source.file), onload );
-
-        } else if ( source.type === "style" ) {
-            loadCSS( (config.asyncStylePath + source.file) ).onloadcssdefined( onload );
-        }
-    });
 };
 
 
@@ -406,56 +342,6 @@ const noop = function () {
 
 /**
  *
- * @description Randomize array element order in-place.
- * Using Fisher-Yates shuffle algorithm.
- * @method shuffle
- * @param {object} arr The array to shuffle
- * @memberof util
- * @returns {array}
- *
- */
-const shuffle = function ( arr ) {
-    let i = arr.length - 1;
-    let j = 0;
-    let temp = arr[ i ];
-
-    for ( i; i > 0; i-- ) {
-        j = Math.floor( Math.random() * (i + 1) );
-        temp = arr[ i ];
-
-        arr[ i ] = arr[ j ];
-        arr[ j ] = temp;
-    }
-
-    return arr;
-};
-
-
-/**
- *
- * @description Parse a floating point time value into a distinguished time representation
- * @method parseTime
- * @param {float} time The floating point time value
- * @memberof util
- * @returns {string}
- *
- */
-const parseTime = function ( time ) {
-    time *= 1000;
-
-    const minutes = parseInt( time / (1000 * 60), 10 );
-    let seconds = parseInt( time / 1000, 10) % 60;
-
-    if ( seconds < 10 ) {
-        seconds = `0${seconds}`;
-    }
-
-    return `${minutes}:${seconds}`;
-};
-
-
-/**
- *
  * @method getDefaultHammerOptions
  * @memberof util
  * @description The default options for Hammer JS.
@@ -478,7 +364,16 @@ const getDefaultHammerOptions = function () {
 
 
 const getPageKey = function () {
-    return `${window.location.pathname}${window.location.search}`;
+    let ret = null;
+
+    if ( window.location.pathname === config.appRoot ) {
+        ret = config.homepageKey;
+
+    } else {
+        ret = `${window.location.pathname}${window.location.search}`;
+    }
+
+    return ret;
 };
 
 
@@ -488,14 +383,12 @@ const getPageKey = function () {
 *******************************************************************************/
 export default {
     // Classes
-    mediabox,
     emitter,
     scroller,
     resizer,
 
     // Loading
     loadImages,
-    loadDependencies,
     updateImages,
     isElementLoadable,
     isElementInViewport,
@@ -508,11 +401,8 @@ export default {
     // Random
     px,
     noop,
-    shuffle,
-    parseTime,
     translate3d,
     getTransitionDuration,
-    safePreventDefault,
     getDefaultHammerOptions,
     getPageKey
 };

@@ -37,14 +37,30 @@ $screen-wrap-delay: ($midi-duration / 2);
 
 
 // Variant screens
-.index {}
-.about {}
 .overlay {
     background-color: transparent;
     pointer-events: none;
     z-index: $z_layer_10;
+
+    &.is-intro {
+        background-color: $white;
+        }
     }
-.project {}
+.project-view {
+    background-color: $white;
+    padding-top: ($expander-padding + $header-fix-height);
+    transform: translate3d( 0, 100%, 0 );
+    z-index: $z_layer_09;
+
+    &.is-active {
+        transform: translate3d( 0, 0, 0 );
+        }
+    &.is-inactive {
+        opacity: 0;
+        overflow: hidden;
+        transform: translate3d( 0, -100%, 0 );
+        }
+    }
 
 
 
