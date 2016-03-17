@@ -56,20 +56,19 @@
 }
 @mixin h2() {
     font-size: $h2-size;
-    line-height: 1.333333;
+    line-height: 1.36;
     @include font-sans-text-medium();
 }
 @mixin h3() {
     font-size: $h3-size;
-    line-height: 1.4166666667;
+    line-height: 1;
     @include font-sans-text-medium();
 }
 @mixin h4() {
     font-size: $h4-size;
-    line-height: 1;
+    line-height: 1.2;
     @include font-sans-text-medium();
 }
-
 
 
 /******************************************************************************

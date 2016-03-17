@@ -7,13 +7,32 @@
 
 
 @media only screen and ( max-width: $break-mobile-full ) {
-    .grid {
-        padding-left: $mobile-padding;
-        padding-right: $mobile-padding;
+    .h3 {
+        font-size: 16px;
+        }
+    .header {
+        padding-left: $grid-padding;
+        padding-right: $grid-padding;
         }
     .grid__item {
-        padding-left: 0;
-        padding-right: 0;
+        padding-bottom: $grid-padding;
         width: 100%;
         }
+    .grid__photo {
+        padding-bottom: 0;
+
+        .image {
+            left: auto;
+            padding-left: 0;
+            padding-right: 0;
+            position: relative;
+            top: auto;
+            transform: none;
+            }
+        .image--tall,
+        .image--wide {
+            height: auto;
+            width: 100%;
+            }
+    }
 }

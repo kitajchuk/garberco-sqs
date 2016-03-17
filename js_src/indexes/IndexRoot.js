@@ -7,24 +7,33 @@ let instance = null;
 /**
  *
  * @public
- * @class IndexClass
+ * @class IndexRoot
  * @param {jQuery} $node The element
  * @param {object} data The datas
- * @classdesc Handle an index.
+ * @classdesc Handle an index as a Singleton(ish).
  *
  */
-class IndexClass {
+class IndexRoot {
     constructor ( $node, data ) {
-        if ( instance && instance.data.id === data.id ) {
-            return instance;
+        if ( !instance || instance && instance.data.id !== data.id ) {
+            this.initialize( $node, data );
         }
 
+        return instance;
+    }
+
+
+    initialize ( $node, data ) {
         this.$node = $node;
         this.data = data;
         this.$target = core.dom.main.find( `.js-main--${this.data.target}` );
         this.$images = this.$node.find( ".js-lazy-image" );
 
-        core.images.handleImages( this.$images, this.onPreload.bind( this ) );
+        core.images.handleImages( this.$images, () => {
+            this.$target.html( this.$node );
+
+            core.util.emitter.fire( "app--update-animate" );
+        });
 
         instance = this;
     }
@@ -34,30 +43,12 @@ class IndexClass {
      *
      * @public
      * @instance
-     * @method onPreload
-     * @memberof IndexClass
-     * @description Handle loaded index grid.
-     *
-     */
-    onPreload () {
-        this.$target.html( this.$node );
-
-        core.util.emitter.fire( "app--update-animate" );
-    }
-
-
-    /**
-     *
-     * @public
-     * @instance
      * @method destroy
-     * @memberof IndexClass
+     * @memberof IndexRoot
      * @description Undo event bindings for this instance.
      *
      */
-    destroy () {
-        //instance = null;
-    }
+    destroy () {}
 }
 
 
@@ -65,4 +56,4 @@ class IndexClass {
 /******************************************************************************
  * Export
 *******************************************************************************/
-export default IndexClass;
+export default IndexRoot;

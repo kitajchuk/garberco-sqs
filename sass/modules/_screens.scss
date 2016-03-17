@@ -11,8 +11,8 @@ $screen-wrap-delay: ($midi-duration / 2);
     position: fixed;
     right: 0;
     top: 0;
-    transition: opacity $midi-duration $ease,
-                transform $base-duration $ease-cubic;
+    transition: transform $base-duration $ease-cubic,
+                opacity $midi-duration $ease;
     z-index: $z_layer_infront;
 
     &.is-active {
@@ -47,8 +47,7 @@ $screen-wrap-delay: ($midi-duration / 2);
         }
     }
 .project-view {
-    background-color: $white;
-    padding-top: ($expander-padding + $header-fix-height);
+    background-color: transparent;
     transform: translate3d( 0, 100%, 0 );
     z-index: $z_layer_09;
 
@@ -56,10 +55,13 @@ $screen-wrap-delay: ($midi-duration / 2);
         transform: translate3d( 0, 0, 0 );
         }
     &.is-inactive {
-        opacity: 0;
         overflow: hidden;
         transform: translate3d( 0, -100%, 0 );
         }
+    }
+.project-view__pane {
+    background-color: $white;
+    min-height: 100%;
     }
 
 

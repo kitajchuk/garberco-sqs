@@ -1,6 +1,6 @@
 import $ from "js_libs/jquery/dist/jquery";
 import * as core from "../core";
-import IndexClass from "./IndexClass";
+import IndexRoot from "./IndexRoot";
 import Project from "../projects/Project";
 import overlay from "../overlay";
 
@@ -28,7 +28,7 @@ const indexes = {
      *
      */
     init () {
-        core.util.emitter.on( "app--load-root-index", this.onLoadRootIndex.bind( this ) );
+        core.util.emitter.on( "app--load-root", this.onLoadRootIndex.bind( this ) );
 
         core.log( "indexes initialized" );
     },
@@ -59,7 +59,7 @@ const indexes = {
     onload () {
         const data = $_jsElement.data();
 
-        instance = new IndexClass( $_jsElement, data );
+        instance = new IndexRoot( $_jsElement, data );
 
         core.dom.body.on( "click", ".js-index-tile", onTileClick );
         core.dom.body.on( "mouseenter", ".js-index-tile", onMouseEnter );

@@ -123,8 +123,8 @@ const api = {
     request ( url, params, options ) {
         const data = $.extend(
             {
-                format: this.format,
-                nocache: true
+                format: this.format
+                //nocache: true
             },
             params
         );

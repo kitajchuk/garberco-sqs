@@ -104,6 +104,7 @@ const dom = {
      */
     project: {
         element: $_jsProject,
+        elementPane: $_jsProject.find( ".js-project-view-pane" ),
         elementTransitionDuration: util.getTransitionDuration( $_jsProject[ 0 ] )
     },
 

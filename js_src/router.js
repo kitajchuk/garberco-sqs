@@ -3,6 +3,7 @@ import $ from "js_libs/jquery/dist/jquery";
 import * as core from "./core";
 import menus from "./menus";
 import indexes from "./indexes";
+import listing from "./indexes/listing";
 import projects from "./projects";
 import animate from "./animate";
 
@@ -162,6 +163,7 @@ const router = {
         this.controller.setModules([
             menus,
             indexes,
+            listing,
             animate,
             projects
             //core.images
@@ -171,7 +173,9 @@ const router = {
         this.controller.on( "page-controller-router-transition-out", this.changePageOut.bind( this ) );
         this.controller.on( "page-controller-router-refresh-document", this.changeContent.bind( this ) );
         this.controller.on( "page-controller-router-transition-in", this.changePageIn.bind( this ) );
-        this.controller.on( "page-controller-initialized-page", this.initPage.bind( this ) );
+        //this.controller.on( "page-controller-initialized-page", this.initPage.bind( this ) );
+
+        this.initPage();
 
         this.controller.initPage();
     },
@@ -202,7 +206,7 @@ const router = {
                 }
             });
 
-            this.loadRootIndex( this.root );
+            this.loadRootIndex();
         }
 
         core.dom.root[ 0 ].href = this.root;
@@ -215,17 +219,27 @@ const router = {
     },
 
 
-    loadRootIndex ( url ) {
+    loadRootIndex () {
         core.api.collection(
-            url,
+            this.root,
             { format: "html" },
             { dataType: "html" }
 
         ).done(( response ) => {
             const doc = this.parseDoc( response );
 
-            core.util.emitter.fire( "app--load-root-index", doc.pageHtml );
+            core.util.emitter.fire( "app--load-root", doc.pageHtml );
         });
+    },
+
+
+    loadFullIndex ( cb ) {
+        core.api.collection(
+            this.root,
+            { format: "json" },
+            { dataType: "json" }
+
+        ).done( cb );
     },
 
 
@@ -276,11 +290,6 @@ const router = {
      *
      */
     changePageOut () {
-        //core.util.emitter.fire( "app--page-out" );
-
-        //core.util.disableMouseWheel( true );
-        //core.util.disableTouchMove( true );
-
         core.dom.html.addClass( "is-routing" );
     },
 
@@ -318,20 +327,7 @@ const router = {
      *
      */
     changePageIn ( /* data */ ) {
-        //core.util.emitter.fire( "app--page-in" );
-
-        //core.util.disableMouseWheel( false );
-        //core.util.disableTouchMove( false );
-
         core.dom.html.removeClass( "is-routing" );
-
-        //core.scrolls.topout( 0 );
-        //core.scrolls.clearStates();
-
-        //setTimeout( () => {
-        //    core.util.emitter.fire( "app--intro-art" );
-
-        //}, this.pageDuration );
     }
 };
 

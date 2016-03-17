@@ -205,10 +205,9 @@ const loadImages = function ( images, handler, useVariant ) {
     };
     let $img = null;
     let data = null;
+    let dims = null;
     let vars = null;
     let width = null;
-    let height = null;
-    let dimension = null;
     let variant = null;
     let source = null;
     let i = null;
@@ -234,13 +233,23 @@ const loadImages = function ( images, handler, useVariant ) {
         $img = images.eq( i );
         data = $img.data();
         width = ($img[ 0 ].clientWidth || $img[ 0 ].parentNode.clientWidth || window.innerWidth);
-        height = ($img[ 0 ].clientHeight || $img[ 0 ].parentNode.clientHeight || window.innerHeight);
-        dimension = Math.max( width, height );
         source = data.imgSrc.replace( rQuery, "" );
+
+        // Pre-process portrait vs landscape using originalSize
+        if ( data.originalSize ) {
+            dims = getOriginalDims( data.originalSize );
+
+            if ( dims.width > dims.height ) {
+                $img.addClass( "image--wide" );
+
+            } else {
+                $img.addClass( "image--tall" );
+            }
+        }
 
         if ( useVariant && data.variants ) {
             vars = data.variants.split( "," ).map( map );
-            variant = getClosestValue( vars, dimension );
+            variant = getClosestValue( vars, width );
 
             // If the pixel density is higher, use a larger image ?
             if ( window.devicePixelRatio > 1 ) {
@@ -359,6 +368,27 @@ const getDefaultHammerOptions = function () {
             userDragString: false,
             userSelectString: false
         }
+    };
+};
+
+
+/**
+ *
+ * @public
+ * @method getOriginalDims
+ * @memberof util
+ * @param {string} original The original image dims
+ * @description Get an object reference to original dims.
+ *              Format: "1600x1600"
+ * @returns {object}
+ *
+ */
+const getOriginalDims = function ( original ) {
+    const dims = original.split( "x" );
+
+    return {
+        width: parseInt( dims[ 0 ], 10 ),
+        height: parseInt( dims[ 1 ], 10 )
     };
 };
 

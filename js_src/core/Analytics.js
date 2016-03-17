@@ -115,7 +115,7 @@ class Analytics {
      */
     getStaticContext ( resHTML ) {
         // Match the { data } in Static.SQUARESPACE_CONTEXT
-        let ctx = cache.get( `${util.getPageKey()}-context` );
+        let ctx = cache.get( `context--${util.getPageKey()}` );
 
         if ( !ctx ) {
             ctx = resHTML.match( /Static\.SQUARESPACE_CONTEXT\s=\s(.*?)\};/ );
@@ -156,7 +156,7 @@ class Analytics {
      *
      */
     cacheStaticContext ( json ) {
-        cache.set( `${util.getPageKey()}-context`, json );
+        cache.set( `context--${util.getPageKey()}`, json );
     }
 }
 

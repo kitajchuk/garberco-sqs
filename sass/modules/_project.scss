@@ -1,4 +1,6 @@
-.project {}
+.project {
+    margin-bottom: 100vh;
+    }
 .project__image,
 .project__diptych {
     font-size: 0;
@@ -12,6 +14,9 @@
     }
 .project__image--full {
     // Inherits .image native 
+    }
+.project__image--full:last-child {
+    padding-bottom: 0;
     }
 
 // Three-quarter centered

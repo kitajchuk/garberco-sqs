@@ -57,3 +57,10 @@
 .-spacer {
     width: $spacer-padding;
     }
+
+.-valign-top {
+    vertical-align: top;
+    }
+.-topper {
+    padding-top: ($expander-padding + $header-fix-height);
+    }

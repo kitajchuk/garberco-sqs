@@ -36,7 +36,7 @@ class Project {
      *
      */
     onPreload () {
-        core.dom.project.element.html( this.$node );
+        core.dom.project.elementPane.html( this.$node );
 
         if ( overlay.isActive() ) {
             overlay.close();
@@ -71,16 +71,14 @@ class Project {
 
 
     updatePosition () {
+        const nodeRect = this.$node[ 0 ].getBoundingClientRect();
         const $imageloaded = this.$images.filter( ".-is-lazy-handled" );
-        const scrollMaxY = (core.dom.project.element[ 0 ].scrollHeight - window.innerHeight);
-        const scrollCurrY = core.dom.project.element[ 0 ].scrollTop;
-        const calcBuffer = 10;
 
         if ( $imageloaded.length !== this.$images.length ) {
             return;
         }
 
-        if ( scrollCurrY >= (scrollMaxY - calcBuffer) && !this.isEnded ) {
+        if ( Math.floor( nodeRect.bottom ) <= 0 && !this.isEnded ) {
             this.isEnded = true;
 
             core.dom.project.element.addClass( "is-inactive" );
@@ -143,7 +141,8 @@ Project.close = function () {
 
     setTimeout( () => {
         core.dom.html.removeClass( "is-project" );
-        core.dom.project.element.detach().empty();
+        core.dom.project.element.detach();
+        core.dom.project.elementPane.empty();
 
     }, core.dom.project.elementTransitionDuration );
 };

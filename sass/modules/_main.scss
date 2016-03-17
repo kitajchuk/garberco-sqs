@@ -12,12 +12,22 @@ $menu-width-minus: #{"calc( ~\"-100vw + #{$photos-padding}\" )"};
 
     &#is-main--about {
         transform: translate3d( $menu-width, 0, 0 );
-        }
+
+        .main__panel--garberco {
+            pointer-events: none;
+            }
+    }
+
     &#is-main--index {
         transform: translate3d( $menu-width-minus, 0, 0 );
-        }
+
+        .main__panel--garberco {
+            pointer-events: none;
+            }
     }
+}
 .main__panel {
+    text-align: left;
     min-height: 100vh;
 
     &.is-active {
@@ -43,3 +53,20 @@ $menu-width-minus: #{"calc( ~\"-100vw + #{$photos-padding}\" )"};
     position: relative;
     width: 100vw;
     }
+
+
+
+.about {
+    padding-right: 20%;
+    }
+.listing {
+    .h4 {
+        margin-bottom: 20px;
+        margin-left: #{"calc( ~\"-100vw + 100%\" )"};
+        text-align: center;
+        width: 100vw;
+        }
+    .grid {
+        margin-bottom: $expander-padding;
+        }
+}

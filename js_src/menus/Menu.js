@@ -1,6 +1,9 @@
 import * as core from "../core";
 
 
+const instances = {};
+
+
 /**
  *
  * @public
@@ -12,12 +15,23 @@ import * as core from "../core";
  */
 class Menu {
     constructor ( $node, data ) {
+        if ( !instances[ data.id ] ) {
+            this.initialize( $node, data );
+        }
+
+        return instances[ data.id ];
+    }
+
+
+    initialize ( $node, data ) {
         this.$node = $node;
         this.data = data;
         this.transTime = 400;
         this.$target = core.dom.main.find( `.js-main--${this.data.target}` );
         this.$anim = this.$node.find( ".js-animate-in" );
         this.$images = this.$node.find( ".js-lazy-image" );
+
+        instances[ data.id ] = this;
 
         core.images.handleImages( this.$images, this.onPreload.bind( this ) );
     }
