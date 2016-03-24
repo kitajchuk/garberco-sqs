@@ -9,9 +9,6 @@
 
 import $ from "js_libs/jquery/dist/jquery";
 import Hammer from "hammerjs";
-import Controller from "properjs-controller";
-import ScrollController from "properjs-scrollcontroller";
-import ResizeController from "properjs-resizecontroller";
 import ImageLoader from "properjs-imageloader";
 import dom from "./dom";
 import config from "./config";
@@ -60,36 +57,6 @@ const px = function ( str ) {
 const translate3d = function ( el, x, y, z ) {
     el.style[ Hammer.prefixed( el.style, "transform" ) ] = `translate3d( ${x}, ${y}, ${z} )`;
 };
-
-
-/**
- *
- * @description Single app instanceof [Controller]{@link https://github.com/ProperJS/Controller} for arbitrary event emitting
- * @member emitter
- * @memberof util
- *
- */
-const emitter = new Controller();
-
-
-/**
- *
- * @description Single app instanceof [ScrollController]{@link https://github.com/ProperJS/ScrollController}
- * @member scroller
- * @memberof util
- *
- */
-const scroller = new ScrollController();
-
-
-/**
- *
- * @description Single app instanceof [ResizeController]{@link https://github.com/ProperJS/ResizeController}
- * @member resizer
- * @memberof util
- *
- */
-const resizer = new ResizeController();
 
 
 /**
@@ -412,11 +379,6 @@ const getPageKey = function () {
  * Export
 *******************************************************************************/
 export default {
-    // Classes
-    emitter,
-    scroller,
-    resizer,
-
     // Loading
     loadImages,
     updateImages,

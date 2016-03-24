@@ -1,7 +1,9 @@
+import log from "./log";
+import * as util from "./util";
+import emitter from "./emitter";
+import resizer from "./resizer";
 import throttle from "properjs-throttle";
 import debounce from "properjs-debounce";
-import * as util from "./util";
-import log from "./log";
 
 
 const _throttled = 50;
@@ -11,7 +13,8 @@ const _debounced = 300;
 /**
  *
  * @public
- * @module resizes
+ * @namespace resizes
+ * @memberof core
  * @description Handles app-wide emission of various resize detection events.
  *
  */
@@ -20,16 +23,16 @@ const resizes = {
      *
      * @public
      * @method init
-     * @memberof resizes
+     * @memberof core.resizes
      * @description Method binds event listeners for resize controller.
      *
      */
     init () {
-        util.resizer.on( "resize", throttle( onThrottle, _throttled ) );
+        resizer.on( "resize", throttle( onThrottle, _throttled ) );
 
         // Hook into resize of `width` only for this handler
         // @bug: iOS window size changes when Safari's chrome switches between full and minimal-ui.
-        util.resizer.on( "resizewidth", debounce( onDebounce, _debounced ) );
+        resizer.on( "resizewidth", debounce( onDebounce, _debounced ) );
 
         log( "resizes initialized" );
     }
@@ -40,12 +43,12 @@ const resizes = {
  *
  * @private
  * @method onDebounce
- * @memberof resizes
+ * @memberof core.resizes
  * @description Debounced resize events.
  *
  */
 const onDebounce = function () {
-    util.emitter.fire( "app--resize-debounced" );
+    emitter.fire( "app--resize-debounced" );
 
     util.updateImages();
 };
@@ -55,12 +58,12 @@ const onDebounce = function () {
  *
  * @private
  * @method onThrottle
- * @memberof resizes
+ * @memberof core.resizes
  * @description Method handles the window resize event via [ResizeController]{@link https://github.com/ProperJS/ResizeController}.
  *
  */
 const onThrottle = function () {
-    util.emitter.fire( "app--resize" );
+    emitter.fire( "app--resize" );
 };
 
 

@@ -24,7 +24,7 @@ const animate = {
     init () {
         core.log( "animate initialized" );
 
-        core.util.emitter.on( "app--update-animate", this.onUpdateAnimate.bind( this ) );
+        core.emitter.on( "app--update-animate", this.onUpdateAnimate.bind( this ) );
     },
 
 
@@ -53,8 +53,8 @@ const animate = {
     onload () {
         _isActive = true;
 
-        core.util.emitter.on( "app--scroll", updateAnimate );
-        core.util.emitter.on( "app--resize", updateAnimate );
+        core.emitter.on( "app--scroll", updateAnimate );
+        core.emitter.on( "app--resize", updateAnimate );
 
         updateAnimate();
     },

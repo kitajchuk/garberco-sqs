@@ -28,7 +28,7 @@ const indexes = {
      *
      */
     init () {
-        core.util.emitter.on( "app--load-root", this.onLoadRootIndex.bind( this ) );
+        core.emitter.on( "app--load-root", this.onLoadRootIndex.bind( this ) );
 
         core.log( "indexes initialized" );
     },

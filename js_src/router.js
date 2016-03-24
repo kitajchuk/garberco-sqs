@@ -29,10 +29,11 @@ const router = {
         this.navData = core.dom.nav.data();
         this.pageData = core.dom.page.data();
         this.pageDuration = core.util.getTransitionDuration( core.dom.page[ 0 ] );
+        this.prepPage();
         this.bindEmptyHashLinks();
         this.initPageController();
 
-        core.util.emitter.on( "app--project-ended", () => {
+        core.emitter.on( "app--project-ended", () => {
             this.route( this.root );
         });
 
@@ -173,9 +174,7 @@ const router = {
         this.controller.on( "page-controller-router-transition-out", this.changePageOut.bind( this ) );
         this.controller.on( "page-controller-router-refresh-document", this.changeContent.bind( this ) );
         this.controller.on( "page-controller-router-transition-in", this.changePageIn.bind( this ) );
-        //this.controller.on( "page-controller-initialized-page", this.initPage.bind( this ) );
-
-        this.initPage();
+        this.controller.on( "page-controller-initialized-page", this.initPage.bind( this ) );
 
         this.controller.initPage();
     },
@@ -184,16 +183,13 @@ const router = {
     /**
      *
      * @public
-     * @method initPage
+     * @method prepPage
      * @memberof router
-     * @description Cache the initial page load.
+     * @description Perform actions before PageController init callback.
      *
      */
-    initPage () {
+    prepPage () {
         this.root = ( this.pageData.type === "menu" ) ? "/" : window.location.pathname;
-
-        core.dom.nav.detach();
-        core.dom.page.detach();
 
         if ( this.pageData.type !== "index" ) {
             this.navData.appTree.forEach(( indexItem ) => {
@@ -211,8 +207,22 @@ const router = {
 
         core.dom.root[ 0 ].href = this.root;
         core.dom.root.on( "click", () => {
-            core.util.emitter.fire( "app--root" );
+            core.emitter.fire( "app--root" );
         });
+    },
+
+
+    /**
+     *
+     * @public
+     * @method initPage
+     * @memberof router
+     * @description Perform actions after PageController init callback.
+     *
+     */
+    initPage () {
+        core.dom.nav.detach();
+        core.dom.page.detach();
 
         core.dom.html.removeClass( "is-clipped" );
         core.dom.body.removeClass( "is-clipped" );
@@ -228,7 +238,7 @@ const router = {
         ).done(( response ) => {
             const doc = this.parseDoc( response );
 
-            core.util.emitter.fire( "app--load-root", doc.pageHtml );
+            core.emitter.fire( "app--load-root", doc.pageHtml );
         });
     },
 
@@ -298,17 +308,17 @@ const router = {
      *
      * @public
      * @method changeContent
-     * @param {string} html The responseText as an HTML string
+     * @param {object} data The PageController data object
      * @memberof router
      * @description Swap the new content into the DOM.
      *
      */
-    changeContent ( html ) {
-        const doc = this.parseDoc( html );
+    changeContent ( data ) {
+        const doc = this.parseDoc( data.response );
 
         core.dom.page[ 0 ].innerHTML = doc.pageHtml;
 
-        core.util.emitter.fire( "app--analytics-push", doc.$doc );
+        core.emitter.fire( "app--analytics-push", doc.$doc );
 
         this.pageData = doc.$page.data();
 

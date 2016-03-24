@@ -60,8 +60,8 @@ const projects = {
 
         instance = new Project( $_jsElement, data );
 
-        core.util.emitter.on( "app--root", killProject );
-        core.util.emitter.on( "app--project-ended", killProject );
+        core.emitter.on( "app--root", killProject );
+        core.emitter.on( "app--project-ended", killProject );
     },
 
 
@@ -94,8 +94,8 @@ const projects = {
             instance = null;
         }
 
-        core.util.emitter.off( "app--root", killProject );
-        core.util.emitter.off( "app--project-ended", killProject );
+        core.emitter.off( "app--root", killProject );
+        core.emitter.off( "app--project-ended", killProject );
     },
 
 

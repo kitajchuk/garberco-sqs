@@ -1,18 +1,21 @@
 import dom from "./dom";
-import detect from "./detect";
-import * as util from "./util";
 import log from "./log";
+import detect from "./detect";
+import emitter from "./emitter";
+import scroller from "./scroller";
 
 
 let _timeout = null;
-let _isNones = false;
+let _isSuppressed = false;
+let _isSuppressedEvents = false;
 const _idleout = 300;
 
 
 /**
  *
  * @public
- * @module scrolls
+ * @namespace scrolls
+ * @memberof core
  * @description Handles app-wide emission of various scroll detection events.
  *
  */
@@ -21,14 +24,14 @@ const scrolls = {
      *
      * @public
      * @method init
-     * @memberof scrolls
+     * @memberof core.scrolls
      * @description Method runs once when window loads.
      *
      */
     init () {
-        util.scroller.on( "scroll", onScroller );
-        util.scroller.on( "scrollup", onScrollerUp );
-        util.scroller.on( "scrolldown", onScrollerDown );
+        scroller.on( "scroll", onScroller );
+        scroller.on( "scrollup", onScrollerUp );
+        scroller.on( "scrolldown", onScrollerDown );
 
         onScroller();
 
@@ -43,8 +46,8 @@ const scrolls = {
      * @public
      * @method topout
      * @param {number} top Optionally, the scroll position to apply
-     * @memberof preload
-     * @description Method set scroll position to argument value or sero.
+     * @memberof core.scrolls
+     * @description Method set scroll position to argument value or zero.
      *
      */
     topout ( top ) {
@@ -57,14 +60,79 @@ const scrolls = {
     /**
      *
      * @public
+     * @method suppress
+     * @param {boolean} bool Whether or not to suppress
+     * @memberof core.scrolls
+     * @description Method will suppress scroll position broadcasting.
+     *
+     */
+    suppress ( bool ) {
+        _isSuppressed = bool;
+    },
+
+
+    /**
+     *
+     * @public
      * @method clearStates
-     * @memberof scrolls
+     * @memberof core.scrolls
      * @description Method removes all applied classNames from this module
      *
      */
     clearStates () {
         dom.html.removeClass( "is-scrolling-up is-scrolling-down is-scrolling" );
+    },
+
+
+    /**
+     *
+     * @public
+     * @method isScrollInRange
+     * @memberof core.scrolls
+     * @description Method determines if scroll is within range
+     * @returns {boolean}
+     *
+     */
+    isScrollInRange () {
+        const scrollPos = scroller.getScrollY();
+
+        return (scrollPos > 0 || scrollPos < scroller.getScrollMax());
+    },
+
+
+    /**
+     *
+     * @public
+     * @method isScrollOutOfRange
+     * @memberof core.scrolls
+     * @description Method determines if scroll is out of range
+     * @returns {boolean}
+     *
+     */
+    isScrollOutOfRange () {
+        const scrollPos = scroller.getScrollY();
+
+        return (scrollPos <= 0 || scrollPos >= scroller.getScrollMax());
     }
+};
+
+
+/**
+ *
+ * @private
+ * @method broadcast
+ * @param {string} event The scroll event to emit
+ * @param {number} position The current scroll position
+ * @memberof core.scrolls
+ * @description Method will emit scroll position information.
+ *
+ */
+const broadcast = function ( event, position ) {
+    if ( _isSuppressed ) {
+        return;
+    }
+
+    emitter.fire( event, position );
 };
 
 
@@ -73,12 +141,12 @@ const scrolls = {
  * @private
  * @method suppressEvents
  * @param {number} scrollPos The current scrollY position
- * @memberof scrolls
+ * @memberof core.scrolls
  * @description Method applies className to disable events while scrolling
  *
  */
 const suppressEvents = function ( scrollPos ) {
-    if ( detect.isDevice() ) {
+    if ( detect.isStandalone() ) {
         return;
     }
 
@@ -89,21 +157,21 @@ const suppressEvents = function ( scrollPos ) {
         log( error );
     }
 
-    if ( !_isNones ) {
-        _isNones = true;
+    if ( !_isSuppressedEvents ) {
+        _isSuppressedEvents = true;
 
         dom.html.addClass( "is-scrolling" );
 
-        util.emitter.fire( "app--scroll-start" );
+        broadcast( "app--scroll-start", scrollPos );
     }
 
     _timeout = setTimeout( () => {
-        if ( scrollPos === util.scroller.getScrollY() ) {
-            _isNones = false;
+        if ( scrollPos === scroller.getScrollY() ) {
+            _isSuppressedEvents = false;
 
             dom.html.removeClass( "is-scrolling" );
 
-            util.emitter.fire( "app--scroll-end" );
+            broadcast( "app--scroll-end", scrollPos );
         }
 
     }, _idleout );
@@ -114,18 +182,18 @@ const suppressEvents = function ( scrollPos ) {
  *
  * @private
  * @method onScrollerUp
- * @memberof scrolls
+ * @memberof core.scrolls
  * @description Method handles upward scroll event
  *
  */
 const onScrollerUp = function () {
-    if ( util.scroller.getScrollY() <= 0 || detect.isDevice() ) {
+    if ( !scrolls.isScrollInRange() || detect.isStandalone() ) {
         return;
     }
 
-    const scrollPos = util.scroller.getScrollY();
+    const scrollPos = scroller.getScrollY();
 
-    util.emitter.fire( "app--scroll-up", scrollPos );
+    broadcast( "app--scroll-up", scrollPos );
 
     dom.html.removeClass( "is-scrolling-down" ).addClass( "is-scrolling-up" );
 };
@@ -135,18 +203,18 @@ const onScrollerUp = function () {
  *
  * @private
  * @method onScrollerDown
- * @memberof scrolls
+ * @memberof core.scrolls
  * @description Method handles downward scroll event
  *
  */
 const onScrollerDown = function () {
-    if ( util.scroller.getScrollY() <= 0 || detect.isDevice() ) {
+    if ( !scrolls.isScrollInRange() || detect.isStandalone() ) {
         return;
     }
 
-    const scrollPos = util.scroller.getScrollY();
+    const scrollPos = scroller.getScrollY();
 
-    util.emitter.fire( "app--scroll-down", scrollPos );
+    broadcast( "app--scroll-down", scrollPos );
 
     dom.html.removeClass( "is-scrolling-up" ).addClass( "is-scrolling-down" );
 };
@@ -156,16 +224,20 @@ const onScrollerDown = function () {
  *
  * @private
  * @method onScroller
- * @memberof scrolls
+ * @memberof core.scrolls
  * @description Method handles regular scroll event via [ScrollController]{@link https://github.com/ProperJS/ScrollController}
  *
  */
 const onScroller = function () {
-    const scrollPos = util.scroller.getScrollY();
+    if ( !scrolls.isScrollInRange() || detect.isStandalone() ) {
+        return;
+    }
+
+    const scrollPos = scroller.getScrollY();
 
     suppressEvents( scrollPos );
 
-    util.emitter.fire( "app--scroll", scrollPos );
+    broadcast( "app--scroll", scrollPos );
 };
 
 

@@ -4,6 +4,7 @@ import * as util from "./util";
 
 const $_jsOverlay = $( ".js-overlay" );
 const $_jsProject = $( ".js-project-view" );
+const $_jsGallery = $( ".js-gallery" );
 
 
 /**
@@ -72,14 +73,28 @@ const dom = {
     /**
      *
      * @public
-     * @member intro
+     * @member overlay
      * @memberof dom
-     * @description The cached brand moment node.
+     * @description The cached overlay node.
      *
      */
     overlay: {
         element: $_jsOverlay,
         elementTitle: $_jsOverlay.find( ".js-overlay-title" )
+    },
+
+
+    /**
+     *
+     * @public
+     * @member gallery
+     * @memberof dom
+     * @description The cached gallery node.
+     *
+     */
+    gallery: {
+        element: $_jsGallery,
+        elementNode: $_jsGallery.find( ".js-gallery-node" )
     },
 
 

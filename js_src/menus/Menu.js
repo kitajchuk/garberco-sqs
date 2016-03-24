@@ -19,6 +19,8 @@ class Menu {
             this.initialize( $node, data );
         }
 
+        console.log( "Menu", this );
+
         return instances[ data.id ];
     }
 

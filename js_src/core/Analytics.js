@@ -2,6 +2,7 @@
 import log from "./log";
 import * as util from "./util";
 import cache from "./cache";
+import emitter from "./emitter";
 
 
 // Singleton
@@ -22,7 +23,7 @@ class Analytics {
         if ( !_instance ) {
             this.initSQSMetrics();
 
-            util.emitter.on( "app--analytics-push", this.pushTrack.bind( this ) );
+            emitter.on( "app--analytics-push", this.pushTrack.bind( this ) );
 
             log( "Analytics initialized" );
 

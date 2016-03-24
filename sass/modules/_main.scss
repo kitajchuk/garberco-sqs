@@ -31,7 +31,6 @@ $menu-width-minus: #{"calc( ~\"-100vw + #{$photos-padding}\" )"};
     min-height: 100vh;
 
     &.is-active {
-        position: relative;
         }
     }
 .main__panel--about,
@@ -56,17 +55,36 @@ $menu-width-minus: #{"calc( ~\"-100vw + #{$photos-padding}\" )"};
 
 
 
-.about {
+.about {}
+.about__desc {
     padding-right: 20%;
     }
-.listing {
-    .h4 {
-        margin-bottom: 20px;
-        margin-left: #{"calc( ~\"-100vw + 100%\" )"};
-        text-align: center;
-        width: 100vw;
+
+
+
+.listing {}
+.listing__grid {
+    margin-bottom: $expander-padding;
+    }
+.listing__title {
+    margin-bottom: 20px;
+    }
+.listing__tile {
+    cursor: pointer;
+    }
+.listing__title__text {
+    }
+
+
+
+.gallery {}
+.gallery__figure {}
+.gallery__image {
+    height: auto;
+    max-height: 80vh;
+    max-width: 80vw;
+    width: auto;
+
+    &.is-active {
         }
-    .grid {
-        margin-bottom: $expander-padding;
-        }
-}
+    }

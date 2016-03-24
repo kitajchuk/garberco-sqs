@@ -19,6 +19,8 @@ class IndexRoot {
             this.initialize( $node, data );
         }
 
+        console.log( "IndexRoot", this );
+
         return instance;
     }
 
@@ -29,10 +31,11 @@ class IndexRoot {
         this.$target = core.dom.main.find( `.js-main--${this.data.target}` );
         this.$images = this.$node.find( ".js-lazy-image" );
 
-        core.images.handleImages( this.$images, () => {
-            this.$target.html( this.$node );
+        // Node must be in DOM for image size to work
+        this.$target.html( this.$node );
 
-            core.util.emitter.fire( "app--update-animate" );
+        core.images.handleImages( this.$images, () => {
+            core.emitter.fire( "app--update-animate" );
         });
 
         instance = this;

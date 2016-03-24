@@ -2,6 +2,7 @@ import dom from "./dom";
 import * as util from "./util";
 import log from "./log";
 import config from "./config";
+import emitter from "./emitter";
 import ImageLoader from "properjs-imageloader";
 import ImageController from "./ImageController";
 
@@ -80,7 +81,7 @@ const images = {
             callback();
         }
 
-        util.emitter.fire( "app--preload-done" );
+        emitter.fire( "app--preload-done" );
     },
 
 
@@ -103,7 +104,7 @@ const images = {
             imageController.on( "preload", this.handlePreload.bind( this, callback ) );
 
             imageController.on( "lazyload", () => {
-                util.emitter.fire( "app--lazyload-done" );
+                emitter.fire( "app--lazyload-done" );
             });
 
         } else {

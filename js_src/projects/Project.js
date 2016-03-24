@@ -49,7 +49,7 @@ class Project {
     cycleAnimation () {
         this.onUpdateEmitter();
 
-        core.util.emitter.go( this.onUpdateEmitter.bind( this ) );
+        core.emitter.go( this.onUpdateEmitter.bind( this ) );
     }
 
 
@@ -84,7 +84,7 @@ class Project {
             core.dom.project.element.addClass( "is-inactive" );
 
             setTimeout( () => {
-                core.util.emitter.fire( "app--project-ended" );
+                core.emitter.fire( "app--project-ended" );
 
             }, core.dom.project.elementTransitionDuration );
         }
@@ -135,7 +135,7 @@ Project.open = function () {
 Project.close = function () {
     isActive = false;
 
-    core.util.emitter.stop();
+    core.emitter.stop();
 
     core.dom.project.element.removeClass( "is-active is-inactive" );
 

@@ -25,7 +25,7 @@ class Waypoints {
 
         this._onScroller();
 
-        core.util.emitter.on( "app--scroll", this._onScroller );
+        core.emitter.on( "app--scroll", this._onScroller );
     }
 
 
@@ -71,7 +71,7 @@ class Waypoints {
     destroy () {
         //console.log( "Waypoints Destroyed", this );
 
-        core.util.emitter.off( "app--scroll", this._onScroller );
+        core.emitter.off( "app--scroll", this._onScroller );
     }
 }
 
