@@ -40,7 +40,7 @@ $screen-wrap-delay: ($midi-duration / 2);
 .overlay {
     background-color: transparent;
     pointer-events: none;
-    z-index: $z_layer_10;
+    //z-index: $z_layer_10;
 
     &.is-intro {
         background-color: $white;

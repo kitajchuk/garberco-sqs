@@ -32,6 +32,10 @@ const overlay = {
 
 
     open () {
+        if ( isActive ) {
+            return this;
+        }
+
         isActive = true;
 
         core.dom.html.addClass( "is-overlay-active" );
@@ -42,6 +46,10 @@ const overlay = {
 
 
     close () {
+        if ( !isActive ) {
+            return this;
+        }
+
         core.dom.overlay.element.removeClass( "is-active" );
 
         setTimeout( () => {
@@ -50,7 +58,14 @@ const overlay = {
             core.dom.html.removeClass( "is-overlay-active" );
             core.dom.overlay.element.detach().removeClass( "is-intro" );
 
+            this.empty();
+
         }, transTime );
+    },
+
+
+    empty () {
+        core.dom.overlay.elementTitle.empty();
     },
 
 

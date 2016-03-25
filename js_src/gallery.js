@@ -39,11 +39,15 @@ const gallery = {
     },
 
 
+    empty () {
+        core.dom.gallery.elementNode.empty();
+    },
+
+
     setImage ( $image ) {
         const data = $image.data();
 
-        core.dom.gallery.elementNode.empty();
-
+        this.empty();
         this.open();
         this.$image = $( new Image() );
         this.$image

@@ -38,9 +38,7 @@ class Project {
     onPreload () {
         core.dom.project.elementPane.html( this.$node );
 
-        if ( overlay.isActive() ) {
-            overlay.close();
-        }
+        overlay.close();
 
         this.cycleAnimation();
     }

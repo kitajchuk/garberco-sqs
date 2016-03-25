@@ -2,13 +2,14 @@ import * as core from "../core";
 import $ from "js_libs/jquery/dist/jquery";
 import router from "../router";
 import gallery from "../gallery";
+import overlay from "../overlay";
 import template from "properjs-template";
 
 
 let instance = null;
-const _gridTitleTpl = `<div class="listing__title grid"><h4 class="listing__title__text h4">{title}</h4></div>`;
+const _gridTitleTpl = `<div class="listing__title js-listing-title grid"><h4 class="listing__title__text h4">{title}</h4></div>`;
 const _gridWrapTpl = `
-<div class="listing__grid grid grid--index"></div>
+<div class="listing__grid js-listing-project grid grid--index"></div>
 `;
 const _gridItemTpl = `
 <div class="listing__tile grid__item__small js-listing-tile">
@@ -70,48 +71,112 @@ class IndexFull {
         gallery.setImage( this.$image );
 
         core.dom.doc.on( "keydown", ( e ) => {
-            let $tile = null;
-            let $image = null;
+            //e.preventDefault();
 
-            // Arrow right
-            if ( e.keyCode === 39 ) {
-                $tile = this.$tile.next();
+            let text = null;
+            let $title = null;
+            let $parent = null;
+            let $project = null;
+            const $next = this.$tile.next();
+            const $prev = this.$tile.prev();
 
-            // Arrow left
-            } else if ( e.keyCode === 37 ) {
-                $tile = this.$tile.prev();
-
-            // ESC key
-            } else if ( e.keyCode === 27 ) {
+            // Escape key
+            if ( e.keyCode === 27 ) {
                 this.unbindGallery();
                 return false;
             }
 
-            // Hook into projects here
-            // Need to know if we are going from one project to another either way
-            // Need to show project title if we are switching to a new project
+            // Currently on a Title screen
+            // Title screen is using overlay module
+            if ( this.$tile.is( ".js-listing-title" ) ) {
+                // Arrow right
+                if ( e.keyCode === 39 ) {
+                    $project = this.$tile.next();
 
-            // Tile is not null ?
-            if ( $tile ) {
-                e.preventDefault();
+                    this.nextProject( $project, $project.find( ".js-listing-tile" ).first() );
 
-                // Tile has an element
-                if ( $tile.length ) {
-                    $image = $tile.find( core.config.lazyImageSelector );
+                // Arrow left
+                } else if ( e.keyCode === 37 ) {
+                    $project = this.$tile.prev();
 
-                    this.$tile = $tile;
-                    this.$image = $image;
-
-                    gallery.setImage( $image );
+                    this.nextProject( $project, $project.find( ".js-listing-tile" ).last() );
                 }
+
+            // Arrow right, has next tile
+            } else if ( e.keyCode === 39 && $next.length ) {
+                this.nextTile( $next );
+
+            // Arrow right, has no next tile
+            } else if ( e.keyCode === 39 && !$next.length ) {
+                this.nextTitle( this.$tile.parent().next() );
+
+            // Arrow left, has prev tile
+            } else if ( e.keyCode === 37 && $prev.length ) {
+                this.nextTile( $prev );
+
+            // Arrow left, has not prev tile
+            } else if ( e.keyCode === 37 && !$prev.length ) {
+                text = null;
+                $parent = this.$tile.parent();
+                $title = $parent.prev().prev().prev();
+
+                // Previous project has a title
+                if ( $title.length ) {
+                    text = $title.text();
+                }
+
+                $title = $parent.prev();
+
+                this.nextTitle( $title, text );
             }
         });
+    }
+
+
+    nextProject ( $project, $tile ) {
+        if ( $project.length ) {
+            // Tile?
+            this.$tile = $tile;
+
+            // Image?
+            this.$image = this.$tile.find( core.config.lazyImageSelector );
+
+            gallery.setImage( this.$image );
+
+            overlay.close();
+        }
+    }
+
+
+    nextTitle ( $title, text ) {
+        gallery.empty();
+
+        if ( $title.length ) {
+            overlay.setTitle( (text || $title.text()) );
+
+            overlay.open();
+
+            this.$tile = $title;
+        }
+    }
+
+
+    nextTile ( $tile ) {
+        // Tile?
+        this.$tile = $tile;
+
+        // Image?
+        this.$image = this.$tile.find( core.config.lazyImageSelector );
+
+        gallery.setImage( this.$image );
     }
 
 
     unbindGallery () {
         this.$tile = null;
         this.$image = null;
+
+        overlay.close();
 
         gallery.close();
 
