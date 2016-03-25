@@ -7,7 +7,7 @@ import template from "properjs-template";
 
 
 let instance = null;
-const _gridTitleTpl = `<div class="listing__title js-listing-title grid"><h4 class="listing__title__text h4">{title}</h4></div>`;
+const _gridTitleTpl = `<div class="listing__title js-listing-title grid" data-title="{title}"><h4 class="listing__title__text h4">{text}</h4></div>`;
 const _gridWrapTpl = `
 <div class="listing__grid js-listing-project grid grid--index"></div>
 `;
@@ -122,7 +122,7 @@ class IndexFull {
 
                 // Previous project has a title
                 if ( $title.length ) {
-                    text = $title.text();
+                    text = $title.data( "title" );
                 }
 
                 $title = $parent.prev();
@@ -152,7 +152,7 @@ class IndexFull {
         gallery.empty();
 
         if ( $title.length ) {
-            overlay.setTitle( (text || $title.text()) );
+            overlay.setTitle( (text || $title.data( "title" )) );
 
             overlay.open();
 
@@ -200,7 +200,7 @@ class IndexFull {
      */
     onLoadFullIndex ( json ) {
         json.collection.collections.forEach(( collection ) => {
-            const $title = $( template( _gridTitleTpl.replace( /\n/g, "" ), collection ) );
+            const $title = $( template( _gridTitleTpl.replace( /\n/g, "" ), { text: collection.title, title: (collection.description || collection.title) } ) );
             const $grid = $( _gridWrapTpl.replace( /\n/g, "" ) );
 
             collection.items.forEach(( item ) => {

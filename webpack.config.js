@@ -11,7 +11,7 @@ module.exports = {
 
     output: {
         path: "./sqs_template/scripts/",
-        filename: "App.js"
+        filename: "app.js"
     },
 
 

@@ -65,6 +65,9 @@ $menu-width-minus: #{"calc( ~\"-100vw + #{$photos-padding}\" )"};
 .listing {}
 .listing__grid {
     margin-bottom: $expander-padding;
+    margin-left: -($grid-padding / 2);
+    margin-right: -($grid-padding / 2);
+    padding-right: ($photos-padding / 2);
     }
 .listing__title {
     margin-bottom: 20px;
