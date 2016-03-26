@@ -6,6 +6,9 @@ import indexes from "./indexes";
 import listing from "./indexes/listing";
 import projects from "./projects";
 import animate from "./animate";
+import overlay from "./overlay";
+import gallery from "./gallery";
+import Project from "./projects/Project";
 
 
 /**
@@ -32,10 +35,6 @@ const router = {
         this.prepPage();
         this.bindEmptyHashLinks();
         this.initPageController();
-
-        core.emitter.on( "app--project-ended", () => {
-            this.route( this.root );
-        });
 
         core.log( "router initialized" );
     },
@@ -153,9 +152,7 @@ const router = {
      *
      */
     initPageController () {
-        this.controller = new PageController({
-            transitionTime: 1
-        });
+        this.controller = new PageController( {} );
 
         this.controller.setConfig([
             "*"
@@ -206,8 +203,15 @@ const router = {
         }
 
         core.dom.root[ 0 ].href = this.root;
+
         core.dom.root.on( "click", () => {
             core.emitter.fire( "app--root" );
+        });
+
+        core.emitter.on( "app--project-ended", () => {
+            if ( !this.isPop ) {
+                this.route( this.root );
+            }
         });
     },
 
@@ -226,6 +230,45 @@ const router = {
 
         core.dom.html.removeClass( "is-clipped" );
         core.dom.body.removeClass( "is-clipped" );
+
+        window.addEventListener( "popstate", this.handlePopstate.bind( this ), false );
+    },
+
+
+    handlePopstate () {
+        this.isPop = true;
+
+        let $tile = null;
+        let match = window.location.pathname.match( /^\/$|^\/about\/$|^\/index\/$/g );
+
+        // GarberCo?
+        // About?
+        // Index?
+        if ( match && match[ 0 ] ) {
+            match = match[ 0 ].replace( /\//g, "" );
+            match = match ? match : "garberco";
+
+            core.dom.main[ 0 ].id = `is-main--${match}`;
+
+            // Project?
+            if ( Project.isActive() ) {
+                core.emitter.fire( "app--project-ended" );
+            }
+
+            // Overlay?
+            overlay.close();
+
+        // Project?
+        } else {
+            $tile = $( `.js-index-tile[href*='${window.location.pathname}']` );
+            $tile.trigger( "mouseenter" );
+            $tile.trigger( "click" );
+        }
+
+        // Gallery?
+        gallery.close();
+
+        this.isPop = false;
     },
 
 

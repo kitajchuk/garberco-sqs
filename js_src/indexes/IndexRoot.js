@@ -19,8 +19,6 @@ class IndexRoot {
             this.initialize( $node, data );
         }
 
-        console.log( "IndexRoot", this );
-
         return instance;
     }
 

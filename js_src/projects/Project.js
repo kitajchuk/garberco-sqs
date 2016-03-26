@@ -22,6 +22,8 @@ class Project {
         this.$images = this.$node.find( ".js-lazy-image" );
         this.isEnded = false;
 
+        core.log( "Project", this );
+
         core.images.handleImages( this.$images, this.onPreload.bind( this ) );
     }
 

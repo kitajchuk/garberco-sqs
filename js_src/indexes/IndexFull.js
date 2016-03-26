@@ -37,8 +37,6 @@ class IndexFull {
             this.initialize( $node, data );
         }
 
-        console.log( "IndexFull", this );
-
         return instance;
     }
 
