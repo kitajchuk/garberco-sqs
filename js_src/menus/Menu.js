@@ -10,7 +10,8 @@ const instances = {};
  * @class Menu
  * @param {jQuery} $node The element
  * @param {object} data The datas
- * @classdesc Handle an index.
+ * @classdesc Handle a menu view.
+ * @memberof menus
  *
  */
 class Menu {
@@ -23,6 +24,17 @@ class Menu {
     }
 
 
+    /**
+     *
+     * @public
+     * @instance
+     * @method initialize
+     * @param {jQuery} $node The element
+     * @param {object} data The datas
+     * @memberof menus.Menu
+     * @description Perform instance bootstrap actions.
+     *
+     */
     initialize ( $node, data ) {
         this.$node = $node;
         this.data = data;
@@ -42,12 +54,12 @@ class Menu {
      * @public
      * @instance
      * @method onPreload
-     * @memberof IndexClass
-     * @description Handle loaded index grid.
+     * @memberof menus.Menu
+     * @description Handle preloaded images.
      *
      */
     onPreload () {
-        this.$target.html( this.$node );
+        this.$target.append( this.$node );
 
         setTimeout(() => {
             this.$anim.addClass( "is-active" );
@@ -61,7 +73,7 @@ class Menu {
      * @public
      * @instance
      * @method destroy
-     * @memberof Menu
+     * @memberof menus.Menu
      * @description Undo event bindings for this instance.
      *
      */

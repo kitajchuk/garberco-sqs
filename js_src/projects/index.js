@@ -116,6 +116,15 @@ const projects = {
 };
 
 
+
+/**
+ *
+ * @private
+ * @method killProject
+ * @memberof projects
+ * @description Destroy a project instance.
+ *
+ */
 const killProject = function () {
     if ( instance ) {
         instance.destroy();

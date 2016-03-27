@@ -1,6 +1,5 @@
-import $ from "js_libs/jquery/dist/jquery";
 import log from "./log";
-import config from "./config";
+import util from "./util";
 
 
 // Singleton
@@ -97,25 +96,6 @@ class Store {
      *
      * @public
      * @instance
-     * @method slug
-     * @param {string} uri The string to slugify
-     * @memberof Store
-     * @description Slug a uri string
-     * @returns {string}
-     *
-     */
-    slug ( uri ) {
-        uri = uri.replace( /^\/|\/$/g, "" ).replace( /\/|\?|\&|=|\s/g, "-" ).toLowerCase();
-        uri = uri === "" ? config.homepageKey : uri;
-
-        return uri;
-    }
-
-
-    /**
-     *
-     * @public
-     * @instance
      * @method set
      * @param {string} id The index key
      * @param {mixed} val The value to store
@@ -124,7 +104,7 @@ class Store {
      *
      */
     set ( id, val ) {
-        id = this.slug( id );
+        id = util.slugify( id );
 
         _cache[ id ] = val;
 
@@ -144,7 +124,7 @@ class Store {
      *
      */
     get ( id ) {
-        id = (id && this.slug( id ));
+        id = (id && util.slugify( id ));
 
         return (id ? this.getValue( _cache[ id ] ) : _cache);
     }
@@ -162,7 +142,7 @@ class Store {
      *
      */
     getValue ( val ) {
-        return (typeof val === "string" ? String( val ) : val ? $.extend( $.isArray( val ) ? [] : {}, val ) : null);
+        return (typeof val === "string" ? String( val ) : val ? util.extendObject( (Array.isArray( val ) ? [] : {}), val ) : null);
     }
 
 

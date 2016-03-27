@@ -12,6 +12,7 @@ let isActive = false;
  * @param {jQuery} $node The element
  * @param {object} data The datas
  * @classdesc Handle an index.
+ * @memberof projects
  *
  */
 class Project {
@@ -33,12 +34,12 @@ class Project {
      * @public
      * @instance
      * @method onPreload
-     * @memberof Project
-     * @description Handle loaded index grid.
+     * @memberof projects.Project
+     * @description Handle loaded project images.
      *
      */
     onPreload () {
-        core.dom.project.elementPane.html( this.$node );
+        core.dom.project.elementPane.append( this.$node );
 
         overlay.close();
 
@@ -46,6 +47,15 @@ class Project {
     }
 
 
+    /**
+     *
+     * @public
+     * @instance
+     * @method cycleAnimation
+     * @memberof projects.Project
+     * @description Run raf cycle to handle animations.
+     *
+     */
     cycleAnimation () {
         this.onUpdateEmitter();
 
@@ -53,6 +63,15 @@ class Project {
     }
 
 
+    /**
+     *
+     * @public
+     * @instance
+     * @method updatePlates
+     * @memberof projects.Project
+     * @description Update active plates for the project.
+     *
+     */
     updatePlates () {
         let $plate = null;
         let i = this.$plates.length;
@@ -70,6 +89,15 @@ class Project {
     }
 
 
+    /**
+     *
+     * @public
+     * @instance
+     * @method updatePosition
+     * @memberof projects.Project
+     * @description Determine when to teardown a project.
+     *
+     */
     updatePosition () {
         const nodeRect = this.$node[ 0 ].getBoundingClientRect();
         const $imageloaded = this.$images.filter( ".-is-lazy-handled" );
@@ -91,6 +119,15 @@ class Project {
     }
 
 
+    /**
+     *
+     * @public
+     * @instance
+     * @method onUpdateEmitter
+     * @memberof projects.Project
+     * @description Handle the raf cycle.
+     *
+     */
     onUpdateEmitter () {
         this.updatePlates();
         this.updatePosition();
@@ -102,7 +139,7 @@ class Project {
      * @public
      * @instance
      * @method destroy
-     * @memberof Project
+     * @memberof projects.Project
      * @description Undo event bindings for this instance.
      *
      */
@@ -113,15 +150,30 @@ class Project {
 
 
 
-/******************************************************************************
- * Static
-*******************************************************************************/
-
+/**
+ *
+ * @public
+ * @static
+ * @method isActive
+ * @memberof projects.Project
+ * @description Test if a project is active.
+ * @returns {boolean}
+ *
+ */
 Project.isActive = function () {
     return isActive;
 };
 
 
+/**
+ *
+ * @public
+ * @static
+ * @method open
+ * @memberof projects.Project
+ * @description Open the project view element.
+ *
+ */
 Project.open = function () {
     isActive = true;
 
@@ -132,6 +184,15 @@ Project.open = function () {
 };
 
 
+/**
+ *
+ * @public
+ * @static
+ * @method close
+ * @memberof projects.Project
+ * @description Close the project view element.
+ *
+ */
 Project.close = function () {
     isActive = false;
 
@@ -142,7 +203,7 @@ Project.close = function () {
     setTimeout( () => {
         core.dom.html.removeClass( "is-project" );
         core.dom.project.element.detach();
-        core.dom.project.elementPane.empty();
+        core.dom.project.elementPane[ 0 ].innerHTML = "";
 
     }, core.dom.project.elementTransitionDuration );
 };

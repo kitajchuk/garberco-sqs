@@ -31,6 +31,15 @@ const overlay = {
     },
 
 
+    /**
+     *
+     * @public
+     * @method open
+     * @memberof overlay
+     * @description Open the overlay.
+     * @returns {@this}
+     *
+     */
     open () {
         if ( isActive ) {
             return this;
@@ -45,6 +54,15 @@ const overlay = {
     },
 
 
+    /**
+     *
+     * @public
+     * @method close
+     * @memberof overlay
+     * @description Close the overlay.
+     * @returns {@this}
+     *
+     */
     close () {
         if ( !isActive ) {
             return this;
@@ -64,18 +82,30 @@ const overlay = {
     },
 
 
+    /**
+     *
+     * @public
+     * @method empty
+     * @memberof overlay
+     * @description Empty the overlay.
+     *
+     */
     empty () {
-        core.dom.overlay.elementTitle.empty();
+        core.dom.overlay.elementTitle[ 0 ].innerHTML = "";
     },
 
 
+    /**
+     *
+     * @public
+     * @method setTitle
+     * @param {string} text The text/html to set.
+     * @memberof overlay
+     * @description Add text to the overlay.
+     *
+     */
     setTitle ( text ) {
-        core.dom.overlay.elementTitle.html( text );
-    },
-
-
-    isActive () {
-        return isActive;
+        core.dom.overlay.elementTitle[ 0 ].innerHTML = text;
     }
 };
 

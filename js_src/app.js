@@ -19,6 +19,7 @@ class App {
         this.overlay = overlay;
         this.gallery = gallery;
         this.analytics = new core.Analytics();
+        this.$mainPanels = this.core.dom.header.find( ".js-main-panel" );
 
         this.initModules();
         this.bindEvents();
@@ -31,6 +32,15 @@ class App {
     }
 
 
+    /**
+     *
+     * @public
+     * @instance
+     * @method initModules
+     * @memberof App
+     * @description Initialize modules.
+     *
+     */
     initModules () {
         this.core.detect.init( this );
         this.core.resizes.init( this );
@@ -41,6 +51,15 @@ class App {
     }
 
 
+    /**
+     *
+     * @public
+     * @instance
+     * @method bindEvents
+     * @memberof App
+     * @description Bind top-level app events.
+     *
+     */
     bindEvents () {
         this.core.dom.header.on( "click", ".js-controller", ( e ) => {
             e.preventDefault();
@@ -49,7 +68,7 @@ class App {
             const data = $controller.data();
             const $target = this.core.dom.main.find( `.js-main--${data.target}` );
 
-            $target.siblings().removeClass( "is-active" );
+            this.$mainPanels.removeClass( "is-active" );
             $target.addClass( "is-active" );
 
             this.core.dom.main[ 0 ].id = data.target ? `is-main--${data.target}` : "";

@@ -11,6 +11,7 @@ let instance = null;
  * @param {jQuery} $node The element
  * @param {object} data The datas
  * @classdesc Handle an index as a Singleton(ish).
+ * @memberof indexes
  *
  */
 class IndexRoot {
@@ -23,6 +24,17 @@ class IndexRoot {
     }
 
 
+    /**
+     *
+     * @public
+     * @instance
+     * @method initialize
+     * @param {jQuery} $node The element
+     * @param {object} data The datas
+     * @memberof indexes.IndexRoot
+     * @description Perform instance bootstrap actions.
+     *
+     */
     initialize ( $node, data ) {
         this.$node = $node;
         this.data = data;
@@ -30,7 +42,7 @@ class IndexRoot {
         this.$images = this.$node.find( ".js-lazy-image" );
 
         // Node must be in DOM for image size to work
-        this.$target.html( this.$node );
+        this.$target.append( this.$node );
 
         core.images.handleImages( this.$images, () => {
             core.emitter.fire( "app--update-animate" );
@@ -45,7 +57,7 @@ class IndexRoot {
      * @public
      * @instance
      * @method destroy
-     * @memberof IndexRoot
+     * @memberof indexes.IndexRoot
      * @description Undo event bindings for this instance.
      *
      */

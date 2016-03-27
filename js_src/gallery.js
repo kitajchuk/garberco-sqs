@@ -8,7 +8,7 @@ import Menu from "./Menu";
  *
  * @public
  * @module gallery
- * @description Performs the branded load-in screen sequence.
+ * @description Handles single view images.
  *
  */
 const gallery = {
@@ -25,6 +25,14 @@ const gallery = {
     },
 
 
+    /**
+     *
+     * @public
+     * @method open
+     * @memberof gallery
+     * @description Open the gallery.
+     *
+     */
     open () {
         if ( !this.menu.isActive() ) {
             this.menu.open();
@@ -32,6 +40,14 @@ const gallery = {
     },
 
 
+    /**
+     *
+     * @public
+     * @method close
+     * @memberof gallery
+     * @description Close the gallery.
+     *
+     */
     close () {
         if ( this.menu.isActive() ) {
             this.menu.close();
@@ -39,11 +55,28 @@ const gallery = {
     },
 
 
+    /**
+     *
+     * @public
+     * @method empty
+     * @memberof gallery
+     * @description Empty the gallery.
+     *
+     */
     empty () {
-        core.dom.gallery.elementNode.empty();
+        core.dom.gallery.elementNode[ 0 ].innerHTML = "";
     },
 
 
+    /**
+     *
+     * @public
+     * @method setImage
+     * @param {jQuery} $image The image to create a full view of.
+     * @memberof gallery
+     * @description Apply an image to the gallery view.
+     *
+     */
     setImage ( $image ) {
         const data = $image.data();
 
@@ -58,7 +91,7 @@ const gallery = {
             })
             .addClass( "gallery__image figure__image image" );
 
-        core.dom.gallery.elementNode.html( this.$image );
+        core.dom.gallery.elementNode.append( this.$image );
 
         core.util.loadImages( this.$image, core.util.noop ).on( "done", () => {
             setTimeout(() => {

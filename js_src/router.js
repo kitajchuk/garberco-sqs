@@ -164,10 +164,8 @@ const router = {
             listing,
             animate,
             projects
-            //core.images
         ]);
 
-        //this.controller.on( "page-controller-router-samepage", () => {} );
         this.controller.on( "page-controller-router-transition-out", this.changePageOut.bind( this ) );
         this.controller.on( "page-controller-router-refresh-document", this.changeContent.bind( this ) );
         this.controller.on( "page-controller-router-transition-in", this.changePageIn.bind( this ) );
@@ -235,6 +233,14 @@ const router = {
     },
 
 
+    /**
+     *
+     * @public
+     * @method handlePopstate
+     * @memberof router
+     * @description Process actions to take on popstate.
+     *
+     */
     handlePopstate () {
         this.isPop = true;
 
@@ -272,13 +278,21 @@ const router = {
     },
 
 
+    /**
+     *
+     * @public
+     * @method loadRootIndex
+     * @memberof router
+     * @description Load the parent Index for the current collection.
+     *
+     */
     loadRootIndex () {
         core.api.collection(
             this.root,
             { format: "html" },
             { dataType: "html" }
 
-        ).done(( response ) => {
+        ).then(( response ) => {
             const doc = this.parseDoc( response );
 
             core.emitter.fire( "app--load-root", doc.pageHtml );
@@ -286,13 +300,22 @@ const router = {
     },
 
 
+    /**
+     *
+     * @public
+     * @method loadFullIndex
+     * @param {function} cb The callback to fire
+     * @memberof router
+     * @description Load the parent Index JSON to render full Index view.
+     *
+     */
     loadFullIndex ( cb ) {
         core.api.collection(
             this.root,
             { format: "json" },
             { dataType: "json" }
 
-        ).done( cb );
+        ).then( cb );
     },
 
 

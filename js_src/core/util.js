@@ -374,6 +374,72 @@ const getPageKey = function () {
 };
 
 
+/**
+ *
+ * @public
+ * @method extendObject
+ * @memberof util
+ * @param {object} target The target object/array
+ * @param {object} arrow The incoming object/array
+ * @description Merge or clone objects and arrays
+ * @returns {object}
+ *
+ */
+const extendObject = function ( target, arrow ) {
+    let i = null;
+    const ret = target;
+
+    // Normalize arrow
+    arrow = (arrow || {});
+
+    // Merge Arrays
+    // This is really just used as a `cloning` mechanism
+    if ( Array.isArray( arrow ) ) {
+        i = arrow.length;
+
+        for ( i; i--; ) {
+            ret[ i ] = arrow[ i ];
+        }
+
+    // Merge Objects
+    // This could `clone` as well, but is better for merging 2 objects
+    } else {
+        for ( i in arrow ) {
+            if ( arrow.hasOwnProperty( i ) ) {
+                ret[ i ] = arrow[ i ];
+            }
+        }
+    }
+
+    return ret;
+};
+
+
+/**
+ *
+ * @public
+ * @method slugify
+ * @memberof util
+ * @param {string} str The string to slug
+ * @description Slugify a string
+ * @returns {string}
+ *
+ */
+const slugify = function ( str ) {
+    str = str.toString().toLowerCase().trim()
+        // Replace & with "and"
+        .replace( /&/g, "-and-" )
+
+        // Replace spaces, non-word characters and dashes with a single dash (-)
+        .replace( /[\s\W-]+/g, "-" )
+
+        // Replace leading trailing slashes with an empty string - nothing
+        .replace( /^[-]+|[-]+$/g, "" );
+
+    return (str ? config.homepageKey : str);
+};
+
+
 
 /******************************************************************************
  * Export
@@ -393,7 +459,9 @@ export default {
     // Random
     px,
     noop,
+    slugify,
     translate3d,
+    extendObject,
     getTransitionDuration,
     getDefaultHammerOptions,
     getPageKey

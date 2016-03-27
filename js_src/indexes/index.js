@@ -156,9 +156,7 @@ const onMouseEnter = function ( /* e */ ) {
 
     overlay.setTitle( $tile.data( "title" ) );
 
-    if ( !overlay.isActive() ) {
-        overlay.open();
-    }
+    overlay.open();
 };
 
 

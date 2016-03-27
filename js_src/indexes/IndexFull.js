@@ -29,6 +29,7 @@ const _gridItemTpl = `
  * @param {jQuery} $node The element
  * @param {object} data The datas
  * @classdesc Handle an index as a Singleton(ish).
+ * @memberof indexes
  *
  */
 class IndexFull {
@@ -41,6 +42,17 @@ class IndexFull {
     }
 
 
+    /**
+     *
+     * @public
+     * @instance
+     * @method initialize
+     * @param {jQuery} $node The element
+     * @param {object} data The datas
+     * @memberof indexes.IndexFull
+     * @description Perform instance bootstrap actions.
+     *
+     */
     initialize ( $node, data ) {
         this.data = data;
         this.$node = $node;
@@ -55,6 +67,15 @@ class IndexFull {
     }
 
 
+    /**
+     *
+     * @public
+     * @instance
+     * @method bindEvents
+     * @memberof indexes.IndexFull
+     * @description Bind instance events.
+     *
+     */
     bindEvents () {
         this.$node.on( "click", ".js-listing-tile", ( e ) => {
             this.bindGallery( $( e.currentTarget ) );
@@ -62,6 +83,16 @@ class IndexFull {
     }
 
 
+    /**
+     *
+     * @public
+     * @instance
+     * @method bindGallery
+     * @param {jQuery} $elem The tile image that was clicked
+     * @memberof indexes.IndexFull
+     * @description Bind active gallery view.
+     *
+     */
     bindGallery ( $elem ) {
         this.$tile = $elem;
         this.$image = this.$tile.find( core.config.lazyImageSelector );
@@ -131,6 +162,38 @@ class IndexFull {
     }
 
 
+    /**
+     *
+     * @public
+     * @instance
+     * @method unbindGallery
+     * @memberof indexes.IndexFull
+     * @description Un-bind active gallery view.
+     *
+     */
+    unbindGallery () {
+        this.$tile = null;
+        this.$image = null;
+
+        overlay.close();
+
+        gallery.close();
+
+        core.dom.doc.off( "keydown" );
+    }
+
+
+    /**
+     *
+     * @public
+     * @instance
+     * @method nextProject
+     * @param {jQuery} $project The project grid
+     * @param {jQuery} $tile The tile image to load in gallery
+     * @memberof indexes.IndexFull
+     * @description Transition to a tile in a new project scope.
+     *
+     */
     nextProject ( $project, $tile ) {
         if ( $project.length ) {
             // Tile?
@@ -146,6 +209,17 @@ class IndexFull {
     }
 
 
+    /**
+     *
+     * @public
+     * @instance
+     * @method nextTitle
+     * @param {jQuery} $title The title element
+     * @param {string} text The optional text for the title to display
+     * @memberof indexes.IndexFull
+     * @description Transition to the title of the next project.
+     *
+     */
     nextTitle ( $title, text ) {
         gallery.empty();
 
@@ -159,6 +233,16 @@ class IndexFull {
     }
 
 
+    /**
+     *
+     * @public
+     * @instance
+     * @method nextTile
+     * @param {jQuery} $tile The tile element
+     * @memberof indexes.IndexFull
+     * @description Transition to the next tile in a project.
+     *
+     */
     nextTile ( $tile ) {
         // Tile?
         this.$tile = $tile;
@@ -170,18 +254,15 @@ class IndexFull {
     }
 
 
-    unbindGallery () {
-        this.$tile = null;
-        this.$image = null;
-
-        overlay.close();
-
-        gallery.close();
-
-        core.dom.doc.off( "keydown" );
-    }
-
-
+    /**
+     *
+     * @public
+     * @instance
+     * @method loadIndex
+     * @memberof indexes.IndexFull
+     * @description Load the full Index JSON to build the UI.
+     *
+     */
     loadIndex () {
         router.loadFullIndex( this.onLoadFullIndex.bind( this ) );
     }
@@ -192,7 +273,7 @@ class IndexFull {
      * @public
      * @method onLoadFullIndex
      * @param {object} json The collection json
-     * @memberof menus
+     * @memberof indexes.IndexFull
      * @description Receive full collections data for an index.
      *
      */
@@ -232,11 +313,13 @@ class IndexFull {
      * @public
      * @instance
      * @method destroy
-     * @memberof IndexFull
+     * @memberof indexes.IndexFull
      * @description Undo event bindings for this instance.
      *
      */
-    destroy () {}
+    destroy () {
+        core.dom.doc.off( "keydown" );
+    }
 }
 
 
