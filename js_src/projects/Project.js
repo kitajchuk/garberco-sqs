@@ -25,6 +25,9 @@ class Project {
 
         core.log( "Project", this );
 
+        // Node must be in DOM for image size to work
+        core.dom.project.elementPane.append( this.$node );
+
         core.images.handleImages( this.$images, this.onPreload.bind( this ) );
     }
 
@@ -39,8 +42,6 @@ class Project {
      *
      */
     onPreload () {
-        core.dom.project.elementPane.append( this.$node );
-
         overlay.close();
 
         this.cycleAnimation();

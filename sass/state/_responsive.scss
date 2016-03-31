@@ -6,7 +6,30 @@
 
 
 
+@media only screen and ( max-width: $break-tablet-small ) {
+    .grid__item {
+        padding-bottom: $grid-padding;
+        width: 100%;
+        }
+}
+
+
+
 @media only screen and ( max-width: $break-mobile-full ) {
+    .main {
+        &#is-main--about {
+            transform: translate3d( 100vw, 0, 0 );
+        }
+
+        &#is-main--index {
+            transform: translate3d( -100vw, 0, 0 );
+        }
+    }
+    .main__panel--about,
+    .main__panel--index {
+        width: 100vw;
+        }
+
     .h3 {
         font-size: 16px;
         }
@@ -14,11 +37,12 @@
         padding-left: $grid-padding;
         padding-right: $grid-padding;
         }
-    .grid__item {
-        padding-bottom: $grid-padding;
-        width: 100%;
+
+    .-topper {
+        padding-top: 200px;
         }
-    .grid__photo {
+
+    .index.grid .grid__photo {
         padding-bottom: 0;
 
         .image {
@@ -34,5 +58,19 @@
             height: auto;
             width: 100%;
             }
+        .image--tall {
+            padding-bottom: 0;
+            padding-top: 0;
+            }
     }
+
+    .listing .grid__photo {}
+    .listing__grid {
+        //margin: 0;
+        padding-left: 45px;
+        padding-right: 45px;
+        }
+    .listing__tile {
+        width: 50%;
+        }
 }
