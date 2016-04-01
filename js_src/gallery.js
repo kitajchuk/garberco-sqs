@@ -1,6 +1,8 @@
 import $ from "js_libs/jquery/dist/jquery";
 import * as core from "./core";
 import Menu from "./Menu";
+import debounce from "properjs-debounce";
+import overlay from "./overlay";
 
 
 
@@ -22,6 +24,18 @@ const gallery = {
      */
     init () {
         this.menu = new Menu( core.dom.gallery.element );
+
+        core.dom.gallery.element.on( "click", debounce( this.onClick.bind( this ), 200, true ) );
+    },
+
+
+    onClick ( e ) {
+        if ( e.target === this.$image[ 0 ] || !this.isLoaded || overlay.isActive() ) {
+            core.emitter.fire( "app--gallery-image" );
+
+        } else {
+            core.emitter.fire( "app--gallery-background" );
+        }
     },
 
 
@@ -80,6 +94,7 @@ const gallery = {
     setImage ( $image ) {
         const data = $image.data();
 
+        this.isLoaded = false;
         this.empty();
         this.open();
         this.$image = $( new Image() );
@@ -94,10 +109,8 @@ const gallery = {
         core.dom.gallery.elementNode.append( this.$image );
 
         core.util.loadImages( this.$image, core.util.noop ).on( "done", () => {
-            setTimeout(() => {
-                this.$image.addClass( "is-active" );
-
-            }, 10 );
+            this.isLoaded = true;
+            this.$image.addClass( "is-active" );
         });
     }
 };

@@ -106,6 +106,11 @@ const overlay = {
      */
     setTitle ( text ) {
         core.dom.overlay.elementTitle[ 0 ].innerHTML = text;
+    },
+
+
+    isActive () {
+        return isActive;
     }
 };
 

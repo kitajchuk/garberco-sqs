@@ -7,7 +7,7 @@ import template from "properjs-template";
 
 
 let instance = null;
-const _gridTitleTpl = `<div class="listing__title js-listing-title" data-title="{title}"><h4 class="listing__title__text h4">{text}</h4></div>`;
+const _gridTitleTpl = `<div class="listing__title js-listing-title" data-title="{title}"><h3 class="listing__title__text h3">{text}</h3></div>`;
 const _gridWrapTpl = `<div class="listing__grid js-listing-project grid grid--index"></div>`;
 const _gridItemTpl = `
 <div class="listing__tile grid__item__small js-listing-tile">
@@ -128,68 +128,16 @@ class IndexFull {
         this.$tile = $elem;
         this.$image = this.$tile.find( core.config.lazyImageSelector );
 
+        this._onKeyDown = this.onKeyDown.bind( this );
+        this._onGalleryImage = this.onGalleryImage.bind( this );
+        this._onGalleryBack = this.onGalleryBack.bind( this );
+
         gallery.setImage( this.$image );
 
-        core.dom.doc.on( "keydown", ( e ) => {
-            //e.preventDefault();
+        core.emitter.on( "app--gallery-image", this._onGalleryImage );
+        core.emitter.on( "app--gallery-background", this._onGalleryBack );
 
-            let text = null;
-            let $title = null;
-            let $parent = null;
-            let $project = null;
-            const $next = this.$tile.next();
-            const $prev = this.$tile.prev();
-
-            // Escape key
-            if ( e.keyCode === 27 ) {
-                this.unbindGallery();
-                return false;
-            }
-
-            // Currently on a Title screen
-            // Title screen is using overlay module
-            if ( this.$tile.is( ".js-listing-title" ) ) {
-                // Arrow right
-                if ( e.keyCode === 39 ) {
-                    $project = this.$tile.next();
-
-                    this.nextProject( $project, $project.find( ".js-listing-tile" ).first() );
-
-                // Arrow left
-                } else if ( e.keyCode === 37 ) {
-                    $project = this.$tile.prev();
-
-                    this.nextProject( $project, $project.find( ".js-listing-tile" ).last() );
-                }
-
-            // Arrow right, has next tile
-            } else if ( e.keyCode === 39 && $next.length ) {
-                this.nextTile( $next );
-
-            // Arrow right, has no next tile
-            } else if ( e.keyCode === 39 && !$next.length ) {
-                this.nextTitle( this.$tile.parent().next() );
-
-            // Arrow left, has prev tile
-            } else if ( e.keyCode === 37 && $prev.length ) {
-                this.nextTile( $prev );
-
-            // Arrow left, has not prev tile
-            } else if ( e.keyCode === 37 && !$prev.length ) {
-                text = null;
-                $parent = this.$tile.parent();
-                $title = $parent.prev().prev().prev();
-
-                // Previous project has a title
-                if ( $title.length ) {
-                    text = $title.data( "title" );
-                }
-
-                $title = $parent.prev();
-
-                this.nextTitle( $title, text );
-            }
-        });
+        core.dom.doc.on( "keydown", this._onKeyDown );
     }
 
 
@@ -207,10 +155,11 @@ class IndexFull {
         this.$image = null;
 
         overlay.close();
-
         gallery.close();
 
-        core.dom.doc.off( "keydown" );
+        core.dom.doc.off( "keydown", this._onKeyDown );
+        core.emitter.off( "app--gallery-image", this._onGalleryImage );
+        core.emitter.off( "app--gallery-background", this._onGalleryBack );
     }
 
 
@@ -337,6 +286,78 @@ class IndexFull {
         core.images.handleImages( this.$node.find( ".js-lazy-image" ), () => {
             this.cycleAnimation();
         });
+    }
+
+
+    onGalleryImage () {
+        this.onKeyDown({
+            keyCode: 39
+        });
+    }
+
+
+    onGalleryBack () {
+        this.unbindGallery();
+    }
+
+
+    onKeyDown ( e ) {
+        let text = null;
+        let $title = null;
+        let $parent = null;
+        let $project = null;
+        const $next = this.$tile.next();
+        const $prev = this.$tile.prev();
+
+        // Escape key
+        if ( e.keyCode === 27 ) {
+            this.unbindGallery();
+            return false;
+        }
+
+        // Currently on a Title screen
+        // Title screen is using overlay module
+        if ( this.$tile.is( ".js-listing-title" ) ) {
+            // Arrow right
+            if ( e.keyCode === 39 ) {
+                $project = this.$tile.next();
+
+                this.nextProject( $project, $project.find( ".js-listing-tile" ).first() );
+
+            // Arrow left
+            } else if ( e.keyCode === 37 ) {
+                $project = this.$tile.prev();
+
+                this.nextProject( $project, $project.find( ".js-listing-tile" ).last() );
+            }
+
+        // Arrow right, has next tile
+        } else if ( e.keyCode === 39 && $next.length ) {
+            this.nextTile( $next );
+
+        // Arrow right, has no next tile
+        } else if ( e.keyCode === 39 && !$next.length ) {
+            this.nextTitle( this.$tile.parent().next() );
+
+        // Arrow left, has prev tile
+        } else if ( e.keyCode === 37 && $prev.length ) {
+            this.nextTile( $prev );
+
+        // Arrow left, has not prev tile
+        } else if ( e.keyCode === 37 && !$prev.length ) {
+            text = null;
+            $parent = this.$tile.parent();
+            $title = $parent.prev().prev().prev();
+
+            // Previous project has a title
+            if ( $title.length ) {
+                text = $title.data( "title" );
+            }
+
+            $title = $parent.prev();
+
+            this.nextTitle( $title, text );
+        }
     }
 
 

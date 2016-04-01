@@ -17,7 +17,6 @@
 }
 @mixin font-sans-text-medium() {
     font-family: $sans-serif-text-medium;
-    font-weight: 600;
     @include font-normal();
 }
 
@@ -51,24 +50,22 @@
 @mixin h1() {
     display: inline-block;
     font-size: $h1-size;
+    font-weight: 600;
     line-height: 1.25;
     @include font-sans-text-medium();
 }
 @mixin h2() {
     font-size: $h2-size;
+    font-weight: 600;
     line-height: 1.36;
     @include font-sans-text-medium();
 }
 @mixin h3() {
     font-size: $h3-size;
-    line-height: 1;
-    @include font-sans-text-medium();
-}
-@mixin h4() {
-    font-size: $h4-size;
     line-height: 1.2;
     @include font-sans-text-medium();
 }
+
 
 
 /******************************************************************************

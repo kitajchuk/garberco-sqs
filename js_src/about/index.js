@@ -55,6 +55,8 @@ const about = {
      *
      */
     onload () {
+        core.dom.html.addClass( "is-offcanvas" );
+
         if ( !instance ) {
             const data = $_jsElement.data();
 

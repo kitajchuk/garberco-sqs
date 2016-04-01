@@ -63,11 +63,3 @@ $screen-wrap-delay: ($midi-duration / 2);
     background-color: $white;
     min-height: 100%;
     }
-
-
-
-@media only screen and ( max-width: $break-mobile-full ) {
-    .screen {
-        padding: $nudge-size;
-        }
-}

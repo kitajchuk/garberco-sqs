@@ -51,7 +51,7 @@
     @include h2();
 
     a {
-        text-decoration: line-through;
+        border-bottom: 5px solid $black;
         }
 
     p + p {
@@ -60,7 +60,4 @@
 }
 .h3 {
     @include h3();
-    }
-.h4 {
-    @include h4();
     }

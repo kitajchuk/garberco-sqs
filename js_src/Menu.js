@@ -48,6 +48,7 @@ class Menu {
 
         setTimeout( () => this.$node.addClass( "is-active" ), 0 );
         setTimeout( () => {
+            this.$node.addClass( "is-active-events" );
             core.dom.html.addClass( "is-clipped" );
             core.dom.body.addClass( "is-clipped" );
 
@@ -65,8 +66,6 @@ class Menu {
      *
      */
     close () {
-        this.isOpen = false;
-
         this.$node.removeClass( "is-active" );
         core.dom.html.removeClass( "is-clipped" );
         core.dom.body.removeClass( "is-clipped" );
@@ -83,6 +82,7 @@ class Menu {
         core.emitter.fire( "app--menu-closed" );
 
         setTimeout( () => {
+            this.isOpen = false;
             core.dom.html.removeClass( "is-menu-open" );
             this.$node.detach();
 

@@ -20,8 +20,6 @@ class About {
             this.initialize( $node, data );
         }
 
-        core.dom.html.addClass( "is-offcanvas" );
-
         return instance;
     }
 

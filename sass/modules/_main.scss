@@ -13,12 +13,14 @@
     &#is-main--about {
         .main__panel--about {
             transform: translate3d( 0, 0, 0 );
+            -webkit-overflow-scrolling: touch;
             }
     }
 
     &#is-main--index {
         .main__panel--index {
             transform: translate3d( -100%, 0, 0 );
+            -webkit-overflow-scrolling: touch;
             }
     }
 }
@@ -50,9 +52,13 @@
 
 
 
-.about {}
-.about__desc {
-    padding-right: 20%;
+.about {
+    padding-bottom: 90px;
+    padding-top: 30vh;
+    }
+.about__main {
+    max-width: 80%;
+    width: 100%;
     }
 
 
@@ -79,14 +85,13 @@
 
 
 
-.gallery {}
+.gallery {
+    user-select: none;
+    }
 .gallery__figure {}
 .gallery__image {
     height: auto;
     max-height: 80vh;
     max-width: 80vw;
     width: auto;
-
-    &.is-active {
-        }
     }
