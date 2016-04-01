@@ -1,6 +1,6 @@
 //import $ from "js_libs/jquery/dist/jquery";
 import * as core from "../core";
-import Menu from "./Menu";
+import About from "./About";
 
 
 let $_jsElement = null;
@@ -10,21 +10,25 @@ let instance = null;
 /**
  *
  * @public
- * @namespace menus
+ * @namespace about
  * @description A nice description of what this module does...
  *
  */
-const menus = {
+const about = {
     /**
      *
      * @public
      * @method init
-     * @memberof menus
+     * @memberof about
      * @description Method runs once when window loads.
      *
      */
     init () {
-        core.log( "menus initialized" );
+        core.emitter.on( "app--root", () => {
+            core.dom.html.removeClass( "is-offcanvas" );
+        });
+
+        core.log( "about initialized" );
     },
 
 
@@ -32,7 +36,7 @@ const menus = {
      *
      * @public
      * @method isActive
-     * @memberof menus
+     * @memberof about
      * @description Method informs PageController of active status.
      * @returns {boolean}
      *
@@ -46,31 +50,15 @@ const menus = {
      *
      * @public
      * @method onload
-     * @memberof menus
+     * @memberof about
      * @description Method performs onloading actions for this module.
      *
      */
     onload () {
-        const data = $_jsElement.data();
+        if ( !instance ) {
+            const data = $_jsElement.data();
 
-        instance = new Menu( $_jsElement, data );
-    },
-
-
-    /**
-     *
-     * @public
-     * @method unload
-     * @memberof menus
-     * @description Method performs unloading actions for this module.
-     *
-     */
-    unload () {
-        this.teardown();
-
-        if ( instance ) {
-            instance.destroy();
-            instance = null;
+            instance = new About( $_jsElement, data );
         }
     },
 
@@ -78,27 +66,36 @@ const menus = {
     /**
      *
      * @public
+     * @method unload
+     * @memberof about
+     * @description Method performs unloading actions for this module.
+     *
+     */
+    unload () {},
+
+
+    /**
+     *
+     * @public
      * @method teardown
-     * @memberof menus
+     * @memberof about
      * @description Method performs cleanup after this module. Remmoves events, null vars etc...
      *
      */
-    teardown () {
-        $_jsElement = null;
-    },
+    teardown () {},
 
 
     /**
      *
      * @public
      * @method getElements
-     * @memberof menus
+     * @memberof about
      * @description Method queries DOM for this modules node.
      * @returns {number}
      *
      */
     getElements () {
-        $_jsElement = core.dom.page.find( ".js-menu" );
+        $_jsElement = core.dom.page.find( ".js-about" );
 
         return ( $_jsElement.length );
     }
@@ -108,4 +105,4 @@ const menus = {
 /******************************************************************************
  * Export
 *******************************************************************************/
-export default menus;
+export default about;

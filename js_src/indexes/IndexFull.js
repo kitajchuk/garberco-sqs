@@ -7,10 +7,8 @@ import template from "properjs-template";
 
 
 let instance = null;
-const _gridTitleTpl = `<div class="listing__title js-listing-title grid" data-title="{title}"><h4 class="listing__title__text h4">{text}</h4></div>`;
-const _gridWrapTpl = `
-<div class="listing__grid js-listing-project grid grid--index"></div>
-`;
+const _gridTitleTpl = `<div class="listing__title js-listing-title" data-title="{title}"><h4 class="listing__title__text h4">{text}</h4></div>`;
+const _gridWrapTpl = `<div class="listing__grid js-listing-project grid grid--index"></div>`;
 const _gridItemTpl = `
 <div class="listing__tile grid__item__small js-listing-tile">
     <div class="grid__photo grid__photo--small animate animate--fade js-animate">
@@ -34,7 +32,7 @@ const _gridItemTpl = `
  */
 class IndexFull {
     constructor ( $node, data ) {
-        if ( !instance || instance && instance.data.id !== data.id ) {
+        if ( !instance ) {
             this.initialize( $node, data );
         }
 
@@ -59,12 +57,45 @@ class IndexFull {
         this.$tile = null;
         this.$image = null;
         this.$target = core.dom.main.find( `.js-main--${this.data.target}` );
+        this.$anims = null;
 
         this.bindEvents();
         this.loadIndex();
 
         instance = this;
     }
+
+
+    cycleAnimation () {
+        core.emitter.go( this.updateAnimate.bind( this ) );
+    }
+
+
+    /**
+     *
+     * @public
+     * @instance
+     * @method updateAnimate
+     * @memberof indexes.IndexFull
+     * @description Update active photos for index.
+     *
+     */
+    updateAnimate () {
+        let $anim = null;
+        let i = this.$anims.length;
+
+        for ( i; i--; ) {
+            $anim = this.$anims.eq( i );
+
+            if ( core.util.isElementInViewport( $anim[ 0 ] ) ) {
+                $anim.addClass( "is-active" );
+
+            } else {
+                $anim.removeClass( "is-active" );
+            }
+        }
+    }
+
 
 
     /**
@@ -301,9 +332,10 @@ class IndexFull {
 
         // Node must be in DOM for image size to work
         this.$target.append( this.$node );
+        this.$anims = this.$node.find( ".js-animate" );
 
         core.images.handleImages( this.$node.find( ".js-lazy-image" ), () => {
-            core.emitter.fire( "app--update-animate" );
+            this.cycleAnimation();
         });
     }
 
@@ -318,7 +350,7 @@ class IndexFull {
      *
      */
     destroy () {
-        core.dom.doc.off( "keydown" );
+        core.emitter.stop();
     }
 }
 

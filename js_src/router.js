@@ -1,7 +1,7 @@
 import PageController from "properjs-pagecontroller";
 import $ from "js_libs/jquery/dist/jquery";
 import * as core from "./core";
-import menus from "./menus";
+import about from "./about";
 import indexes from "./indexes";
 import listing from "./indexes/listing";
 import projects from "./projects";
@@ -159,7 +159,7 @@ const router = {
         ]);
 
         this.controller.setModules([
-            menus,
+            about,
             indexes,
             listing,
             animate,
@@ -184,7 +184,7 @@ const router = {
      *
      */
     prepPage () {
-        this.root = ( this.pageData.type === "menu" ) ? "/" : window.location.pathname;
+        this.root = ( this.pageData.type === "offcanvas" ) ? "/" : window.location.pathname;
 
         if ( this.pageData.type !== "index" ) {
             this.navData.appTree.forEach(( indexItem ) => {

@@ -9,20 +9,28 @@ let instance = null;
 /**
  *
  * @public
- * @namespace menus
+ * @namespace listing
  * @description A nice description of what this module does...
  *
  */
-const menus = {
+const listing = {
     /**
      *
      * @public
      * @method init
-     * @memberof menus
+     * @memberof listing
      * @description Method runs once when window loads.
      *
      */
     init () {
+        core.emitter.on( "app--root", () => {
+            core.dom.html.removeClass( "is-offcanvas" );
+
+            if ( instance ) {
+                instance.destroy();
+            }
+        });
+
         core.log( "listing initialized" );
     },
 
@@ -31,7 +39,7 @@ const menus = {
      *
      * @public
      * @method isActive
-     * @memberof menus
+     * @memberof listing
      * @description Method informs PageController of active status.
      * @returns {boolean}
      *
@@ -45,44 +53,20 @@ const menus = {
      *
      * @public
      * @method onload
-     * @memberof menus
+     * @memberof listing
      * @description Method performs onloading actions for this module.
      *
      */
     onload () {
-        const data = $_jsElement.data();
+        core.dom.html.addClass( "is-offcanvas" );
 
-        instance = new IndexFull( $_jsElement, data );
-    },
+        if ( !instance ) {
+            const data = $_jsElement.data();
 
+            instance = new IndexFull( $_jsElement, data );
 
-    /**
-     *
-     * @public
-     * @method unload
-     * @memberof menus
-     * @description Method performs unloading actions for this module.
-     *
-     */
-    unload () {
-        this.teardown();
-    },
-
-
-    /**
-     *
-     * @public
-     * @method teardown
-     * @memberof menus
-     * @description Method performs cleanup after this module. Remmoves events, null vars etc...
-     *
-     */
-    teardown () {
-        $_jsElement = null;
-
-        if ( instance ) {
-            instance.destroy();
-            instance = null;
+        } else {
+            instance.cycleAnimation();
         }
     },
 
@@ -90,8 +74,30 @@ const menus = {
     /**
      *
      * @public
+     * @method unload
+     * @memberof listing
+     * @description Method performs unloading actions for this module.
+     *
+     */
+    unload () {},
+
+
+    /**
+     *
+     * @public
+     * @method teardown
+     * @memberof listing
+     * @description Method performs cleanup after this module. Remmoves events, null vars etc...
+     *
+     */
+    teardown () {},
+
+
+    /**
+     *
+     * @public
      * @method getElements
-     * @memberof menus
+     * @memberof listing
      * @description Method queries DOM for this modules node.
      * @returns {number}
      *
@@ -107,4 +113,4 @@ const menus = {
 /******************************************************************************
  * Export
 *******************************************************************************/
-export default menus;
+export default listing;

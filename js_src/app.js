@@ -72,6 +72,13 @@ class App {
             $target.addClass( "is-active" );
 
             this.core.dom.main[ 0 ].id = data.target ? `is-main--${data.target}` : "";
+
+            if ( /garberco/.test( data.target ) ) {
+                this.core.dom.html.removeClass( "is-neverflow" );
+
+            } else {
+                this.core.dom.html.addClass( "is-neverflow" );
+            }
         });
     }
 }

@@ -1,56 +1,51 @@
-$menu-width: #{"calc( ~\"100vw - #{$photos-padding}\" )"};
-$menu-width-minus: #{"calc( ~\"-100vw + #{$photos-padding}\" )"};
-
-
-
 .main {
     font-size: 0;
     position: relative;
     text-align: center;
-    transition: transform $base-duration $ease;
-    width: 100vw;
 
-    &#is-main--about {
-        transform: translate3d( $menu-width, 0, 0 );
-
+    &#is-main--about,
+    &#is-main--index {
         .main__panel--garberco {
             pointer-events: none;
             }
     }
 
-    &#is-main--index {
-        transform: translate3d( $menu-width-minus, 0, 0 );
+    &#is-main--about {
+        .main__panel--about {
+            transform: translate3d( 0, 0, 0 );
+            }
+    }
 
-        .main__panel--garberco {
-            pointer-events: none;
+    &#is-main--index {
+        .main__panel--index {
+            transform: translate3d( -100%, 0, 0 );
             }
     }
 }
 .main__panel {
     text-align: left;
-    min-height: 100vh;
-
-    &.is-active {
-        }
     }
 .main__panel--about,
 .main__panel--index {
     background-color: $white;
-    left: 0;
-    position: absolute;
+    height: 100%;
+    overflow-y: scroll;
+    position: fixed;
     top: 0;
-    width: $menu-width;
+    transition: transform $base-duration $ease;
+    width: 100%;
+    z-index: $z_layer_09;
     }
 .main__panel--about {
+    left: 0;
     transform: translate3d( -100%, 0, 0 );
     }
 .main__panel--index {
-    transform: translate3d( 100vw, 0, 0 );
+    left: 100%;
     }
 .main__panel--garberco {
     background-color: $white;
     position: relative;
-    width: 100vw;
     }
 
 
@@ -62,12 +57,16 @@ $menu-width-minus: #{"calc( ~\"-100vw + #{$photos-padding}\" )"};
 
 
 
-.listing {}
+.listing {
+    text-align: center;
+    }
 .listing__grid {
     margin-bottom: $expander-padding;
     margin-left: -($grid-padding / 2);
     margin-right: -($grid-padding / 2);
-    padding-right: ($photos-padding / 2);
+    padding-left: 0;
+    padding-right: 0;
+    text-align: left;
     }
 .listing__title {
     margin-bottom: 20px;

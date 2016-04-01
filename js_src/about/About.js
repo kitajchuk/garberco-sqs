@@ -1,26 +1,28 @@
 import * as core from "../core";
 
 
-const instances = {};
+let instance = null;
 
 
 /**
  *
  * @public
- * @class Menu
+ * @class About
  * @param {jQuery} $node The element
  * @param {object} data The datas
  * @classdesc Handle a menu view.
  * @memberof menus
  *
  */
-class Menu {
+class About {
     constructor ( $node, data ) {
-        if ( !instances[ data.id ] ) {
+        if ( !instance ) {
             this.initialize( $node, data );
         }
 
-        return instances[ data.id ];
+        core.dom.html.addClass( "is-offcanvas" );
+
+        return instance;
     }
 
 
@@ -31,7 +33,7 @@ class Menu {
      * @method initialize
      * @param {jQuery} $node The element
      * @param {object} data The datas
-     * @memberof menus.Menu
+     * @memberof menus.About
      * @description Perform instance bootstrap actions.
      *
      */
@@ -43,7 +45,7 @@ class Menu {
         this.$anim = this.$node.find( ".js-animate-in" );
         this.$images = this.$node.find( ".js-lazy-image" );
 
-        instances[ data.id ] = this;
+        instance = this;
 
         core.images.handleImages( this.$images, this.onPreload.bind( this ) );
     }
@@ -54,7 +56,7 @@ class Menu {
      * @public
      * @instance
      * @method onPreload
-     * @memberof menus.Menu
+     * @memberof menus.About
      * @description Handle preloaded images.
      *
      */
@@ -73,7 +75,7 @@ class Menu {
      * @public
      * @instance
      * @method destroy
-     * @memberof menus.Menu
+     * @memberof menus.About
      * @description Undo event bindings for this instance.
      *
      */
@@ -85,4 +87,4 @@ class Menu {
 /******************************************************************************
  * Export
 *******************************************************************************/
-export default Menu;
+export default About;
