@@ -7,7 +7,7 @@
  */
 
 
-import $ from "js_libs/jquery/dist/jquery";
+import $ from "js_libs/hobo/dist/hobo.build";
 import Hammer from "hammerjs";
 import ImageLoader from "properjs-imageloader";
 import dom from "./dom";

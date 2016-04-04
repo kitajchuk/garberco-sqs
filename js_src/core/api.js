@@ -1,4 +1,4 @@
-import $ from "js_libs/jquery/dist/jquery";
+import $ from "js_libs/hobo/dist/hobo.build";
 import paramalama from "paramalama";
 import * as util from "./util";
 
@@ -161,7 +161,7 @@ const api = {
             }
 
             this.request( this.endpoint( seg ), params, options )
-                .done( ( data ) => {
+                .then( ( data ) => {
                     // Resolve with `responseText`
                     if ( typeof data === "string" ) {
                         resolve( data );
@@ -179,7 +179,7 @@ const api = {
                     }
 
                 })
-                .fail( ( error ) => {
+                .catch( ( error ) => {
                     reject( error );
                 });
         });

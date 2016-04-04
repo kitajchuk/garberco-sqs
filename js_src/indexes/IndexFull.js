@@ -1,5 +1,5 @@
 import * as core from "../core";
-import $ from "js_libs/jquery/dist/jquery";
+import $ from "js_libs/hobo/dist/hobo.build";
 import router from "../router";
 import gallery from "../gallery";
 import overlay from "../overlay";
@@ -66,6 +66,15 @@ class IndexFull {
     }
 
 
+    /**
+     *
+     * @public
+     * @instance
+     * @method cycleAnimation
+     * @memberof indexes.IndexFull
+     * @description Start the animation cycle for the listing.
+     *
+     */
     cycleAnimation () {
         core.emitter.go( this.updateAnimate.bind( this ) );
     }
@@ -109,7 +118,14 @@ class IndexFull {
      */
     bindEvents () {
         this.$node.on( "click", ".js-listing-tile", ( e ) => {
-            this.bindGallery( $( e.currentTarget ) );
+            let i = e.path.length;
+
+            for ( i; i--; ) {
+                if ( e.path[ i ].className && e.path[ i ].className.indexOf( "js-listing-tile" ) !== -1 ) {
+                    this.bindGallery( $( e.path[ i ] ) );
+                    break;
+                }
+            }
         });
     }
 
@@ -289,6 +305,15 @@ class IndexFull {
     }
 
 
+    /**
+     *
+     * @public
+     * @instance
+     * @method onGalleryImage
+     * @memberof indexes.IndexFull
+     * @description Trigger gallery arrow key right.
+     *
+     */
     onGalleryImage () {
         this.onKeyDown({
             keyCode: 39
@@ -296,11 +321,30 @@ class IndexFull {
     }
 
 
+    /**
+     *
+     * @public
+     * @instance
+     * @method onGalleryBack
+     * @memberof indexes.IndexFull
+     * @description Trigger gallery unbinding.
+     *
+     */
     onGalleryBack () {
         this.unbindGallery();
     }
 
 
+    /**
+     *
+     * @public
+     * @instance
+     * @method onKeyDown
+     * @param {object} e The Event object
+     * @memberof indexes.IndexFull
+     * @description Handle key events when gallery is open.
+     *
+     */
     onKeyDown ( e ) {
         let text = null;
         let $title = null;

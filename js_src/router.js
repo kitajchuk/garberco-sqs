@@ -1,5 +1,5 @@
 import PageController from "properjs-pagecontroller";
-import $ from "js_libs/jquery/dist/jquery";
+import $ from "js_libs/hobo/dist/hobo.build";
 import * as core from "./core";
 import about from "./about";
 import indexes from "./indexes";

@@ -1,4 +1,4 @@
-import $ from "js_libs/jquery/dist/jquery";
+import $ from "js_libs/hobo/dist/hobo.build";
 import * as util from "./util";
 
 

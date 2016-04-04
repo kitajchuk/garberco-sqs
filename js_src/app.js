@@ -1,4 +1,4 @@
-import $ from "js_libs/jquery/dist/jquery";
+import $ from "js_libs/hobo/dist/hobo.build";
 import * as core from "./core";
 import router from "./router";
 import overlay from "./overlay";
@@ -61,25 +61,48 @@ class App {
      *
      */
     bindEvents () {
-        this.core.dom.header.on( "click", ".js-controller", ( e ) => {
-            e.preventDefault();
+        this.core.dom.header.on( "click", ".js-controller", this.onController.bind( this ) );
+    }
 
-            const $controller = $( e.currentTarget );
-            const data = $controller.data();
-            const $target = this.core.dom.main.find( `.js-main--${data.target}` );
 
-            this.$mainPanels.removeClass( "is-active" );
-            $target.addClass( "is-active" );
+    /**
+     *
+     * @public
+     * @instance
+     * @method onController
+     * @param {object} e The Event object
+     * @memberof App
+     * @description Handle controller links for main app.
+     *
+     */
+    onController ( e ) {
+        e.preventDefault();
 
-            this.core.dom.main[ 0 ].id = data.target ? `is-main--${data.target}` : "";
+        let i = e.path.length;
+        let $controller = null;
+        let data = null;
+        let $target = null;
 
-            if ( /garberco/.test( data.target ) ) {
-                this.core.dom.html.removeClass( "is-neverflow" );
-
-            } else {
-                this.core.dom.html.addClass( "is-neverflow" );
+        for ( i; i--; ) {
+            if ( e.path[ i ].tagName === "A" ) {
+                $controller = $( e.path[ i ] );
+                data = $controller.data();
+                $target = this.core.dom.main.find( `.js-main--${data.target}` );
+                break;
             }
-        });
+        }
+
+        this.$mainPanels.removeClass( "is-active" );
+        $target.addClass( "is-active" );
+
+        this.core.dom.main[ 0 ].id = `is-main--${data.target}`;
+
+        if ( /garberco/.test( data.target ) ) {
+            this.core.dom.html.removeClass( "is-neverflow" );
+
+        } else {
+            this.core.dom.html.addClass( "is-neverflow" );
+        }
     }
 }
 
