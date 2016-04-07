@@ -343,6 +343,7 @@ class IndexFull {
      * @param {object} e The Event object
      * @memberof indexes.IndexFull
      * @description Handle key events when gallery is open.
+     * @returns {boolean}
      *
      */
     onKeyDown ( e ) {

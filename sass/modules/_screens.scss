@@ -11,8 +11,8 @@ $screen-wrap-delay: ($midi-duration / 2);
     position: fixed;
     right: 0;
     top: 0;
-    transition: transform $base-duration $ease-cubic,
-                opacity $midi-duration $ease;
+    transition: opacity $midi-duration $ease,
+                transform $base-duration $ease-cubic-sharp;
     z-index: $z_layer_infront;
 
     &.is-active {
@@ -20,19 +20,6 @@ $screen-wrap-delay: ($midi-duration / 2);
         -webkit-overflow-scrolling: touch;
         }
     }
-.screen__wrap {
-    height: 100%;
-    opacity: 0;
-    transform: translate3d( 0, $nudge-size, 0 );
-    transition: opacity $midi-duration $ease-cubic $screen-wrap-delay,
-                transform $midi-duration $ease $screen-wrap-delay;
-    }
-.screen.is-active {
-    .screen__wrap {
-        opacity: 1;
-        transform: translate3d( 0, 0, 0 );
-        }
-}
 
 
 
@@ -40,7 +27,6 @@ $screen-wrap-delay: ($midi-duration / 2);
 .overlay {
     background-color: transparent;
     pointer-events: none;
-    //z-index: $z_layer_10;
 
     &.is-intro {
         background-color: $white;
@@ -48,6 +34,7 @@ $screen-wrap-delay: ($midi-duration / 2);
     }
 .project-view {
     background-color: transparent;
+    opacity: 1;
     transform: translate3d( 0, 100%, 0 );
     z-index: $z_layer_09;
 

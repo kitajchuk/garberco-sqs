@@ -62,9 +62,9 @@ const indexes = {
         instance = new IndexRoot( $_jsElement, data );
 
         core.dom.body.on( "click", ".js-index-tile", onTileClick );
-        core.dom.body.on( "mouseenter", ".js-index-tile", onMouseEnter );
-        core.dom.body.on( "mousemove", ".js-index-tile", onMouseEnter );
-        core.dom.body.on( "mouseleave", ".js-index-tile", onMouseLeave );
+        core.dom.body.on( "mouseenter", ".js-index-tile img", onMouseEnter );
+        core.dom.body.on( "mousemove", ".js-index-tile img", onMouseEnter );
+        core.dom.body.on( "mouseleave", ".js-index-tile img", onMouseLeave );
     },
 
 
@@ -141,6 +141,12 @@ const clearTimeoutById = function ( id ) {
 const onTileClick = function ( e ) {
     e.preventDefault();
 
+    const $tile = $( this ).closest( ".js-index-tile" );
+
+    overlay.setTitle( $tile.data( "title" ) );
+
+    overlay.open();
+
     Project.open();
 };
 
@@ -152,7 +158,7 @@ const onMouseEnter = function ( /* e */ ) {
         return;
     }
 
-    const $tile = $( this );
+    const $tile = $( this ).closest( ".js-index-tile" );
 
     overlay.setTitle( $tile.data( "title" ) );
 

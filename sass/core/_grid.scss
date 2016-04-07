@@ -92,15 +92,14 @@
     width: 16.666666667%;
     }
 .grid__photo {
+    cursor: default;
     display: inline-block;
     padding-bottom: 100%;
     width: 100%;
-        //outline: 1px solid red;
 
     .image {
+        cursor: pointer;
         left: 50%;
-        padding-left: $grid-padding;
-        padding-right: $grid-padding;
         position: absolute;
         top: 50%;
         transform: translate3d( -50%, -50%, 0 );
@@ -113,6 +112,8 @@
         }
     .image--wide {
         height: auto;
+        padding-left: $grid-padding;
+        padding-right: $grid-padding;
         width: 100%;
         }
 }

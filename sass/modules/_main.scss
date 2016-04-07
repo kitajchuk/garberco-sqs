@@ -3,40 +3,44 @@
     position: relative;
     text-align: center;
 
-    &#is-main--about,
-    &#is-main--index {
+    &#is-main--garberco {
         .main__panel--garberco {
-            pointer-events: none;
+            overflow: auto;
+            position: relative;
             }
     }
 
     &#is-main--about {
         .main__panel--about {
+            overflow: auto;
+            position: relative;
             transform: translate3d( 0, 0, 0 );
-            -webkit-overflow-scrolling: touch;
+            }
+        .main__panel--garberco {
+            transform: translate3d( 100%, 0, 0 );
             }
     }
 
     &#is-main--index {
         .main__panel--index {
+            overflow: auto;
+            position: relative;
             transform: translate3d( -100%, 0, 0 );
-            -webkit-overflow-scrolling: touch;
+            }
+        .main__panel--garberco {
+            transform: translate3d( -100%, 0, 0 );
             }
     }
 }
 .main__panel {
-    text-align: left;
-    }
-.main__panel--about,
-.main__panel--index {
     background-color: $white;
     height: 100%;
-    overflow-y: scroll;
+    overflow: hidden;
     position: fixed;
+    transition: transform $base-duration $ease-cubic-sharp;
+    text-align: left;
     top: 0;
-    transition: transform $base-duration $ease;
     width: 100%;
-    z-index: $z_layer_09;
     }
 .main__panel--about {
     left: 0;
@@ -46,8 +50,7 @@
     left: 100%;
     }
 .main__panel--garberco {
-    background-color: $white;
-    position: relative;
+    left: 0;
     }
 
 

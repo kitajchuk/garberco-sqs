@@ -184,20 +184,32 @@ const router = {
      *
      */
     prepPage () {
-        this.root = ( this.pageData.type === "offcanvas" ) ? "/" : window.location.pathname;
+        this.root = null;
 
+        // Index?
+        // Indexes will already have the root gridwall loaded
+        // Offcanvas/Project paths will need to manually load the root index
         if ( this.pageData.type !== "index" ) {
-            this.navData.appTree.forEach(( indexItem ) => {
-                if ( indexItem.items ) {
-                    indexItem.items.forEach(( collectionItem ) => {
-                        if ( collectionItem.collection.id === this.pageData.id ) {
-                            this.root = indexItem.collection.fullUrl;
-                        }
-                    });
-                }
-            });
+            if ( this.pageData.type === "offcanvas" ) {
+                this.root = "/";
 
+            } else {
+                this.navData.appTree.forEach(( indexItem ) => {
+                    if ( indexItem.items ) {
+                        indexItem.items.forEach(( collectionItem ) => {
+                            if ( collectionItem.collection.id === this.pageData.id ) {
+                                this.root = indexItem.collection.fullUrl;
+                            }
+                        });
+                    }
+                });
+            }
+
+            this.root = (this.root || "/");
             this.loadRootIndex();
+
+        } else {
+            this.root = window.location.pathname;
         }
 
         core.dom.root[ 0 ].href = this.root;
@@ -255,6 +267,12 @@ const router = {
             match = match ? match : "garberco";
 
             core.dom.main[ 0 ].id = `is-main--${match}`;
+
+            // GarberCo?
+            if ( match === core.config.rootUrlId ) {
+                core.dom.html.removeClass( "is-offcanvas" );
+                //core.dom.html.removeClass( "is-neverflow" );
+            }
 
             // Project?
             if ( Project.isActive() ) {

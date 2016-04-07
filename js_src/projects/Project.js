@@ -178,7 +178,7 @@ Project.isActive = function () {
 Project.open = function () {
     isActive = true;
 
-    core.dom.html.addClass( "is-project" );
+    core.dom.html.addClass( "is-offcanvas" );
     core.dom.body.append( core.dom.project.element );
 
     setTimeout( () => core.dom.project.element.addClass( "is-active" ), 10 );
@@ -202,7 +202,7 @@ Project.close = function () {
     core.dom.project.element.removeClass( "is-active is-inactive" );
 
     setTimeout( () => {
-        core.dom.html.removeClass( "is-project" );
+        core.dom.html.removeClass( "is-offcanvas" );
         core.dom.project.element.detach();
         core.dom.project.elementPane[ 0 ].innerHTML = "";
 

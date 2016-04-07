@@ -45,6 +45,9 @@
 
 
 @media only screen and ( max-width: $break-mobile-full ) {
+    .h1 {
+        font-size: 36px;
+        }
     .h2 {
         font-size: 30px;
         font-weight: inherit;
@@ -55,7 +58,8 @@
     }
 
     .overlay {
-        display: none;
+        padding-left: $grid-padding / 2;
+        padding-right: $grid-padding / 2;
         }
 
     .grid__item {
@@ -108,9 +112,30 @@
 
     .project__image,
     .project__diptych {
-        padding-bottom: 80px;
-        padding-top: 80px;
+        padding-bottom: 40px;
+        padding-top: 40px;
+
+        .image {
+            margin: 0 !important;
+            max-width: 100% !important;
+            width: 100% !important;
+            }
+    }
+    .project__image:not( .project__image--full ) {
+        padding-left: $grid-padding / 2;
+        padding-right: $grid-padding / 2;
         }
+    .project__diptych {
+        .diptych__left,
+        .diptych__right {
+            padding-left: $grid-padding / 2 !important;
+            padding-right: $grid-padding / 2 !important;
+            width: 100% !important;
+            }
+        .diptych__left {
+            padding-bottom: 80px;
+            }
+    }
 
     .about,
     .index,

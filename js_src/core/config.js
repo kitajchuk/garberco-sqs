@@ -9,6 +9,17 @@ const config = {
     /**
      *
      * @public
+     * @member rootUrlId
+     * @memberof config
+     * @description The urlId for "/".
+     *
+     */
+    rootUrlId: "garberco",
+
+
+    /**
+     *
+     * @public
      * @member homepageKey
      * @memberof config
      * @description The cache key to use for homepage.
