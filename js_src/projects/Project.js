@@ -17,13 +17,13 @@ let isActive = false;
  */
 class Project {
     constructor ( $node, data ) {
+        isActive = true;
+
         this.$node = $node;
         this.data = data;
         this.$plates = this.$node.find( ".js-project-plate" );
         this.$images = this.$node.find( ".js-lazy-image" );
         this.isEnded = false;
-
-        core.log( "Project", this );
 
         // Node must be in DOM for image size to work
         core.dom.project.elementPane.append( this.$node );

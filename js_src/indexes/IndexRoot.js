@@ -66,8 +66,14 @@ class IndexRoot {
         // Fresh query for js- animatable elements each time
         this.$anims = this.$node.find( ".js-animate" );
 
-        core.emitter.stop();
-        core.emitter.go( this.updateAnimate.bind( this ) );
+        // Root index is loaded in the background when you hit a Project direct
+        if ( !Project.isActive() ) {
+            core.emitter.stop();
+            core.emitter.go( this.updateAnimate.bind( this ) );
+
+        } else {
+            this.updateAnimate();
+        }
     }
 
 
