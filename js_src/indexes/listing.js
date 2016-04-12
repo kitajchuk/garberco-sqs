@@ -27,7 +27,7 @@ const listing = {
             core.dom.html.removeClass( "is-offcanvas" );
 
             if ( instance ) {
-                instance.destroy();
+                instance.teardown();
             }
         });
 
@@ -58,6 +58,8 @@ const listing = {
      *
      */
     onload () {
+        core.emitter.fire( "app--offcanvas" );
+
         core.dom.html.addClass( "is-offcanvas" );
 
         if ( !instance ) {
@@ -68,6 +70,8 @@ const listing = {
         } else {
             instance.cycleAnimation();
         }
+
+        core.log( "listing onload" );
     },
 
 
@@ -79,7 +83,9 @@ const listing = {
      * @description Method performs unloading actions for this module.
      *
      */
-    unload () {},
+    unload () {
+        core.log( "listing unload" );
+    },
 
 
     /**

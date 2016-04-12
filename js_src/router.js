@@ -5,7 +5,6 @@ import about from "./about";
 import indexes from "./indexes";
 import listing from "./indexes/listing";
 import projects from "./projects";
-import animate from "./animate";
 import overlay from "./overlay";
 import gallery from "./gallery";
 import Project from "./projects/Project";
@@ -162,7 +161,6 @@ const router = {
             about,
             indexes,
             listing,
-            animate,
             projects
         ]);
 

@@ -3,7 +3,6 @@ import * as util from "./util";
 import log from "./log";
 import config from "./config";
 import emitter from "./emitter";
-import ImageLoader from "properjs-imageloader";
 import ImageController from "./ImageController";
 
 
@@ -62,9 +61,7 @@ const images = {
      * @description Method performs unloading actions for this module.
      *
      */
-    unload () {
-        ImageLoader.killInstances();
-    },
+    unload () {},
 
 
     /**

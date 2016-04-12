@@ -44,7 +44,7 @@ class Waypoints {
         let $elem = null;
 
         if ( !$queued.length ) {
-            this.destroy();
+            this.teardown();
         }
 
         for ( i; i--; ) {
@@ -63,14 +63,12 @@ class Waypoints {
      *
      * @public
      * @instance
-     * @method destroy
+     * @method teardown
      * @memberof Waypoints
      * @description Undo event bindings for this instance.
      *
      */
-    destroy () {
-        //console.log( "Waypoints Destroyed", this );
-
+    teardown () {
         core.emitter.off( "app--scroll", this._onScroller );
     }
 }

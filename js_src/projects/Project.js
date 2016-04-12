@@ -60,6 +60,7 @@ class Project {
     cycleAnimation () {
         this.onUpdateEmitter();
 
+        core.emitter.stop();
         core.emitter.go( this.onUpdateEmitter.bind( this ) );
     }
 
@@ -139,12 +140,12 @@ class Project {
      *
      * @public
      * @instance
-     * @method destroy
+     * @method teardown
      * @memberof projects.Project
      * @description Undo event bindings for this instance.
      *
      */
-    destroy () {
+    teardown () {
         Project.close();
     }
 }

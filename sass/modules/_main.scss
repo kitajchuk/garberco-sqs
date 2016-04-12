@@ -1,19 +1,20 @@
+/******************************************************************************
+ * Main applet
+*******************************************************************************/
 .main {
     font-size: 0;
+    overflow: hidden;
     position: relative;
     text-align: center;
 
+/*
     &#is-main--garberco {
-        .main__panel--garberco {
-            overflow: auto;
-            position: relative;
-            }
+        .main__panel--garberco {}
     }
+*/
 
     &#is-main--about {
         .main__panel--about {
-            overflow: auto;
-            position: relative;
             transform: translate3d( 0, 0, 0 );
             }
         .main__panel--garberco {
@@ -23,8 +24,6 @@
 
     &#is-main--index {
         .main__panel--index {
-            overflow: auto;
-            position: relative;
             transform: translate3d( -100%, 0, 0 );
             }
         .main__panel--garberco {
@@ -35,7 +34,8 @@
 .main__panel {
     background-color: $white;
     height: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     position: fixed;
     transition: transform $base-duration $ease-cubic-sharp;
     text-align: left;
@@ -55,6 +55,9 @@
 
 
 
+/******************************************************************************
+ * About offcanvas
+*******************************************************************************/
 .about {
     padding-bottom: 90px;
     padding-top: 30vh;
@@ -66,6 +69,9 @@
 
 
 
+/******************************************************************************
+ * Full Index offcanvas
+*******************************************************************************/
 .listing {
     text-align: center;
     }
@@ -83,15 +89,15 @@
 .listing__tile {
     cursor: pointer;
     }
-.listing__title__text {
-    }
 
 
 
+/******************************************************************************
+ * Gallery view
+*******************************************************************************/
 .gallery {
     user-select: none;
     }
-.gallery__figure {}
 .gallery__image {
     height: auto;
     max-height: 80vh;

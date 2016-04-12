@@ -76,6 +76,10 @@ class IndexFull {
      *
      */
     cycleAnimation () {
+        // Fresh query for js- animatable elements each time
+        this.$anims = this.$node.find( ".js-animate" );
+
+        core.emitter.stop();
         core.emitter.go( this.updateAnimate.bind( this ) );
     }
 
@@ -281,11 +285,6 @@ class IndexFull {
             collection.items.forEach(( item ) => {
                 $grid.append( template( _gridItemTpl.replace( /\n/g, "" ), item ) );
 
-                // @note:
-                // @todo: Keep this `systemDataVariants` condition in until we re-upload these 3 images
-                // /a-girl-named-georges/           diaplayIndex: 1
-                // /woolrich-made-in-usa/           displayIndex: 1
-                // /nike-running-free-designers/    displayIndex: 5
                 if ( item.customContent && item.customContent.diptychImage && item.customContent.diptychImage.systemDataVariants ) {
                     $grid.append( template( _gridItemTpl.replace( /\n/g, "" ), item.customContent.diptychImage ) );
                 }
@@ -297,7 +296,6 @@ class IndexFull {
 
         // Node must be in DOM for image size to work
         this.$target.append( this.$node );
-        this.$anims = this.$node.find( ".js-animate" );
 
         core.images.handleImages( this.$node.find( ".js-lazy-image" ), () => {
             this.cycleAnimation();
@@ -410,13 +408,15 @@ class IndexFull {
      *
      * @public
      * @instance
-     * @method destroy
+     * @method teardown
      * @memberof indexes.IndexFull
      * @description Undo event bindings for this instance.
      *
      */
-    destroy () {
+    teardown () {
         core.emitter.stop();
+
+        core.log( "IndexFull teardown" );
     }
 }
 

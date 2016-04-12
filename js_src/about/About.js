@@ -72,12 +72,14 @@ class About {
      *
      * @public
      * @instance
-     * @method destroy
+     * @method teardown
      * @memberof menus.About
      * @description Undo event bindings for this instance.
      *
      */
-    destroy () {}
+    teardown () {
+        core.log( "About teardown" );
+    }
 }
 
 

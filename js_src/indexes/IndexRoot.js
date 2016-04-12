@@ -1,4 +1,7 @@
+import $ from "js_libs/hobo/dist/hobo.build";
 import * as core from "../core";
+import Project from "../projects/Project";
+import overlay from "../overlay";
 
 
 let instance = null;
@@ -40,13 +43,11 @@ class IndexRoot {
         this.data = data;
         this.$target = core.dom.main.find( `.js-main--${this.data.target}` );
         this.$images = this.$node.find( ".js-lazy-image" );
+        this.timeoutId = null;
+        this.timeoutDelay = core.dom.overlay.elementTransitionDuration;
 
-        // Node must be in DOM for image size to work
-        this.$target.append( this.$node );
-
-        core.images.handleImages( this.$images, () => {
-            core.emitter.fire( "app--update-animate" );
-        });
+        this.bindEvents();
+        this.loadIndex();
 
         instance = this;
     }
@@ -56,12 +57,172 @@ class IndexRoot {
      *
      * @public
      * @instance
-     * @method destroy
+     * @method cycleAnimation
+     * @memberof indexes.IndexRoot
+     * @description Start the animation cycle for the listing.
+     *
+     */
+    cycleAnimation () {
+        // Fresh query for js- animatable elements each time
+        this.$anims = this.$node.find( ".js-animate" );
+
+        core.emitter.stop();
+        core.emitter.go( this.updateAnimate.bind( this ) );
+    }
+
+
+    /**
+     *
+     * @public
+     * @instance
+     * @method updateAnimate
+     * @memberof indexes.IndexRoot
+     * @description Update active photos for index.
+     *
+     */
+    updateAnimate () {
+        let $anim = null;
+        let i = this.$anims.length;
+
+        for ( i; i--; ) {
+            $anim = this.$anims.eq( i );
+
+            if ( core.util.isElementInViewport( $anim[ 0 ] ) ) {
+                $anim.addClass( "is-active" );
+
+            } else {
+                $anim.removeClass( "is-active" );
+            }
+        }
+    }
+
+
+    /**
+     *
+     * @public
+     * @instance
+     * @method bindEvents
+     * @memberof indexes.IndexRoot
+     * @description Bind event handlers for this instance.
+     *
+     */
+    bindEvents () {
+        core.dom.body.on( "click", ".js-index-tile", this.onTileClick.bind( this ) );
+        core.dom.body.on( "mouseenter", ".js-index-tile img", this.onMouseEnter.bind( this ) );
+        core.dom.body.on( "mousemove", ".js-index-tile img", this.onMouseEnter.bind( this ) );
+        core.dom.body.on( "mouseleave", ".js-index-tile img", this.onMouseLeave.bind( this ) );
+    }
+
+
+    /**
+     *
+     * @public
+     * @instance
+     * @method loadIndex
+     * @memberof indexes.IndexRoot
+     * @description Handle loading process for this instance.
+     *
+     */
+    loadIndex () {
+        // Node must be in DOM for image size to work
+        this.$target.append( this.$node );
+
+        core.images.handleImages( this.$images, () => {
+            this.cycleAnimation();
+        });
+    }
+
+
+    /**
+     *
+     * @public
+     * @instance
+     * @method onTileClick
+     * @param {object} e The Event object
+     * @memberof indexes.IndexRoot
+     * @description Handle project grid tile clicks - loads a new Project.
+     *
+     */
+    onTileClick ( e ) {
+        e.preventDefault();
+
+        const $tile = $( e.target ).closest( ".js-index-tile" );
+
+        overlay.setTitle( $tile.data( "title" ) );
+
+        overlay.open();
+
+        Project.open();
+    }
+
+
+    /**
+     *
+     * @public
+     * @instance
+     * @method onMouseEnter
+     * @param {object} e The Event object
+     * @memberof indexes.IndexRoot
+     * @description Handle showing title on mouse enter grid tile.
+     *
+     */
+    onMouseEnter ( e ) {
+        try {
+            clearTimeout( this.timeoutId );
+
+        } catch ( error ) {
+            core.log( "warn", error );
+        }
+
+        if ( Project.isActive() ) {
+            return;
+        }
+
+        const $tile = $( e.target ).closest( ".js-index-tile" );
+
+        overlay.setTitle( $tile.data( "title" ) );
+
+        overlay.open();
+    }
+
+
+    /**
+     *
+     * @public
+     * @instance
+     * @method onMouseLeave
+     * @memberof indexes.IndexRoot
+     * @description Handle removing title on mouse leave grid tile.
+     *
+     */
+    onMouseLeave () {
+        if ( Project.isActive() ) {
+            return;
+        }
+
+        this.timeoutId = setTimeout(() => {
+            if ( !Project.isActive() ) {
+                overlay.close();
+            }
+
+        }, this.timeoutDelay );
+    }
+
+
+    /**
+     *
+     * @public
+     * @instance
+     * @method teardown
      * @memberof indexes.IndexRoot
      * @description Undo event bindings for this instance.
      *
      */
-    destroy () {}
+    teardown () {
+        core.emitter.stop();
+
+        core.log( "IndexRoot teardown" );
+    }
 }
 
 

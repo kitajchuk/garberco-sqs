@@ -80,7 +80,8 @@ const dom = {
      */
     overlay: {
         element: $_jsOverlay,
-        elementTitle: $_jsOverlay.find( ".js-overlay-title" )
+        elementTitle: $_jsOverlay.find( ".js-overlay-title" ),
+        elementTransitionDuration: util.getTransitionDuration( $_jsOverlay[ 0 ] )
     },
 
 

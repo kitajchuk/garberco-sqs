@@ -1,14 +1,10 @@
 import $ from "js_libs/hobo/dist/hobo.build";
 import * as core from "../core";
 import IndexRoot from "./IndexRoot";
-import Project from "../projects/Project";
-import overlay from "../overlay";
 
 
 let $_jsElement = null;
 let instance = null;
-let timeoutId = null;
-const timeoutDelay = core.util.getTransitionDuration( core.dom.overlay.element[ 0 ] );
 
 
 /**
@@ -28,7 +24,17 @@ const indexes = {
      *
      */
     init () {
-        core.emitter.on( "app--load-root", this.onLoadRootIndex.bind( this ) );
+        core.emitter.on( "app--offcanvas", () => {
+            if ( instance ) {
+                instance.teardown();
+            }
+        });
+
+        core.emitter.on( "app--load-root", ( root ) => {
+            $_jsElement = $( root );
+
+            this.onload();
+        });
 
         core.log( "indexes initialized" );
     },
@@ -57,14 +63,16 @@ const indexes = {
      *
      */
     onload () {
-        const data = $_jsElement.data();
+        if ( !instance ) {
+            const data = $_jsElement.data();
 
-        instance = new IndexRoot( $_jsElement, data );
+            instance = new IndexRoot( $_jsElement, data );
 
-        core.dom.body.on( "click", ".js-index-tile", onTileClick );
-        core.dom.body.on( "mouseenter", ".js-index-tile img", onMouseEnter );
-        core.dom.body.on( "mousemove", ".js-index-tile img", onMouseEnter );
-        core.dom.body.on( "mouseleave", ".js-index-tile img", onMouseLeave );
+        } else {
+            instance.cycleAnimation();
+        }
+
+        core.log( "indexes onload" );
     },
 
 
@@ -77,7 +85,7 @@ const indexes = {
      *
      */
     unload () {
-        this.teardown();
+        core.log( "indexes unload" );
     },
 
 
@@ -89,19 +97,7 @@ const indexes = {
      * @description Method performs cleanup after this module. Remmoves events, null vars etc...
      *
      */
-    teardown () {
-        $_jsElement = null;
-
-        if ( instance ) {
-            instance.destroy();
-            instance = null;
-        }
-
-        core.dom.body.off( "click", onTileClick );
-        core.dom.body.off( "mouseenter", onMouseEnter );
-        core.dom.body.off( "mousemove", onMouseEnter );
-        core.dom.body.off( "mouseleave", onMouseLeave );
-    },
+    teardown () {},
 
 
     /**
@@ -117,66 +113,7 @@ const indexes = {
         $_jsElement = core.dom.page.find( ".js-index" );
 
         return ( $_jsElement.length );
-    },
-
-
-    onLoadRootIndex ( root ) {
-        $_jsElement = $( root );
-
-        this.onload();
     }
-};
-
-
-const clearTimeoutById = function ( id ) {
-    try {
-        clearTimeout( id );
-
-    } catch ( error ) {
-        core.log( "warn", error );
-    }
-};
-
-
-const onTileClick = function ( e ) {
-    e.preventDefault();
-
-    const $tile = $( this ).closest( ".js-index-tile" );
-
-    overlay.setTitle( $tile.data( "title" ) );
-
-    overlay.open();
-
-    Project.open();
-};
-
-
-const onMouseEnter = function ( /* e */ ) {
-    clearTimeoutById( timeoutId );
-
-    if ( Project.isActive() ) {
-        return;
-    }
-
-    const $tile = $( this ).closest( ".js-index-tile" );
-
-    overlay.setTitle( $tile.data( "title" ) );
-
-    overlay.open();
-};
-
-
-const onMouseLeave = function () {
-    if ( Project.isActive() ) {
-        return;
-    }
-
-    timeoutId = setTimeout(() => {
-        if ( !Project.isActive() ) {
-            overlay.close();
-        }
-
-    }, timeoutDelay );
 };
 
 

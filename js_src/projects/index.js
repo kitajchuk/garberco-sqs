@@ -1,7 +1,5 @@
-//import $ from "js_libs/hobo/dist/hobo.build";
 import * as core from "../core";
 import Project from "./Project";
-import ImageLoader from "properjs-imageloader";
 
 
 let $_jsElement = null;
@@ -90,7 +88,7 @@ const projects = {
         $_jsElement = null;
 
         if ( instance ) {
-            instance.destroy();
+            instance.teardown();
             instance = null;
         }
 
@@ -127,11 +125,9 @@ const projects = {
  */
 const killProject = function () {
     if ( instance ) {
-        instance.destroy();
+        instance.teardown();
         instance = null;
     }
-
-    ImageLoader.killInstances();
 };
 
 
