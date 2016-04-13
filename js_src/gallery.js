@@ -24,18 +24,56 @@ const gallery = {
      */
     init () {
         this.menu = new Menu( core.dom.gallery.element );
+        this.klasa = "gallery__image figure__image image";
+        this.$image = $( new Image() );
+        this.$image[ 0 ].className = this.klasa;
+
+        core.dom.gallery.elementNode.append( this.$image );
 
         core.dom.gallery.element.on( "click", debounce( this.onClick.bind( this ), 200, true ) );
     },
 
 
+    /**
+     *
+     * @public
+     * @method init
+     * @memberof onClick
+     * @param {object} e The Event object
+     * @description Handle gallery click event.
+     *
+     */
     onClick ( e ) {
-        if ( e.target === this.$image[ 0 ] || !this.isLoaded || overlay.isActive() ) {
-            core.emitter.fire( "app--gallery-image" );
+        if ( e.target === core.dom.gallery.elementNode[ 0 ] || overlay.isActive() ) {
+            this.handleClick( e );
 
         } else {
             core.emitter.fire( "app--gallery-background" );
         }
+    },
+
+
+    /**
+     *
+     * @public
+     * @method init
+     * @memberof handleClick
+     * @param {object} e The Event object
+     * @description Handle gallery click, move forward/backward.
+     *
+     */
+    handleClick ( e ) {
+        const rect = this.$image[ 0 ].getBoundingClientRect();
+        let direction = null;
+
+        if ( e.clientX <= (rect.width / 2 + rect.left) && !overlay.isActive() ) {
+            direction = "left";
+
+        } else {
+            direction = "right";
+        }
+
+        core.emitter.fire( "app--gallery-image", direction );
     },
 
 
@@ -78,7 +116,7 @@ const gallery = {
      *
      */
     empty () {
-        core.dom.gallery.elementNode[ 0 ].innerHTML = "";
+        this.$image[ 0 ].src = "";
     },
 
 
@@ -86,7 +124,7 @@ const gallery = {
      *
      * @public
      * @method setImage
-     * @param {jQuery} $image The image to create a full view of.
+     * @param {Hobo} $image The image to create a full view of.
      * @memberof gallery
      * @description Apply an image to the gallery view.
      *
@@ -94,24 +132,14 @@ const gallery = {
     setImage ( $image ) {
         const data = $image.data();
 
-        this.isLoaded = false;
-        this.empty();
         this.open();
-        this.$image = $( new Image() );
-        this.$image
-            .attr({
-                "data-img-src": data.imgSrc,
-                "data-variants": data.variants,
-                "data-original-size": data.originalSize
-            })
-            .addClass( "gallery__image figure__image image" );
-
-        core.dom.gallery.elementNode.append( this.$image );
-
-        core.util.loadImages( this.$image, core.util.noop ).on( "done", () => {
-            this.isLoaded = true;
-            this.$image.addClass( "is-active" );
+        this.$image.removeAttr( core.config.imageLoaderAttr ).attr({
+            "data-img-src": data.imgSrc,
+            "data-variants": data.variants,
+            "data-original-size": data.originalSize
         });
+
+        core.util.loadImages( this.$image, core.util.noop, true, window.innerWidth );
     }
 };
 

@@ -96,11 +96,40 @@
  * Gallery view
 *******************************************************************************/
 .gallery {
+    cursor: url( /assets/imgs/x.png ) 0 0, auto;
     user-select: none;
+
+    &.is-title {
+        cursor: url( /assets/imgs/arrow-right.png ) 0 0, auto;
+        }
     }
+.gallery__figure {
+    position: relative;
+    width: auto;
+
+    &:after,
+    &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 50%;
+        z-index: $z_layer_01;
+        }
+    &:after {
+        cursor: url( /assets/imgs/arrow-right.png ) 0 0, auto;
+        right: 0;
+        }
+    &:before {
+        cursor: url( /assets/imgs/arrow-left.png ) 0 0, auto;
+        left: 0;
+        }
+}
 .gallery__image {
     height: auto;
     max-height: 80vh;
     max-width: 80vw;
+    position: relative;
+    transform: translate3d( 0, 0, 0 );
     width: auto;
     }

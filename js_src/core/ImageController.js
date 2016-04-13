@@ -7,7 +7,7 @@ import Controller from "properjs-controller";
  *
  * @public
  * @class ImageController
- * @param {jQuery} $images The image collection to load
+ * @param {Hobo} $images The image collection to load
  * @classdesc Handles breaking out the preload vs lazyload batches
  * @memberof core
  *

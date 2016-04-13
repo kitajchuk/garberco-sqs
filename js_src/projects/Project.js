@@ -9,7 +9,7 @@ let isActive = false;
  *
  * @public
  * @class Project
- * @param {jQuery} $node The element
+ * @param {Hobo} $node The element
  * @param {object} data The datas
  * @classdesc Handle an index.
  * @memberof projects
@@ -179,7 +179,7 @@ Project.isActive = function () {
 Project.open = function () {
     isActive = true;
 
-    core.dom.html.addClass( "is-offcanvas" );
+    core.dom.html.addClass( "is-offcanvas is-offcanvas--project" );
     core.dom.body.append( core.dom.project.element );
 
     setTimeout( () => core.dom.project.element.addClass( "is-active" ), 10 );
@@ -203,7 +203,7 @@ Project.close = function () {
     core.dom.project.element.removeClass( "is-active is-inactive" );
 
     setTimeout( () => {
-        core.dom.html.removeClass( "is-offcanvas" );
+        core.dom.html.removeClass( core.config.offcanvasClasses );
         core.dom.project.element.detach();
         core.dom.project.elementPane[ 0 ].innerHTML = "";
 

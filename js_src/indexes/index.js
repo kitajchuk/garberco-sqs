@@ -71,8 +71,6 @@ const indexes = {
         } else {
             instance.cycleAnimation();
         }
-
-        core.log( "indexes onload" );
     },
 
 
@@ -84,20 +82,7 @@ const indexes = {
      * @description Method performs unloading actions for this module.
      *
      */
-    unload () {
-        core.log( "indexes unload" );
-    },
-
-
-    /**
-     *
-     * @public
-     * @method teardown
-     * @memberof indexes
-     * @description Method performs cleanup after this module. Remmoves events, null vars etc...
-     *
-     */
-    teardown () {},
+    unload () {},
 
 
     /**

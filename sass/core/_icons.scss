@@ -1,6 +1,17 @@
 /******************************************************************************
  * Icons: Base
 *******************************************************************************/
+.icon-wrap {
+    cursor: pointer;
+    display: inline-block;
+    padding: 30px;
+    }
+.icon-wrap--left {
+    margin: 0px 0 0 -30px;
+    }
+.icon-wrap--right {
+    margin: 0px -30px 0 0;
+    }
 .icon {
     cursor: pointer;
     display: inline-block;
@@ -14,6 +25,18 @@
     }
 .icon__svg--dark {
     fill: $black;
+    }
+
+
+
+.icon--x {
+    width: 30px;
+    }
+.icon--arrow-left {
+    width: 12px;
+    }
+.icon--arrow-right {
+    width: 12px;
     }
 
 

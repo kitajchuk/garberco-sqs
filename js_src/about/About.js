@@ -8,7 +8,7 @@ let instance = null;
  *
  * @public
  * @class About
- * @param {jQuery} $node The element
+ * @param {Hobo} $node The element
  * @param {object} data The datas
  * @classdesc Handle a menu view.
  * @memberof menus
@@ -29,9 +29,9 @@ class About {
      * @public
      * @instance
      * @method initialize
-     * @param {jQuery} $node The element
+     * @param {Hobo} $node The element
      * @param {object} data The datas
-     * @memberof menus.About
+     * @memberof about.About
      * @description Perform instance bootstrap actions.
      *
      */
@@ -54,7 +54,7 @@ class About {
      * @public
      * @instance
      * @method onPreload
-     * @memberof menus.About
+     * @memberof about.About
      * @description Handle preloaded images.
      *
      */
@@ -73,13 +73,11 @@ class About {
      * @public
      * @instance
      * @method teardown
-     * @memberof menus.About
+     * @memberof about.About
      * @description Undo event bindings for this instance.
      *
      */
-    teardown () {
-        core.log( "About teardown" );
-    }
+    teardown () {}
 }
 
 

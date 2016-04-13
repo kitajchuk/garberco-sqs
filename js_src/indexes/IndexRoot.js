@@ -1,5 +1,6 @@
 import $ from "js_libs/hobo/dist/hobo.build";
 import * as core from "../core";
+import router from "../router";
 import Project from "../projects/Project";
 import overlay from "../overlay";
 
@@ -11,7 +12,7 @@ let instance = null;
  *
  * @public
  * @class IndexRoot
- * @param {jQuery} $node The element
+ * @param {Hobo} $node The element
  * @param {object} data The datas
  * @classdesc Handle an index as a Singleton(ish).
  * @memberof indexes
@@ -32,7 +33,7 @@ class IndexRoot {
      * @public
      * @instance
      * @method initialize
-     * @param {jQuery} $node The element
+     * @param {Hobo} $node The element
      * @param {object} data The datas
      * @memberof indexes.IndexRoot
      * @description Perform instance bootstrap actions.
@@ -66,8 +67,8 @@ class IndexRoot {
         // Fresh query for js- animatable elements each time
         this.$anims = this.$node.find( ".js-animate" );
 
-        // Root index is loaded in the background when you hit a Project direct
-        if ( !Project.isActive() ) {
+        // If pathname is not the `root` we shant not start raf cycle
+        if ( window.location.pathname === router.root ) {
             core.emitter.stop();
             core.emitter.go( this.updateAnimate.bind( this ) );
 
@@ -226,8 +227,6 @@ class IndexRoot {
      */
     teardown () {
         core.emitter.stop();
-
-        core.log( "IndexRoot teardown" );
     }
 }
 

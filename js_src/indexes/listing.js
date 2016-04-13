@@ -24,8 +24,6 @@ const listing = {
      */
     init () {
         core.emitter.on( "app--root", () => {
-            core.dom.html.removeClass( "is-offcanvas" );
-
             if ( instance ) {
                 instance.teardown();
             }
@@ -60,7 +58,7 @@ const listing = {
     onload () {
         core.emitter.fire( "app--offcanvas" );
 
-        core.dom.html.addClass( "is-offcanvas" );
+        core.dom.html.removeClass( core.config.offcanvasClasses ).addClass( "is-offcanvas is-offcanvas--index" );
 
         if ( !instance ) {
             const data = $_jsElement.data();
@@ -70,8 +68,6 @@ const listing = {
         } else {
             instance.cycleAnimation();
         }
-
-        core.log( "listing onload" );
     },
 
 
@@ -83,20 +79,7 @@ const listing = {
      * @description Method performs unloading actions for this module.
      *
      */
-    unload () {
-        core.log( "listing unload" );
-    },
-
-
-    /**
-     *
-     * @public
-     * @method teardown
-     * @memberof listing
-     * @description Method performs cleanup after this module. Remmoves events, null vars etc...
-     *
-     */
-    teardown () {},
+    unload () {},
 
 
     /**

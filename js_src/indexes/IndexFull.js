@@ -24,7 +24,7 @@ const _gridItemTpl = `
  *
  * @public
  * @class IndexFull
- * @param {jQuery} $node The element
+ * @param {Hobo} $node The element
  * @param {object} data The datas
  * @classdesc Handle an index as a Singleton(ish).
  * @memberof indexes
@@ -45,7 +45,7 @@ class IndexFull {
      * @public
      * @instance
      * @method initialize
-     * @param {jQuery} $node The element
+     * @param {Hobo} $node The element
      * @param {object} data The datas
      * @memberof indexes.IndexFull
      * @description Perform instance bootstrap actions.
@@ -139,7 +139,7 @@ class IndexFull {
      * @public
      * @instance
      * @method bindGallery
-     * @param {jQuery} $elem The tile image that was clicked
+     * @param {Hobo} $elem The tile image that was clicked
      * @memberof indexes.IndexFull
      * @description Bind active gallery view.
      *
@@ -188,8 +188,8 @@ class IndexFull {
      * @public
      * @instance
      * @method nextProject
-     * @param {jQuery} $project The project grid
-     * @param {jQuery} $tile The tile image to load in gallery
+     * @param {Hobo} $project The project grid
+     * @param {Hobo} $tile The tile image to load in gallery
      * @memberof indexes.IndexFull
      * @description Transition to a tile in a new project scope.
      *
@@ -214,7 +214,7 @@ class IndexFull {
      * @public
      * @instance
      * @method nextTitle
-     * @param {jQuery} $title The title element
+     * @param {Hobo} $title The title element
      * @param {string} text The optional text for the title to display
      * @memberof indexes.IndexFull
      * @description Transition to the title of the next project.
@@ -228,6 +228,8 @@ class IndexFull {
 
             overlay.open();
 
+            core.dom.gallery.element.addClass( "is-title" );
+
             this.$tile = $title;
         }
     }
@@ -238,7 +240,7 @@ class IndexFull {
      * @public
      * @instance
      * @method nextTile
-     * @param {jQuery} $tile The tile element
+     * @param {Hobo} $tile The tile element
      * @memberof indexes.IndexFull
      * @description Transition to the next tile in a project.
      *
@@ -308,14 +310,22 @@ class IndexFull {
      * @public
      * @instance
      * @method onGalleryImage
+     * @param {string} direction The direction to move
      * @memberof indexes.IndexFull
      * @description Trigger gallery arrow key right.
      *
      */
-    onGalleryImage () {
-        this.onKeyDown({
-            keyCode: 39
-        });
+    onGalleryImage ( direction ) {
+        if ( direction === "left" ) {
+            this.onKeyDown({
+                keyCode: 37
+            });
+
+        } else {
+            this.onKeyDown({
+                keyCode: 39
+            });
+        }
     }
 
 
@@ -329,6 +339,8 @@ class IndexFull {
      *
      */
     onGalleryBack () {
+        gallery.empty();
+
         this.unbindGallery();
     }
 
@@ -374,6 +386,8 @@ class IndexFull {
                 this.nextProject( $project, $project.find( ".js-listing-tile" ).last() );
             }
 
+            core.dom.gallery.element.removeClass( "is-title" );
+
         // Arrow right, has next tile
         } else if ( e.keyCode === 39 && $next.length ) {
             this.nextTile( $next );
@@ -415,8 +429,6 @@ class IndexFull {
      */
     teardown () {
         core.emitter.stop();
-
-        core.log( "IndexFull teardown" );
     }
 }
 

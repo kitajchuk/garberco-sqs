@@ -25,8 +25,6 @@ const about = {
      */
     init () {
         core.emitter.on( "app--root", () => {
-            core.dom.html.removeClass( "is-offcanvas" );
-
             if ( instance ) {
                 instance.teardown();
             }
@@ -61,15 +59,13 @@ const about = {
     onload () {
         core.emitter.fire( "app--offcanvas" );
 
-        core.dom.html.addClass( "is-offcanvas" );
+        core.dom.html.removeClass( core.config.offcanvasClasses ).addClass( "is-offcanvas is-offcanvas--about" );
 
         if ( !instance ) {
             const data = $_jsElement.data();
 
             instance = new About( $_jsElement, data );
         }
-
-        core.log( "about onload" );
     },
 
 
@@ -81,20 +77,7 @@ const about = {
      * @description Method performs unloading actions for this module.
      *
      */
-    unload () {
-        core.log( "about unload" );
-    },
-
-
-    /**
-     *
-     * @public
-     * @method teardown
-     * @memberof about
-     * @description Method performs cleanup after this module. Remmoves events, null vars etc...
-     *
-     */
-    teardown () {},
+    unload () {},
 
 
     /**

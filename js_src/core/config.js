@@ -58,7 +58,18 @@ const config = {
      * @description The string attribute ImageLoader gives loaded images.
      *
      */
-    imageLoaderAttr: "data-imageloader"
+    imageLoaderAttr: "data-imageloader",
+
+
+    /**
+     *
+     * @public
+     * @member offcanvasClasses
+     * @memberof config
+     * @description The string of offcanvas element classNames.
+     *
+     */
+    offcanvasClasses: "is-offcanvas is-offcanvas--about is-offcanvas--index is-offcanvas--project"
 };
 
 

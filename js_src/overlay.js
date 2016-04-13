@@ -109,6 +109,15 @@ const overlay = {
     },
 
 
+    /**
+     *
+     * @public
+     * @method isActive
+     * @memberof overlay
+     * @description Is the overlay open?.
+     * @returns {boolean}
+     *
+     */
     isActive () {
         return isActive;
     }

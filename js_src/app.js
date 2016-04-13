@@ -96,8 +96,6 @@ class App {
         $target.addClass( "is-active" );
 
         this.core.dom.main[ 0 ].id = `is-main--${data.target}`;
-
-        //window.scrollTo( 0, 0 );
     }
 }
 

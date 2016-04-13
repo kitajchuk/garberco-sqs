@@ -25,9 +25,37 @@
 }
 
 .is-offcanvas {
+/*
     .header__nav--about,
     .header__nav--index {
         opacity: 0;
         pointer-events: none;
+        }
+*/
+}
+
+.is-offcanvas--about {
+    .header__nav--about {
+        pointer-events: none;
+        visibility: hidden;
+        }
+    .nav__back--left {
+        display: block;
+        }
+}
+
+.is-offcanvas--index {
+    .header__nav--index {
+        pointer-events: none;
+        visibility: hidden;
+        }
+    .nav__back--right {
+        display: block;
+        }
+}
+
+.is-menu-open {
+    .overlay {
+        background-color: $white;
         }
 }

@@ -210,9 +210,11 @@ const router = {
             this.root = window.location.pathname;
         }
 
-        core.dom.root[ 0 ].href = this.root;
+        core.dom.root.attr( "href", this.root );
 
         core.dom.root.on( "click", () => {
+            core.dom.html.removeClass( core.config.offcanvasClasses );
+
             core.emitter.fire( "app--root" );
         });
 
@@ -268,7 +270,7 @@ const router = {
 
             // GarberCo?
             if ( match === core.config.rootUrlId ) {
-                core.dom.html.removeClass( "is-offcanvas" );
+                core.dom.html.removeClass( core.config.offcanvasClasses );
                 //core.dom.html.removeClass( "is-neverflow" );
             }
 

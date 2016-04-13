@@ -5,3 +5,21 @@
 .nav--projects {
     display: none;
     }
+
+
+
+.nav__menu {
+    position: relative;
+    }
+.nav__back {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY( -50% );
+    }
+.nav__back--left {
+    left: 0;
+    }
+.nav__back--right {
+    right: 0;
+    }

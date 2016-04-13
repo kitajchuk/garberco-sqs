@@ -17,20 +17,6 @@ import detect from "./detect";
 
 /**
  *
- * @description Noop a preventDefault() for event handlers
- * @method preNoop
- * @param {object} e The event object
- * @returns {boolean}
- *
- */
-const preNoop = function ( e ) {
-    e.preventDefault();
-    return false;
-};
-
-
-/**
- *
  * @description Add pixel units when inline styling
  * @method px
  * @param {string} str The value to pixel-ify
@@ -121,6 +107,16 @@ const getClosestValue = function ( arr, closestTo ) {
 };
 
 
+/**
+ *
+ * @public
+ * @method getElementsInView
+ * @param {Hobo} $nodes The elements to check
+ * @memberof util
+ * @description Get only visible elements
+ * @returns {Hobo}
+ *
+ */
 const getElementsInView = function ( $nodes ) {
     let i = $nodes.length;
     const $ret = $( [] );
@@ -139,7 +135,7 @@ const getElementsInView = function ( $nodes ) {
  *
  * @description Update images that have already been loaded
  * @method updateImages
- * @param {jQuery} images The optional argument passed collection to reload
+ * @param {Hobo} images The optional argument passed collection to reload
  * @memberof util
  *
  */
@@ -161,11 +157,12 @@ const updateImages = function ( images ) {
  * @param {object} images Optional collection of images to load
  * @param {function} handler Optional handler for load conditions
  * @param {boolean} useVariant Optional flag to skip loading size variants
+ * @param {number} useWidth Optional manual width to determine variant against
  * @memberof util
  * @returns {instance}
  *
  */
-const loadImages = function ( images, handler, useVariant ) {
+const loadImages = function ( images, handler, useVariant, useWidth ) {
     const rQuery = /\?(.*)$/;
     const map = function ( vnt ) {
         return parseInt( vnt, 10 );
@@ -199,7 +196,7 @@ const loadImages = function ( images, handler, useVariant ) {
     for ( i; i--; ) {
         $img = images.eq( i );
         data = $img.data();
-        width = ($img[ 0 ].clientWidth || $img[ 0 ].parentNode.clientWidth || window.innerWidth);
+        width = (useWidth || $img[ 0 ].clientWidth || $img[ 0 ].parentNode.clientWidth || window.innerWidth);
         source = data.imgSrc.replace( rQuery, "" );
 
         // Pre-process portrait vs landscape using originalSize
@@ -237,42 +234,6 @@ const loadImages = function ( images, handler, useVariant ) {
         transitionDelay: 0
 
     }).on( "data", handler );
-};
-
-
-/**
- *
- * @description Toggle on/off scrollability
- * @method disableMouseWheel
- * @param {boolean} enable Flag to enable/disable
- * @memberof util
- *
- */
-const disableMouseWheel = function ( enable ) {
-    if ( enable ) {
-        dom.doc.on( "DOMMouseScroll mousewheel", preNoop );
-
-    } else {
-        dom.doc.off( "DOMMouseScroll mousewheel" );
-    }
-};
-
-
-/**
- *
- * @description Toggle on/off touch movement
- * @method disableTouchMove
- * @param {boolean} enable Flag to enable/disable
- * @memberof util
- *
- */
-const disableTouchMove = function ( enable ) {
-    if ( enable ) {
-        dom.doc.on( "touchmove", preNoop );
-
-    } else {
-        dom.doc.off( "touchmove" );
-    }
 };
 
 
@@ -360,6 +321,15 @@ const getOriginalDims = function ( original ) {
 };
 
 
+/**
+ *
+ * @public
+ * @method getPageKey
+ * @memberof util
+ * @description Get the unique page key for cache and such
+ * @returns {object}
+ *
+ */
 const getPageKey = function () {
     let ret = null;
 
@@ -445,24 +415,17 @@ const slugify = function ( str ) {
  * Export
 *******************************************************************************/
 export default {
-    // Loading
-    loadImages,
-    updateImages,
-    isElementLoadable,
-    isElementInViewport,
-    getElementsInView,
-
-    // Disabling
-    disableMouseWheel,
-    disableTouchMove,
-
-    // Random
     px,
     noop,
     slugify,
+    getPageKey,
+    loadImages,
     translate3d,
     extendObject,
+    updateImages,
+    getElementsInView,
+    isElementLoadable,
+    isElementInViewport,
     getTransitionDuration,
-    getDefaultHammerOptions,
-    getPageKey
+    getDefaultHammerOptions
 };
