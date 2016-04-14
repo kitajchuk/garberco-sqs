@@ -1,5 +1,6 @@
 import * as core from "../core";
 import overlay from "../overlay";
+import Menu from "../Menu";
 
 
 let isActive = false;
@@ -16,19 +17,77 @@ let isActive = false;
  *
  */
 class Project {
-    constructor ( $node, data ) {
+    constructor ( $node, $info, data ) {
         isActive = true;
 
         this.$node = $node;
+        this.$infoScreen = $info;
+        this.$infoButton = core.dom.header.find( ".js-project-info" );
+        this.menu = new Menu( this.$infoScreen );
         this.data = data;
         this.$plates = this.$node.find( ".js-project-plate" );
         this.$images = this.$node.find( ".js-lazy-image" );
         this.isEnded = false;
 
+        this.bindEvents();
+        this.loadProject();
+    }
+
+
+    /**
+     *
+     * @public
+     * @instance
+     * @method bindEvents
+     * @memberof projects.Project
+     * @description Bind event handlers for open Project.
+     *
+     */
+    bindEvents () {
+        this._onClickInfo = this.onClickInfo.bind( this );
+
+        this.$infoScreen.on( "click", this._onClickInfo );
+        this.$infoButton.on( "click", this._onClickInfo );
+    }
+
+
+    /**
+     *
+     * @public
+     * @instance
+     * @method loadProject
+     * @memberof projects.Project
+     * @description Load images with {@link ImageController}.
+     *
+     */
+    loadProject () {
         // Node must be in DOM for image size to work
         core.dom.project.elementPane.append( this.$node );
 
         core.images.handleImages( this.$images, this.onPreload.bind( this ) );
+    }
+
+
+    /**
+     *
+     * @public
+     * @instance
+     * @method onClickInfo
+     * @memberof projects.Project
+     * @description Handle Info text/overlay interaction.
+     *
+     */
+    onClickInfo () {
+        if ( core.env.isConfig() && this.menu.isActive() ) {
+            return;
+        }
+
+        if ( this.menu.isActive() ) {
+            this.menu.close();
+
+        } else {
+            this.menu.open();
+        }
     }
 
 
@@ -146,6 +205,11 @@ class Project {
      *
      */
     teardown () {
+        if ( this._onClickInfo ) {
+            this.$infoScreen.on( "click", this._onClickInfo );
+            this.$infoButton.on( "click", this._onClickInfo );
+        }
+
         Project.close();
     }
 }

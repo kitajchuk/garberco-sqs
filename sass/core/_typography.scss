@@ -60,4 +60,8 @@
 }
 .h3 {
     @include h3();
+
+    strong {
+        font-weight: 600;
+        }
     }

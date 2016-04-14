@@ -1,6 +1,15 @@
 @media only screen and ( max-width: $break-laptop-medium ) {
+    .header {
+        padding-left: $grid-padding;
+        padding-right: $grid-padding;
+        }
     .grid__item {
+        padding-bottom: 0;
         width: 50%;
+        }
+    .index.grid {
+        padding-left: 0;
+        padding-right: 0;
         }
 
     .h2 {
@@ -40,6 +49,23 @@
     .about__col + .about__col {
         margin-top: 90px;
         }
+
+    .grid__item__small {
+        width: 25%;
+        }
+
+    .info__text {
+        padding-left: $grid-padding / 2;
+        padding-right: $grid-padding / 2;
+        max-width: 100%;
+        width: 100%;
+        }
+}
+
+
+
+@media only screen and ( max-width: $break-tablet-small ) {
+    
 }
 
 
@@ -80,13 +106,23 @@
         font-size: 18px;
         }
 
-    .logo {
-        max-width: 140px;
-        }
+    .icon--garberco {
+        svg {
+            height: 20px;
+            }
+    }
+    .icon--garberco--intro {
+        svg {
+            height: 40px;
+            }
+    }
 
     .index.grid {
+        padding-left: $grid-padding / 2;
+        padding-right: $grid-padding / 2;
         text-align: center;
         }
+
     .index.grid .grid__photo {
         padding-bottom: 0;
 

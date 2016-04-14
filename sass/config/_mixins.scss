@@ -57,7 +57,7 @@
 @mixin h2() {
     font-size: $h2-size;
     font-weight: 600;
-    line-height: 1.36;
+    line-height: 1.2;
     @include font-sans-text-medium();
 }
 @mixin h3() {

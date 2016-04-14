@@ -32,6 +32,9 @@ $screen-wrap-delay: ($midi-duration / 2);
         background-color: $white;
         }
     }
+
+
+
 .project-view {
     background-color: transparent;
     opacity: 1;
@@ -50,3 +53,25 @@ $screen-wrap-delay: ($midi-duration / 2);
     background-color: $white;
     min-height: 100%;
     }
+
+
+
+.info {
+    background-color: $dark;
+    cursor: url( /assets/imgs/x--light.png ) 0 0, auto;
+    pointer-events: none;
+
+    &.is-active-events {
+        pointer-events: auto;
+        }
+    }
+.info__text {
+    color: $white;
+    max-width: 700px;
+    min-height: 50px;
+    min-width: 320px;
+    }
+
+
+
+.intro {}

@@ -66,7 +66,7 @@ class Menu {
      *
      */
     close () {
-        this.$node.removeClass( "is-active" );
+        this.$node.removeClass( "is-active is-active-events" );
         core.dom.html.removeClass( "is-clipped" );
         core.dom.body.removeClass( "is-clipped" );
 

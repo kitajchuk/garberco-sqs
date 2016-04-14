@@ -24,22 +24,12 @@
 .is-routing {
 }
 
-.is-offcanvas {
-/*
-    .header__nav--about,
-    .header__nav--index {
-        opacity: 0;
-        pointer-events: none;
-        }
-*/
-}
-
 .is-offcanvas--about {
     .header__nav--about {
         pointer-events: none;
         visibility: hidden;
         }
-    .nav__back--left {
+    .nav__back--arrow-left {
         display: block;
         }
 }
@@ -49,7 +39,19 @@
         pointer-events: none;
         visibility: hidden;
         }
-    .nav__back--right {
+    .nav__back--arrow-right {
+        display: block;
+        }
+}
+
+.is-offcanvas--project {
+    .header__nav--about,
+    .header__nav--index {
+        pointer-events: none;
+        visibility: hidden;
+        }
+    .nav__back--x,
+    .nav__back--info {
         display: block;
         }
 }

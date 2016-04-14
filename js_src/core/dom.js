@@ -73,6 +73,17 @@ const dom = {
     /**
      *
      * @public
+     * @member intro
+     * @memberof dom
+     * @description The cached intro node?
+     *
+     */
+    intro: $( ".js-intro" ),
+
+
+    /**
+     *
+     * @public
      * @member overlay
      * @memberof dom
      * @description The cached overlay node.

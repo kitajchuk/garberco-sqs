@@ -29,19 +29,25 @@
 
 
 
-.icon--x {
-    width: 30px;
-    }
-.icon--arrow-left {
-    width: 12px;
-    }
+.icon--x,
+.icon--arrow-left,
 .icon--arrow-right {
-    width: 12px;
-    }
-
-
-
-.logo {
-    max-width: 200px;
-    width: 100%;
-    }
+    svg {
+        height: 18px;
+        }
+}
+.icon--garberco {
+    svg {
+        height: 30px;
+        }
+}
+.icon--garberco--intro {
+    svg {
+        height: 60px;
+        }
+}
+.icon--pencil {
+    svg {
+        height: 16px;
+        }
+}

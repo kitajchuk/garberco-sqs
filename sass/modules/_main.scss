@@ -66,6 +66,11 @@
     max-width: 80%;
     width: 100%;
     }
+.about__col {
+    .h3 {
+        line-height: 1.4;
+        }
+}
 
 
 
@@ -97,7 +102,12 @@
 *******************************************************************************/
 .gallery {
     cursor: url( /assets/imgs/x.png ) 0 0, auto;
+    pointer-events: none;
     user-select: none;
+
+    &.is-active-events {
+        pointer-events: auto;
+        }
 
     &.is-title {
         cursor: url( /assets/imgs/arrow-right.png ) 0 0, auto;

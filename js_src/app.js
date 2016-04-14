@@ -3,6 +3,7 @@ import * as core from "./core";
 import router from "./router";
 import overlay from "./overlay";
 import gallery from "./gallery";
+import intro from "./intro";
 
 
 /**
@@ -18,15 +19,12 @@ class App {
         this.router = router;
         this.overlay = overlay;
         this.gallery = gallery;
+        this.intro = intro;
         this.analytics = new core.Analytics();
         this.$mainPanels = this.core.dom.header.find( ".js-main-panel" );
 
         this.initModules();
         this.bindEvents();
-
-        // @note:
-        // Remove cart until it has a use ?
-        $( ".absolute-cart-box" ).remove();
 
         core.log( "App", this );
     }
@@ -61,7 +59,26 @@ class App {
      *
      */
     bindEvents () {
+        this._onPreloadDone = this.onPreloadDone.bind( this );
+
+        this.core.emitter.on( "app--preload-done", this._onPreloadDone );
         this.core.dom.header.on( "click", ".js-controller", this.onController.bind( this ) );
+    }
+
+
+    /**
+     *
+     * @public
+     * @instance
+     * @method onPreloadDone
+     * @memberof App
+     * @description Handle intro teardown.
+     *
+     */
+    onPreloadDone () {
+        this.core.emitter.off( "app--preload-done", this._onPreloadDone );
+
+        this.intro.teardown();
     }
 
 
