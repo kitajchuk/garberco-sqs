@@ -4,9 +4,11 @@ import router from "../router";
 import gallery from "../gallery";
 import overlay from "../overlay";
 import template from "properjs-template";
+import Controller from "properjs-controller";
 
 
 let instance = null;
+const animator = new Controller();
 const _gridTitleTpl = `<div class="listing__title js-listing-title" data-title="{title}"><h3 class="listing__title__text h3">{text}</h3></div>`;
 const _gridWrapTpl = `<div class="listing__grid js-listing-project grid grid--index"></div>`;
 const _gridItemTpl = `
@@ -79,8 +81,8 @@ class IndexFull {
         // Fresh query for js- animatable elements each time
         this.$anims = this.$node.find( ".js-animate" );
 
-        core.emitter.stop();
-        core.emitter.go( this.updateAnimate.bind( this ) );
+        animator.stop();
+        animator.go( this.updateAnimate.bind( this ) );
     }
 
 
@@ -424,7 +426,7 @@ class IndexFull {
      *
      */
     teardown () {
-        core.emitter.stop();
+        animator.stop();
     }
 }
 

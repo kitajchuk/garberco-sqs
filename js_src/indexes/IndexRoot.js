@@ -3,9 +3,11 @@ import * as core from "../core";
 import router from "../router";
 import Project from "../projects/Project";
 import overlay from "../overlay";
+import Controller from "properjs-controller";
 
 
 let instance = null;
+const animator = new Controller();
 
 
 /**
@@ -69,8 +71,8 @@ class IndexRoot {
 
         // If pathname is not the `root` we shant not start raf cycle
         if ( window.location.pathname === router.root ) {
-            core.emitter.stop();
-            core.emitter.go( this.updateAnimate.bind( this ) );
+            animator.stop();
+            animator.go( this.updateAnimate.bind( this ) );
 
         } else {
             this.updateAnimate();
@@ -229,7 +231,7 @@ class IndexRoot {
      *
      */
     teardown () {
-        core.emitter.stop();
+        animator.stop();
     }
 }
 

@@ -43,9 +43,9 @@ class About {
         this.$anim = this.$node.find( ".js-animate-in" );
         this.$images = this.$node.find( ".js-lazy-image" );
 
-        instance = this;
+        this.loadContent();
 
-        core.images.handleImages( this.$images, this.onPreload.bind( this ) );
+        instance = this;
     }
 
 
@@ -53,18 +53,18 @@ class About {
      *
      * @public
      * @instance
-     * @method onPreload
+     * @method loadContent
      * @memberof about.About
-     * @description Handle preloaded images.
+     * @description Handle content.
      *
      */
-    onPreload () {
+    loadContent () {
         this.$target.append( this.$node );
 
         setTimeout(() => {
             this.$anim.addClass( "is-active" );
 
-        }, this.transTime );
+        }, 10 );
     }
 
 

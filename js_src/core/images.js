@@ -85,6 +85,19 @@ const images = {
     /**
      *
      * @public
+     * @method handleLazyload
+     * @memberof core.images
+     * @description Method handles the `done` lazyloading event cycle.
+     *
+     */
+    handleLazyload () {
+        emitter.fire( "app--lazyload-done" );
+    },
+
+
+    /**
+     *
+     * @public
      * @method handleImages
      * @memberof core.images
      * @param {object} $images Optionally, the image collection to load
@@ -99,10 +112,7 @@ const images = {
             const imageController = new ImageController( $images );
 
             imageController.on( "preload", this.handlePreload.bind( this, callback ) );
-
-            imageController.on( "lazyload", () => {
-                emitter.fire( "app--lazyload-done" );
-            });
+            imageController.on( "lazyload", this.handleLazyload.bind( this ) );
 
         } else {
             this.handlePreload( callback );

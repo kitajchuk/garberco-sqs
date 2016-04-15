@@ -1,9 +1,11 @@
 import * as core from "../core";
 import overlay from "../overlay";
 import Menu from "../Menu";
+import Controller from "properjs-controller";
 
 
 let isActive = false;
+const animator = new Controller();
 
 
 /**
@@ -119,8 +121,8 @@ class Project {
     cycleAnimation () {
         this.onUpdateEmitter();
 
-        core.emitter.stop();
-        core.emitter.go( this.onUpdateEmitter.bind( this ) );
+        animator.stop();
+        animator.go( this.onUpdateEmitter.bind( this ) );
     }
 
 
@@ -262,7 +264,7 @@ Project.open = function () {
 Project.close = function () {
     isActive = false;
 
-    core.emitter.stop();
+    animator.stop();
 
     core.dom.project.element.removeClass( "is-active is-inactive" );
 
