@@ -7,12 +7,6 @@
     position: relative;
     text-align: center;
 
-/*
-    &#is-main--garberco {
-        .main__panel--garberco {}
-    }
-*/
-
     &#is-main--about {
         .main__panel--about {
             transform: translate3d( 0, 0, 0 );
@@ -41,6 +35,14 @@
     text-align: left;
     top: 0;
     width: 100%;
+    -webkit-overflow-scrolling: touch;
+
+    &.is-active {
+        display: block;
+        }
+    &.is-hidden {
+        display: none;
+        }
     }
 .main__panel--about {
     left: 0;

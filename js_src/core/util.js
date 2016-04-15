@@ -8,11 +8,9 @@
 
 
 import $ from "js_libs/hobo/dist/hobo.build";
-import Hammer from "hammerjs";
 import ImageLoader from "properjs-imageloader";
 import dom from "./dom";
 import config from "./config";
-import detect from "./detect";
 
 
 /**
@@ -26,22 +24,6 @@ import detect from "./detect";
  */
 const px = function ( str ) {
     return `${str}px`;
-};
-
-
-/**
- *
- * @description Apply a translate3d transform
- * @method translate3d
- * @param {object} el The element to transform
- * @param {string|number} x The x value
- * @param {string|number} y The y value
- * @param {string|number} z The z value
- * @memberof util
- *
- */
-const translate3d = function ( el, x, y, z ) {
-    el.style[ Hammer.prefixed( el.style, "transform" ) ] = `translate3d( ${x}, ${y}, ${z} )`;
 };
 
 
@@ -216,13 +198,13 @@ const loadImages = function ( images, handler, useVariant, useWidth ) {
             variant = getClosestValue( vars, width );
 
             // If the pixel density is higher, use a larger image ?
-            if ( window.devicePixelRatio > 1 ) {
+            //if ( window.devicePixelRatio > 1 ) {
                 // Splice off the variant that was matched
-                vars.splice( vars.indexOf( variant ), 1 );
+            //    vars.splice( vars.indexOf( variant ), 1 );
 
                 // Apply the new, larger variant as the format
-                variant = getClosestValue( vars, variant );
-            }
+            //    variant = getClosestValue( vars, variant );
+            //}
 
             $img[ 0 ].setAttribute( config.lazyImageAttr, `${source}?format=${variant}w` );
         }
@@ -253,8 +235,8 @@ const getTransitionDuration = function ( el ) {
     let multiplyBy = 1000;
 
     if ( el ) {
-        duration = getComputedStyle( el )[ Hammer.prefixed( el.style, "transition-duration" ) ];
-        isSeconds = duration.indexOf( "ms" ) === -1;
+        duration = getComputedStyle( el )[ "transition-duration" ];
+        isSeconds = String( duration ).indexOf( "ms" ) === -1;
         multiplyBy = isSeconds ? 1000 : 1;
 
         ret = parseFloat( duration ) * multiplyBy;
@@ -274,29 +256,6 @@ const getTransitionDuration = function ( el ) {
  */
 const noop = function () {
     return true;
-};
-
-
-/**
- *
- * @method getDefaultHammerOptions
- * @memberof util
- * @description The default options for Hammer JS.
- *              Disables cssProps for non-touch experiences.
- * @returns {object}
- *
- */
-const getDefaultHammerOptions = function () {
-    return detect.isDevice() ? {} : {
-        cssProps: {
-            contentZoomingString: false,
-            tapHighlightColorString: false,
-            touchCalloutString: false,
-            touchSelectString: false,
-            userDragString: false,
-            userSelectString: false
-        }
-    };
 };
 
 
@@ -420,12 +379,10 @@ export default {
     slugify,
     getPageKey,
     loadImages,
-    translate3d,
     extendObject,
     updateImages,
     getElementsInView,
     isElementLoadable,
     isElementInViewport,
-    getTransitionDuration,
-    getDefaultHammerOptions
+    getTransitionDuration
 };

@@ -115,9 +115,12 @@ class IndexRoot {
      */
     bindEvents () {
         core.dom.body.on( "click", ".js-index-tile", this.onTileClick.bind( this ) );
-        core.dom.body.on( "mouseenter", ".js-index-tile img", this.onMouseEnter.bind( this ) );
-        core.dom.body.on( "mousemove", ".js-index-tile img", this.onMouseEnter.bind( this ) );
-        core.dom.body.on( "mouseleave", ".js-index-tile img", this.onMouseLeave.bind( this ) );
+
+        if ( !core.detect.isDevice() ) {
+            core.dom.body.on( "mouseenter", ".js-index-tile img", this.onMouseEnter.bind( this ) );
+            core.dom.body.on( "mousemove", ".js-index-tile img", this.onMouseEnter.bind( this ) );
+            core.dom.body.on( "mouseleave", ".js-index-tile img", this.onMouseLeave.bind( this ) );
+        }
     }
 
 

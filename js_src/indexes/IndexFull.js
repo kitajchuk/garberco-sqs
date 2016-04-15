@@ -122,14 +122,10 @@ class IndexFull {
      */
     bindEvents () {
         this.$node.on( "click", ".js-listing-tile", ( e ) => {
-            let i = e.path.length;
+            const $target = $( e.target );
+            const $tile = $target.is( ".js-listing-tile" ) ? $target : $target.closest( ".js-listing-tile" );
 
-            for ( i; i--; ) {
-                if ( e.path[ i ].className && e.path[ i ].className.indexOf( "js-listing-tile" ) !== -1 ) {
-                    this.bindGallery( $( e.path[ i ] ) );
-                    break;
-                }
-            }
+            this.bindGallery( $tile );
         });
     }
 

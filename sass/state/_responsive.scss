@@ -83,6 +83,10 @@
             }
     }
 
+    .-topper {
+        padding-top: 200px;
+        }
+
     .overlay {
         padding-left: $grid-padding / 2;
         padding-right: $grid-padding / 2;
@@ -174,6 +178,9 @@
         padding-left: $grid-padding / 2;
         padding-right: $grid-padding / 2;
         }
+    .listing {
+        padding-top: 100px;
+        }
     .listing__title {
         display: none;
         }
@@ -190,9 +197,5 @@
     .gallery__image {
         max-height: 100vh;
         max-width: 100vw;
-        }
-
-    .-topper {
-        padding-top: 200px;
         }
 }
