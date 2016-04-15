@@ -24,6 +24,10 @@ body {
     -webkit-touch-callout: none;
     @include font-sans-text();
     }
+html,
+body {
+    height: 100%;
+    }
 a {
     color: inherit;
     text-decoration: none;

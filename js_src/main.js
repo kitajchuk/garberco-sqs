@@ -58,18 +58,10 @@ const main = {
         const data = $controller.data();
         const $panel = core.dom.main.find( `.js-main--${data.target}` );
 
-        this.$mainPanels.removeClass( "is-hidden is-active" );
+        this.$mainPanels.removeClass( "is-active" );
         $panel.addClass( "is-active" );
 
-        setTimeout( () => {
-            core.dom.main[ 0 ].id = `is-main--${data.target}`;
-
-        }, 10 );
-
-        setTimeout( () => {
-            this.$mainPanels.not( $panel ).addClass( "is-hidden" );
-
-        }, this.mainDuration + 10 );
+        core.dom.main[ 0 ].id = `is-main--${data.target}`;
     }
 };
 

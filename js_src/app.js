@@ -41,8 +41,8 @@ class App {
      */
     initModules () {
         this.core.detect.init( this );
-        this.core.resizes.init( this );
-        this.core.scrolls.init( this );
+        //this.core.resizes.init( this );
+        //this.core.scrolls.init( this );
         this.main.init( this );
         this.router.init( this );
         this.overlay.init( this );

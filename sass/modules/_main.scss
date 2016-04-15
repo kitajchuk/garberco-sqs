@@ -3,6 +3,7 @@
 *******************************************************************************/
 .main {
     font-size: 0;
+    height: 100%;
     overflow: hidden;
     position: relative;
     text-align: center;
@@ -29,20 +30,13 @@
     background-color: $white;
     height: 100%;
     overflow-x: hidden;
-    overflow-y: auto;
-    position: fixed;
+    overflow-y: scroll;
+    position: absolute;
     transition: transform $base-duration $ease-cubic-sharp;
     text-align: left;
     top: 0;
     width: 100%;
     -webkit-overflow-scrolling: touch;
-
-    &.is-active {
-        display: block;
-        }
-    &.is-hidden {
-        display: none;
-        }
     }
 .main__panel--about {
     left: 0;

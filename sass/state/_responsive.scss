@@ -160,18 +160,20 @@
         padding-left: $grid-padding / 2;
         padding-right: $grid-padding / 2;
         }
+    /*
     .project__diptych {
         .diptych__left,
         .diptych__right {
             margin: 0 !important;
             padding-left: $grid-padding / 2 !important;
             padding-right: $grid-padding / 2 !important;
-            width: 50% !important;
+            width: 100% !important;
             }
         .diptych__left {
             padding-bottom: 80px;
             }
     }
+    */
 
     // 33% => 50% left/center/right
     .project__image--third,
@@ -187,6 +189,20 @@
         .image {
             max-width: 50% !important;
             width: 50% !important;
+            }
+    }
+
+    .project__diptych {
+        .diptych__left,
+        .diptych__right {
+            margin: 0 !important;
+            width: 50% !important;
+            }
+        .diptych__left {
+            padding-left: $grid-padding / 2 !important;
+            }
+        .diptych__right {
+            padding-right: $grid-padding / 2 !important;
             }
     }
 

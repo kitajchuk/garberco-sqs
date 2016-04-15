@@ -14,7 +14,7 @@ class Menu {
         this.$node = $node;
         this.tDuration = core.util.getTransitionDuration( this.$node[ 0 ] );
         this.isOpen = false;
-        this.scrollPos = core.scroller.getScrollY();
+        //this.scrollPos = core.scroller.getScrollY();
 
         this.$node.detach();
     }
@@ -38,15 +38,15 @@ class Menu {
         // Handle scroll suppression
 
         // 0.2 => Get the current scroll position
-        this.scrollPos = core.scroller.getScrollY();
+        //this.scrollPos = core.scroller.getScrollY();
 
         // 0.3 => Suppress the scrolls emitter
-        core.scrolls.suppress( true );
+        //core.scrolls.suppress( true );
 
         // 0.4 => Broadcast the open menu
         core.emitter.fire( "app--menu-opened" );
 
-        setTimeout( () => this.$node.addClass( "is-active" ), 0 );
+        setTimeout( () => this.$node.addClass( "is-active" ), 10 );
         setTimeout( () => {
             this.$node.addClass( "is-active-events" );
             core.dom.html.addClass( "is-clipped" );
@@ -73,10 +73,10 @@ class Menu {
         // Handle scroll suppression
 
         // 0.1 => Reset the document scroll position
-        core.dom.body[ 0 ].scrollTop = this.scrollPos;
+        //core.dom.body[ 0 ].scrollTop = this.scrollPos;
 
         // 0.2 => Un-suppress the scrolls emitter
-        core.scrolls.suppress( false );
+        //core.scrolls.suppress( false );
 
         // 0.3 => Broadcast the closed menu
         core.emitter.fire( "app--menu-closed" );
