@@ -187,8 +187,8 @@
     .project__image--half-left-pad,
     .project__image--half-right-pad {
         .image {
-            max-width: 50% !important;
-            width: 50% !important;
+            max-width: 75% !important;
+            width: 75% !important;
             }
     }
 
@@ -200,8 +200,10 @@
             }
         .diptych__left {
             padding-left: $grid-padding / 2 !important;
+            padding-right: $grid-padding / 4 !important;
             }
         .diptych__right {
+            padding-left: $grid-padding / 4 !important;
             padding-right: $grid-padding / 2 !important;
             }
     }
