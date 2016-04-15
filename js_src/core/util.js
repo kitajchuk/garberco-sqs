@@ -32,7 +32,7 @@ const px = function ( str ) {
  * @description Module onImageLoadHander method, handles event
  * @method isElementLoadable
  * @param {object} el The DOMElement to check the offset of
- * @memberof util
+ * @memberof core.util
  * @returns {boolean}
  *
  */
@@ -159,7 +159,7 @@ const loadImages = function ( images, handler, useVariant, useWidth ) {
     let i = null;
 
     // Normalize the handler
-    handler = (handler || isElementLoadable);
+    handler = (handler || isElementInViewport);
 
     // Normalize the images
     images = (images || dom.page.find( config.lazyImageSelector ));
@@ -213,9 +213,8 @@ const loadImages = function ( images, handler, useVariant, useWidth ) {
     return new ImageLoader({
         elements: images,
         property: config.lazyImageAttr,
-        transitionDelay: 0
-
-    }).on( "data", handler );
+        executor: handler
+    });
 };
 
 
@@ -381,8 +380,8 @@ export default {
     loadImages,
     extendObject,
     updateImages,
-    getElementsInView,
     isElementLoadable,
+    getElementsInView,
     isElementInViewport,
     getTransitionDuration
 };

@@ -20,7 +20,7 @@
     "properjs-controller": "~0.2",
     "properjs-debounce": "^0.2.0",
     "properjs-easing": "~0.2",
-    "properjs-imageloader": "~0.2",
+    "properjs-imageloader": "~0.3",
     "properjs-matchelement": "~0.2",
     "properjs-mediabox": "~0.3",
     "properjs-pagecontroller": "~0.3",

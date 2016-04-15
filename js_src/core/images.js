@@ -1,6 +1,4 @@
 import dom from "./dom";
-import * as util from "./util";
-import log from "./log";
 import config from "./config";
 import emitter from "./emitter";
 import ImageController from "./ImageController";
@@ -15,55 +13,6 @@ import ImageController from "./ImageController";
  *
  */
 const images = {
-    /**
-     *
-     * @public
-     * @method init
-     * @memberof core.images
-     * @description Method runs once when window loads.
-     *
-     */
-    init () {
-        log( "preload initialized" );
-    },
-
-
-    /**
-     *
-     * @public
-     * @method isActive
-     * @memberof core.images
-     * @description Method informs PageController of active status.
-     * @returns {boolean}
-     *
-     */
-    isActive: util.noop,
-
-
-    /**
-     *
-     * @public
-     * @method onload
-     * @memberof core.images
-     * @description Method performs onloading actions for this module.
-     *
-     */
-    onload () {
-        this.handleImages();
-    },
-
-
-    /**
-     *
-     * @public
-     * @method unload
-     * @memberof core.images
-     * @description Method performs unloading actions for this module.
-     *
-     */
-    unload () {},
-
-
     /**
      *
      * @public

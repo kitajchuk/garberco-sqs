@@ -33,6 +33,8 @@ class Project {
 
         this.bindEvents();
         this.loadProject();
+
+        core.log( "Project", this );
     }
 
 
@@ -163,16 +165,14 @@ class Project {
      */
     updatePosition () {
         const nodeRect = this.$node[ 0 ].getBoundingClientRect();
-        const $imageloaded = this.$images.filter( ".-is-lazy-handled" );
+        const $imageloaded = this.$images.filter( `[${core.config.imageLoaderAttr}]` );
 
         if ( $imageloaded.length !== this.$images.length ) {
             return;
         }
 
-        if ( Math.floor( nodeRect.bottom ) <= 0 && !this.isEnded ) {
+        if ( core.dom.project.element[ 0 ].scrollTop !== 0 && Math.floor( nodeRect.bottom ) <= 0 && !this.isEnded ) {
             this.isEnded = true;
-
-            core.dom.project.element.addClass( "is-inactive" );
 
             setTimeout( () => {
                 core.emitter.fire( "app--project-ended" );
@@ -249,6 +249,7 @@ Project.open = function () {
     core.dom.body.append( core.dom.project.element );
 
     setTimeout( () => core.dom.project.element.addClass( "is-active" ), 10 );
+    setTimeout( () => core.dom.project.element.removeClass( "is-noscroll" ), core.dom.project.elementTransitionDuration );
 };
 
 
@@ -266,11 +267,11 @@ Project.close = function () {
 
     animator.stop();
 
-    core.dom.project.element.removeClass( "is-active is-inactive" );
+    core.dom.project.element.removeClass( "is-active" );
 
     setTimeout( () => {
         core.dom.html.removeClass( core.config.offcanvasClasses );
-        core.dom.project.element.detach();
+        core.dom.project.element.detach().addClass( "is-noscroll" );
         core.dom.project.elementPane[ 0 ].innerHTML = "";
 
     }, core.dom.project.elementTransitionDuration );
