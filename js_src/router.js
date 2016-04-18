@@ -1,3 +1,5 @@
+import Easing from "properjs-easing";
+import Tween from "properjs-tween";
 import PageController from "properjs-pagecontroller";
 import $ from "js_libs/hobo/dist/hobo.build";
 import * as core from "./core";
@@ -31,6 +33,8 @@ const router = {
         this.navData = core.dom.nav.data();
         this.pageData = core.dom.page.data();
         this.pageDuration = core.util.getTransitionDuration( core.dom.page[ 0 ] );
+        this.tweenScroll = null;
+        this.$rootPanel = core.dom.main.find( ".js-main--garberco" );
         this.prepPage();
         this.bindEmptyHashLinks();
         this.initPageController();
@@ -145,6 +149,19 @@ const router = {
     /**
      *
      * @public
+     * @method redirect
+     * @memberof router
+     * @description Handle 404 / Invalid page hit.
+     *
+     */
+    redirect () {
+        window.location.href = window.location.origin;
+    },
+
+
+    /**
+     *
+     * @public
      * @method initPageController
      * @memberof router
      * @description Create the PageController instance.
@@ -168,6 +185,7 @@ const router = {
         this.controller.on( "page-controller-router-refresh-document", this.changeContent.bind( this ) );
         this.controller.on( "page-controller-router-transition-in", this.changePageIn.bind( this ) );
         this.controller.on( "page-controller-initialized-page", this.initPage.bind( this ) );
+        this.controller.on( "page-controller-router-samepage", this.samePage.bind( this ) );
 
         this.controller.initPage();
     },
@@ -230,11 +248,12 @@ const router = {
      *
      * @public
      * @method initPage
+     * @param {object} data The PageController data object
      * @memberof router
      * @description Perform actions after PageController init callback.
      *
      */
-    initPage () {
+    initPage ( /* data */ ) {
         core.dom.nav.detach();
         core.dom.page.detach();
 
@@ -242,6 +261,32 @@ const router = {
         core.dom.body.removeClass( "is-clipped" );
 
         window.addEventListener( "popstate", this.handlePopstate.bind( this ), false );
+    },
+
+
+    /**
+     *
+     * @public
+     * @method samePage
+     * @memberof router
+     * @description Handle logo click on root index, or homepage.
+     *
+     */
+    samePage () {
+        if ( window.location.pathname === this.root && !this.tweenScroll && this.$rootPanel[ 0 ].scrollTop > 0 ) {
+            this.tweenScroll = new Tween({
+                to: 0,
+                from: this.$rootPanel[ 0 ].scrollTop,
+                ease: Easing.easeInOutCubic,
+                update: ( top ) => {
+                    this.$rootPanel[ 0 ].scrollTop = top;
+                },
+                complete: () => {
+                    this.tweenScroll = null;
+                },
+                duration: 400
+            });
+        }
     },
 
 

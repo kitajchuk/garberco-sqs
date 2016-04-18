@@ -23,8 +23,13 @@ class App {
         this.intro = intro;
         this.analytics = new core.Analytics();
 
-        this.bindEvents();
-        this.initModules();
+        if ( !this.core.dom.page.length ) {
+            this.router.redirect();
+
+        } else {
+            this.bindEvents();
+            this.initModules();
+        }
 
         core.log( "App", this );
     }

@@ -74,9 +74,41 @@ class IndexRoot {
             animator.stop();
             animator.go( this.updateAnimate.bind( this ) );
 
+            this.handleScroll();
+
         } else {
             this.updateAnimate();
         }
+    }
+
+
+    /**
+     *
+     * @public
+     * @instance
+     * @method handleScroll
+     * @memberof indexes.IndexRoot
+     * @description Handle active scroll for root panel.
+     *
+     */
+    handleScroll () {
+        let _timeout = null;
+        const _handleScroll = function () {
+            overlay.suppress( false );
+        };
+
+        this.$target.on( "scroll", () => {
+            try {
+                clearTimeout( _timeout );
+
+            } catch ( error ) {
+                core.log( "warn", error );
+            }
+
+            overlay.suppress( true );
+
+            _timeout = setTimeout( _handleScroll, 300 );
+        });
     }
 
 
@@ -232,6 +264,8 @@ class IndexRoot {
      */
     teardown () {
         animator.stop();
+
+        this.$target.off( "scroll" );
     }
 }
 

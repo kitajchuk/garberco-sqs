@@ -2,6 +2,7 @@ import * as core from "../core";
 import overlay from "../overlay";
 import Menu from "../Menu";
 import Controller from "properjs-controller";
+import bar from "../bar";
 
 
 let isActive = false;
@@ -105,6 +106,8 @@ class Project {
      *
      */
     onPreload () {
+        bar.stop();
+
         overlay.close();
 
         this.cycleAnimation();
@@ -165,19 +168,16 @@ class Project {
      */
     updatePosition () {
         const nodeRect = this.$node[ 0 ].getBoundingClientRect();
-        const $imageloaded = this.$images.filter( `[${core.config.imageLoaderAttr}]` );
+        //const $imageloaded = this.$images.filter( `[${core.config.imageLoaderAttr}]` );
 
-        if ( $imageloaded.length !== this.$images.length ) {
-            return;
-        }
+        //if ( $imageloaded.length !== this.$images.length ) {
+        //    return;
+        //}
 
         if ( core.dom.project.element[ 0 ].scrollTop !== 0 && Math.floor( nodeRect.bottom ) <= 0 && !this.isEnded ) {
             this.isEnded = true;
 
-            setTimeout( () => {
-                core.emitter.fire( "app--project-ended" );
-
-            }, core.dom.project.elementTransitionDuration );
+            core.emitter.fire( "app--project-ended" );
         }
     }
 
@@ -244,6 +244,8 @@ Project.isActive = function () {
  */
 Project.open = function () {
     isActive = true;
+
+    bar.load();
 
     core.dom.html.addClass( "is-offcanvas is-offcanvas--project" );
     core.dom.body.append( core.dom.project.element );

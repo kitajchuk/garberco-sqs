@@ -2,6 +2,7 @@ import * as core from "./core";
 
 
 let isActive = false;
+let isSuppressed = false;
 const transTime = core.util.getTransitionDuration( core.dom.overlay.element[ 0 ] );
 
 
@@ -41,7 +42,7 @@ const overlay = {
      *
      */
     open () {
-        if ( isActive ) {
+        if ( isActive || isSuppressed ) {
             return this;
         }
 
@@ -98,6 +99,24 @@ const overlay = {
     /**
      *
      * @public
+     * @method suppress
+     * @param {boolean} bool Will it be suppressed?
+     * @memberof overlay
+     * @description Suppress the overlay.
+     *
+     */
+    suppress ( bool ) {
+        isSuppressed = bool;
+
+        if ( isSuppressed && isActive ) {
+            this.close();
+        }
+    },
+
+
+    /**
+     *
+     * @public
      * @method setTitle
      * @param {string} text The text/html to set.
      * @memberof overlay
@@ -105,7 +124,9 @@ const overlay = {
      *
      */
     setTitle ( text ) {
-        core.dom.overlay.elementTitle[ 0 ].innerHTML = text;
+        if ( !isSuppressed ) {
+            core.dom.overlay.elementTitle[ 0 ].innerHTML = text;
+        }
     },
 
 

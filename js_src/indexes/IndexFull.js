@@ -5,6 +5,7 @@ import gallery from "../gallery";
 import overlay from "../overlay";
 import template from "properjs-template";
 import Controller from "properjs-controller";
+import bar from "../bar";
 
 
 let instance = null;
@@ -264,6 +265,8 @@ class IndexFull {
      *
      */
     loadIndex () {
+        bar.load();
+
         router.loadFullIndex( this.onLoadFullIndex.bind( this ) );
     }
 
@@ -298,6 +301,8 @@ class IndexFull {
         this.$target.append( this.$node );
 
         core.images.handleImages( this.$node.find( ".js-lazy-image" ), () => {
+            bar.stop();
+
             this.cycleAnimation();
         });
     }

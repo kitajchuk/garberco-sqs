@@ -65,6 +65,8 @@ class About {
             this.$anim.addClass( "is-active" );
 
         }, 10 );
+
+        core.emitter.fire( "app--preload-done" );
     }
 
 

@@ -3,6 +3,7 @@ import * as core from "./core";
 import Menu from "./Menu";
 import debounce from "properjs-debounce";
 import overlay from "./overlay";
+import bar from "./bar";
 
 
 
@@ -132,6 +133,7 @@ const gallery = {
     setImage ( $image ) {
         const data = $image.data();
 
+        bar.load();
         this.open();
         this.$image.removeAttr( core.config.imageLoaderAttr ).attr({
             "data-img-src": data.imgSrc,
@@ -139,7 +141,9 @@ const gallery = {
             "data-original-size": data.originalSize
         });
 
-        core.util.loadImages( this.$image, core.util.noop, true, window.innerWidth );
+        core.util.loadImages( this.$image, core.util.noop, true, window.innerWidth ).on( "done", () => {
+            bar.stop();
+        });
     }
 };
 

@@ -35,6 +35,18 @@
 
 
 
+@media only screen and ( max-width: 1200px ) {
+    .grid__item {
+        padding-bottom: 0;
+        width: 50%;
+        }
+    .grid__item__small {
+        width: 25%;
+        }
+}
+
+
+
 @media only screen and ( max-width: $break-tablet-medium ) {
     .h1 {
         font-size: 80px;
@@ -44,14 +56,6 @@
         }
     .about__col + .about__col {
         margin-top: 90px;
-        }
-
-    .grid__item {
-        padding-bottom: 0;
-        width: 50%;
-        }
-    .grid__item__small {
-        width: 25%;
         }
 
     .info__text {
@@ -106,7 +110,8 @@
         padding-right: $grid-padding / 2;
         padding-top: 50px;
         }
-    .header__nav {
+    .header__nav,
+    .nav__back--info {
         font-size: 18px;
         }
 
@@ -132,16 +137,12 @@
 
         .image {
             left: auto;
-            padding-left: 0;
-            padding-right: 0;
             position: relative;
             top: auto;
             transform: none;
             }
         .image--tall {
             height: #{"calc( ~\"100vw - 90px\" )"};
-            padding-bottom: 0;
-            padding-top: 0;
             }
     }
 

@@ -22,12 +22,12 @@ const intro = {
             return;
         }
 
-        core.dom.intro.removeClass( "is-active" );
-
         setTimeout( () => {
-            core.dom.intro.remove();
+            core.dom.intro.removeClass( "is-active" );
 
-        }, core.util.getTransitionDuration( core.dom.intro[ 0 ] ) );
+            setTimeout( () => core.dom.intro.remove(), core.util.getTransitionDuration( core.dom.intro[ 0 ] ) );
+
+        }, 1000 );
     }
 };
 

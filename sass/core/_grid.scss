@@ -105,26 +105,22 @@
         transform: translate3d( -50%, -50%, 0 );
         }
     .image--tall {
-        height: 100%;
-        padding-bottom: $grid-padding;
-        padding-top: $grid-padding;
+        height: #{"calc( ~\"100% - (#{$grid-padding} * 2)\" )"};
         width: auto;
         }
     .image--wide {
         height: auto;
-        padding-left: $grid-padding;
-        padding-right: $grid-padding;
-        width: 100%;
+        width: #{"calc( ~\"100% - (#{$grid-padding} * 2)\" )"};
         }
 }
 .grid__photo--small {
-    .image {
-        padding-left: ($grid-padding / 2);
-        padding-right: ($grid-padding / 2);
-        }
     .image--tall {
-        padding-bottom: ($grid-padding / 2);
-        padding-top: ($grid-padding / 2);
+        height: #{"calc( ~\"100% - #{$grid-padding}\" )"};
+        width: auto;
+        }
+    .image--wide {
+        height: auto;
+        width: #{"calc( ~\"100% - #{$grid-padding}\" )"};
         }
 }
 .grid__title {

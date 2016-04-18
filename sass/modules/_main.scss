@@ -139,3 +139,31 @@
     transform: translate3d( 0, 0, 0 );
     width: auto;
     }
+
+
+
+/******************************************************************************
+ * Load bar
+*******************************************************************************/
+.bar {
+    font-size: 0;
+    height: 2px;
+    left: 0;
+    position: fixed;
+    text-align: left;
+    top: 0;
+    transform: translate3d( 0, 0, 0 );
+    transition: transform $base-duration $ease-cubic;
+    width: 100%;
+    z-index: $z_layer_infront;
+
+    &.is-done {
+        transform: translate3d( 0, -100%, 0 );
+        }
+    }
+.bar__inner {
+    background-color: $black;
+    display: inline-block;
+    height: 100%;
+    width: 0;
+    }
