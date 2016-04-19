@@ -11,6 +11,8 @@ import $ from "js_libs/hobo/dist/hobo.build";
 import ImageLoader from "properjs-imageloader";
 import dom from "./dom";
 import config from "./config";
+import detect from "./detect";
+import Hammer from "hammerjs";
 
 
 /**
@@ -24,6 +26,22 @@ import config from "./config";
  */
 const px = function ( str ) {
     return `${str}px`;
+};
+
+
+/**
+ *
+ * @description Apply a translate3d transform
+ * @method translate3d
+ * @param {object} el The element to transform
+ * @param {string|number} x The x value
+ * @param {string|number} y The y value
+ * @param {string|number} z The z value
+ * @memberof core.util
+ *
+ */
+const translate3d = function ( el, x, y, z ) {
+    el.style[ Hammer.prefixed( el.style, "transform" ) ] = `translate3d( ${x}, ${y}, ${z} )`;
 };
 
 
@@ -377,6 +395,69 @@ const slugify = function ( str ) {
 };
 
 
+/**
+ *
+ * @method getDefaultHammerOptions
+ * @memberof core.util
+ * @description The default options for Hammer JS.
+ *              Disables cssProps for non-touch experiences.
+ * @returns {object}
+ *
+ */
+const getDefaultHammerOptions = function () {
+    return detect.isDevice() ? {} : {
+        cssProps: {
+            contentZoomingString: false,
+            tapHighlightColorString: false,
+            touchCalloutString: false,
+            touchSelectString: false,
+            userDragString: false,
+            userSelectString: false
+        }
+    };
+};
+
+
+/**
+ *
+ * Get the applied transform values from CSS
+ * @method getTransformValues
+ * @param {object} el The DOMElement
+ * @memberof util
+ * @returns {object}
+ *
+ */
+const getTransformValues = function ( el ) {
+    if ( !el ) {
+        return null;
+    }
+
+    const transform = window.getComputedStyle( el )[ Hammer.prefixed( el.style, "transform" ) ];
+    const values = transform.replace( /matrix|3d|\(|\)|\s/g, "" ).split( "," );
+    const ret = {};
+
+    // No Transform
+    if ( values[ 0 ] === "none" ) {
+        ret.x = 0;
+        ret.y = 0;
+        ret.z = 0;
+
+    // Matrix 3D
+    } else if ( values.length === 16 ) {
+        ret.x = parseFloat( values[ 12 ] );
+        ret.y = parseFloat( values[ 13 ] );
+        ret.z = parseFloat( values[ 14 ] );
+
+    } else {
+        ret.x = parseFloat( values[ 4 ] );
+        ret.y = parseFloat( values[ 5 ] );
+        ret.z = 0;
+    }
+
+    return ret;
+};
+
+
 
 /******************************************************************************
  * Export
@@ -387,10 +468,13 @@ export default {
     slugify,
     getPageKey,
     loadImages,
+    translate3d,
     extendObject,
     updateImages,
     isElementLoadable,
     getElementsInView,
+    getTransformValues,
     isElementInViewport,
-    getTransitionDuration
+    getTransitionDuration,
+    getDefaultHammerOptions
 };

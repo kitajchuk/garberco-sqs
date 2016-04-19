@@ -6,6 +6,7 @@ import overlay from "../overlay";
 import template from "properjs-template";
 import Controller from "properjs-controller";
 import bar from "../bar";
+import Hammer from "hammerjs";
 
 
 let instance = null;
@@ -319,7 +320,7 @@ class IndexFull {
      *
      */
     onGalleryImage ( direction ) {
-        if ( direction === "left" ) {
+        if ( direction === Hammer.DIRECTION_LEFT ) {
             this.onKeyDown({
                 keyCode: 37
             });
@@ -386,7 +387,9 @@ class IndexFull {
             } else if ( e.keyCode === 37 ) {
                 $project = this.$tile.prev();
 
-                this.nextProject( $project, $project.find( ".js-listing-tile" ).last() );
+                if ( $project.length ) {
+                    this.nextProject( $project, $project.find( ".js-listing-tile" ).last() );
+                }
             }
 
             core.dom.gallery.element.removeClass( "is-title" );

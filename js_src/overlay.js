@@ -3,7 +3,6 @@ import * as core from "./core";
 
 let isActive = false;
 let isSuppressed = false;
-const transTime = core.util.getTransitionDuration( core.dom.overlay.element[ 0 ] );
 
 
 /**
@@ -79,7 +78,7 @@ const overlay = {
 
             this.empty();
 
-        }, transTime );
+        }, core.dom.overlay.elementTransitionDuration );
     },
 
 

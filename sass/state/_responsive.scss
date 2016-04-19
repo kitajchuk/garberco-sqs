@@ -115,6 +115,13 @@
         font-size: 18px;
         }
 
+    .icon--x,
+    .icon--arrow-left,
+    .icon--arrow-right {
+        svg {
+            height: 14px;
+            }
+    }
     .icon--garberco {
         svg {
             height: 20px;
@@ -141,8 +148,12 @@
             top: auto;
             transform: none;
             }
+        .image--wide {
+            max-width: 100%;
+            width: 100%;
+            }
         .image--tall {
-            height: #{"calc( ~\"100vw - 90px\" )"};
+            height: 85vw;
             }
     }
 
@@ -161,27 +172,13 @@
         padding-left: $grid-padding / 2;
         padding-right: $grid-padding / 2;
         }
-    /*
-    .project__diptych {
-        .diptych__left,
-        .diptych__right {
-            margin: 0 !important;
-            padding-left: $grid-padding / 2 !important;
-            padding-right: $grid-padding / 2 !important;
-            width: 100% !important;
-            }
-        .diptych__left {
-            padding-bottom: 80px;
-            }
-    }
-    */
 
-    // 33% => 50% left/center/right
+    // 33% => 75% left/center/right
     .project__image--third,
     .project__image--third-left,
     .project__image--third-right,
 
-    // 50% => 50% left/center/right
+    // 50% => 75% left/center/right
     .project__image--half,
     .project__image--half-left,
     .project__image--half-right,
@@ -193,6 +190,7 @@
             }
     }
 
+    // 50% | 50%
     .project__diptych {
         .diptych__left,
         .diptych__right {
@@ -208,18 +206,6 @@
             padding-right: $grid-padding / 2 !important;
             }
     }
-
-    /*
-    // 75% => 75% left/center/right
-    .project__image--threeq,
-    .project__image--threeq-left,
-    .project__image--threeq-right {
-        .image {
-            max-width: 75% !important;
-            width: 75% !important;
-            }
-    }
-    */
 
     .about,
     .index,
