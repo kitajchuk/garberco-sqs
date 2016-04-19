@@ -1,3 +1,11 @@
+@media only screen and ( max-width: $break-laptop-full ) {
+    .h1 {
+        font-size: 120px;
+        }
+}
+
+
+
 @media only screen and ( max-width: $break-laptop-medium ) {
     .header {
         padding-left: $grid-padding;
@@ -15,13 +23,11 @@
     .about__main {
         max-width: 100%;
         }
-}
 
-
-
-@media only screen and ( max-width: $break-laptop-full ) {
-    .h1 {
-        font-size: 120px;
+    .project__image,
+    .project__diptych {
+        padding-bottom: 90px;
+        padding-top: 90px;
         }
 }
 
