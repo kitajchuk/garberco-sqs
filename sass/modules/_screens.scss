@@ -44,6 +44,9 @@ $screen-wrap-delay: ($midi-duration / 2);
     &.is-active {
         transform: translate3d( 0, 0, 0 );
         }
+    &.is-hidden {
+        visibility: hidden;
+        }
     &.is-noscroll {
         overflow-y: hidden;
         }
