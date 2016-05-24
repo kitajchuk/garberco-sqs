@@ -25,7 +25,7 @@ $screen-wrap-delay: ($midi-duration / 2);
 
 // Variant screens
 .overlay {
-    background-color: transparent;
+    background-color: rgba( 255, 255, 255, 0.05 );
     pointer-events: none;
 
     &.is-intro {
@@ -72,8 +72,16 @@ $screen-wrap-delay: ($midi-duration / 2);
     max-width: 700px;
     min-height: 50px;
     min-width: 320px;
+
+    p a {
+        border-bottom: 2px solid $white;
+        }
+}
+
+
+
+.intro,
+.overlay.is-intro {
+    transition-duration: $long-duration;
+    transition-timing-function: $ease-out;
     }
-
-
-
-.intro {}

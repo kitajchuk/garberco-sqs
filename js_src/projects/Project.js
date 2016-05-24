@@ -108,9 +108,9 @@ class Project {
     onPreload () {
         bar.stop();
 
-        overlay.close();
-
         this.cycleAnimation();
+
+        setTimeout( overlay.close(), (core.dom.project.elementTransitionDuration * 2) );
     }
 
 
