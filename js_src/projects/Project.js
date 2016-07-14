@@ -3,6 +3,7 @@ import overlay from "../overlay";
 import Menu from "../Menu";
 import Controller from "properjs-controller";
 import bar from "../bar";
+import VideoVimeo from "../video/VideoVimeo";
 
 
 let isActive = false;
@@ -30,10 +31,12 @@ class Project {
         this.data = data;
         this.$plates = this.$node.find( ".js-project-plate" );
         this.$images = this.$node.find( ".js-lazy-image" );
+        this.$videos = this.$node.find( ".js-video" );
         this.isEnded = false;
 
         this.bindEvents();
         this.loadProject();
+        this.loadVideos();
 
         core.log( "Project", this );
     }
@@ -70,6 +73,47 @@ class Project {
         core.dom.project.elementPane.append( this.$node );
 
         core.images.handleImages( this.$images, this.onPreload.bind( this ) );
+    }
+
+
+    /**
+     *
+     * @public
+     * @instance
+     * @method loadVideos
+     * @memberof projects.Project
+     * @description Load videos from vimeo.
+     *
+     */
+    loadVideos () {
+        this.$videos.forEach(( elem, i ) => {
+            const $video = this.$videos.eq( i );
+            const data = $video.data();
+
+            $video.data( "instance", new VideoVimeo( $video, data ) );
+        });
+    }
+
+
+    /**
+     *
+     * @public
+     * @instance
+     * @method killVideos
+     * @memberof projects.Project
+     * @description Kill videos from vimeo.
+     *
+     */
+    killVideos () {
+        this.$videos.forEach(( elem, i ) => {
+            const $video = this.$videos.eq( i );
+            const data = $video.data();
+
+            if ( data.instance ) {
+                data.instance.destroy();
+                data.instance = null;
+            }
+        });
     }
 
 
@@ -168,11 +212,6 @@ class Project {
      */
     updatePosition () {
         const nodeRect = this.$node[ 0 ].getBoundingClientRect();
-        //const $imageloaded = this.$images.filter( `[${core.config.imageLoaderAttr}]` );
-
-        //if ( $imageloaded.length !== this.$images.length ) {
-        //    return;
-        //}
 
         if ( core.dom.project.element[ 0 ].scrollTop !== 0 && Math.floor( nodeRect.bottom ) <= 0 && !this.isEnded ) {
             this.isEnded = true;
@@ -196,6 +235,8 @@ class Project {
     onUpdateEmitter () {
         this.updatePlates();
         this.updatePosition();
+
+        core.emitter.fire( "app--project-scroll" );
     }
 
 
@@ -213,6 +254,8 @@ class Project {
             this.$infoScreen.on( "click", this._onClickInfo );
             this.$infoButton.on( "click", this._onClickInfo );
         }
+
+        this.killVideos();
 
         Project.close();
     }

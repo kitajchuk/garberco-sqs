@@ -1,0 +1,43 @@
+._video {
+    position: relative;
+    }
+._video__cursor {
+    cursor: pointer;
+    }
+._video__element {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    }
+._video__poster {
+    height: 100%;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    transition: opacity $base-duration $ease;
+    width: 100%;
+    }
+._video__playback {
+    left: 50%;
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    transform: translate3d( -50%, -50%, 0 );
+    transition: opacity $base-duration $ease;
+    }
+
+
+
+._video.is-active {
+    ._video__poster {
+        opacity: 0;
+        }
+}
+._video.is-playing {
+    ._video__playback {
+        opacity: 0;
+        }
+}

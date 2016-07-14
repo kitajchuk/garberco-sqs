@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "dependencies": {},
   "devDependencies": {
+    "@squarespace/squarespace-dev-server": "^0.3.7",
     "autoprefixer": "^5.2.0",
     "babel-loader": "^5.3.2",
     "babel-preset-es2015": "^6.1.18",
@@ -51,7 +52,8 @@
     "watch": "parallelshell 'npm run watch:js' 'npm run watch:sass'",
     "watch:js": "chokidar ./js_src/* --initial -d 10 -c 'npm run build:js'",
     "watch:sass": "chokidar ./sass/* --initial -d 10 -c 'npm run build:css'",
-    "start": "npm run watch"
+    "start": "npm run watch",
+    "server": "./node_modules/.bin/sqs-server https://garberco.squarespace.com -d sqs_template --run-authenticated"
   },
   "start": "npm run watch",
   "repository": {

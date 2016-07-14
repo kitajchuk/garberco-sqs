@@ -183,6 +183,29 @@ const api = {
                     reject( error );
                 });
         });
+    },
+
+
+    /**
+     *
+     * @public
+     * @method vimeo
+     * @param {string} id The vimeo video ID
+     * @memberof core.api
+     * @description Retrieves vimeo video information.
+     *              Returned Promise resolves with api data {object}
+     * @returns {Promise}
+     *
+     */
+    vimeo ( id ) {
+        return $.ajax({
+            url: `https://api.vimeo.com/videos/${id}`,
+            method: "GET",
+            data: {
+                access_token: "4fe810e95b5a32a53133739750ef23e4"
+            },
+            dataType: "json"
+        });
     }
 };
 

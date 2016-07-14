@@ -16,8 +16,6 @@ import api from "./api";
 import cache from "./cache";
 import Analytics from "./Analytics";
 import emitter from "./emitter";
-//import scroller from "./scroller";
-//import scrolls from "./scrolls";
 import resizer from "./resizer";
 import resizes from "./resizes";
 
@@ -34,8 +32,6 @@ export {
     cache,
     Analytics,
     emitter,
-    //scroller,
-    //scrolls,
     resizer,
     resizes
 };

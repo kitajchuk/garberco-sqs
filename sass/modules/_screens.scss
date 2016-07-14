@@ -77,6 +77,12 @@ $screen-wrap-delay: ($midi-duration / 2);
         border-bottom: 2px solid $white;
         }
 }
+.info__text--config {
+    .sqs-layout {
+        outline: 1px solid $white;
+        padding: 50px 0;
+        }
+}
 
 
 
