@@ -139,6 +139,21 @@
     transform: translate3d( 0, 0, 0 );
     width: auto;
     }
+.gallery__video {
+    display: none;
+    width: 80vw;
+    }
+
+
+
+.gallery.is-video {
+    .gallery__image {
+        display: none;
+        }
+    .gallery__video {
+        display: inline-block;
+        }
+}
 
 
 

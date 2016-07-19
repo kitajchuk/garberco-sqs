@@ -7,6 +7,7 @@ import bar from "./bar";
 import Hammer from "hammerjs";
 import Easing from "properjs-easing";
 import Tween from "properjs-tween";
+import VideoVimeo from "./video/VideoVimeo";
 
 
 
@@ -29,11 +30,21 @@ const gallery = {
     init () {
         this.tween = null;
         this.menu = new Menu( core.dom.gallery.element );
-        this.klasa = "gallery__image figure__image image";
+
+        // Image
         this.$image = $( new Image() );
-        this.$image[ 0 ].className = this.klasa;
+        this.$image[ 0 ].className = "gallery__image figure__image image";
+
+        // Video
+        this.videoData = null;
+        this.$videoWrap = $( document.createElement( "div" ) );
+        this.$videoWrap[ 0 ].className = "_video gallery__video";
+        this.$video = $( document.createElement( "video" ) );
+        this.$video[ 0 ].className = "_video__element";
+        this.$videoWrap.append( this.$video );
 
         core.dom.gallery.elementNode.append( this.$image );
+        core.dom.gallery.elementNode.append( this.$videoWrap );
 
         if ( core.detect.isDevice() ) {
             this.bindSwipe();
@@ -61,7 +72,7 @@ const gallery = {
         this.tap = new Hammer( core.dom.gallery.element[ 0 ], core.util.getDefaultHammerOptions() );
         this.tap.on( "tap", this._onTap );
 
-        this.swipe = new Hammer( this.$image[ 0 ], core.util.getDefaultHammerOptions() );
+        this.swipe = new Hammer( core.dom.gallery.elementNode[ 0 ], core.util.getDefaultHammerOptions() );
         this.swipe.on( "panmove", this._onPanmove );
         this.swipe.on( "panend", this._onPanend );
         this.swipe.on( "swipe", this._onSwipe );
@@ -91,7 +102,7 @@ const gallery = {
      *
      */
     onTap ( e ) {
-        if ( e.target !== this.$image ) {
+        if ( e.target !== this.$video[ 0 ] ) {
             core.emitter.fire( "app--gallery-background" );
         }
     },
@@ -111,7 +122,7 @@ const gallery = {
 
         if ( !this.tween ) {
             core.util.translate3d(
-                this.$image[ 0 ],
+                core.dom.gallery.elementNode[ 0 ],
                 core.util.px( (e.deltaX / 3) ),
                 0,
                 0
@@ -131,7 +142,7 @@ const gallery = {
      */
     onPanend () {
         if ( !this.tween ) {
-            const transform = core.util.getTransformValues( this.$image[ 0 ] );
+            const transform = core.util.getTransformValues( core.dom.gallery.elementNode[ 0 ] );
             const isLeft = (transform.x < 0);
 
             this.tween = new Tween({
@@ -140,7 +151,7 @@ const gallery = {
                 ease: Easing.easeInOutCubic,
                 update: ( x ) => {
                     core.util.translate3d(
-                        this.$image[ 0 ],
+                        core.dom.gallery.elementNode[ 0 ],
                         core.util.px( (isLeft ? -x : x) ),
                         0,
                         0
@@ -167,7 +178,7 @@ const gallery = {
     onSwipe ( e ) {
         e.preventDefault();
 
-        const transform = core.util.getTransformValues( this.$image[ 0 ] );
+        const transform = core.util.getTransformValues( core.dom.gallery.elementNode[ 0 ] );
         const isLeft = (e.direction === Hammer.DIRECTION_LEFT);
 
         if ( !this.tween ) {
@@ -177,7 +188,7 @@ const gallery = {
                 ease: Easing.easeInOutCubic,
                 update: ( x ) => {
                     core.util.translate3d(
-                        this.$image[ 0 ],
+                        core.dom.gallery.elementNode[ 0 ],
                         core.util.px( (isLeft ? -x : x) ),
                         0,
                         0
@@ -192,7 +203,7 @@ const gallery = {
                         this.tween = null;
 
                         core.util.translate3d(
-                            this.$image[ 0 ],
+                            core.dom.gallery.elementNode[ 0 ],
                             0,
                             0,
                             0
@@ -235,7 +246,7 @@ const gallery = {
      *
      */
     handleClick ( e ) {
-        const rect = this.$image[ 0 ].getBoundingClientRect();
+        const rect = (this.videoData ? this.$video[ 0 ] : this.$image[ 0 ]).getBoundingClientRect();
         let direction = null;
 
         if ( e.clientX <= (rect.width / 2 + rect.left) && !overlay.isActive() ) {
@@ -275,6 +286,8 @@ const gallery = {
     close () {
         if ( this.menu.isActive() ) {
             this.menu.close();
+
+            this.empty();
         }
     },
 
@@ -289,6 +302,11 @@ const gallery = {
      */
     empty () {
         this.$image[ 0 ].src = "";
+
+        if ( this.videoData ) {
+            this.$video[ 0 ].innerHTML = "";
+            this.videoData = null;
+        }
     },
 
 
@@ -302,7 +320,11 @@ const gallery = {
      *
      */
     setImage ( $image ) {
+        this.empty();
+
         const data = $image.data();
+
+        core.dom.gallery.element.removeClass( "is-video" );
 
         bar.load();
         this.open();
@@ -315,6 +337,39 @@ const gallery = {
         core.util.loadImages( this.$image, core.util.noop, true, window.innerWidth ).on( "done", () => {
             bar.stop();
         });
+    },
+
+
+    /**
+     *
+     * @public
+     * @method setVideo
+     * @param {object} vData The vimeo api data.
+     * @memberof gallery
+     * @description Apply a video to the gallery view.
+     *
+     */
+    setVideo ( vData ) {
+        this.empty();
+        this.videoData = vData;
+
+        const files = VideoVimeo.logVideoFiles( this.videoData );
+        const file = VideoVimeo.getVideoFile( files );
+
+        core.dom.gallery.element.addClass( "is-video" );
+
+        this.open();
+        this.$videoWrap[ 0 ].style.paddingBottom = `${((this.videoData.height / this.videoData.width) * 100)}%`;
+
+        // Avoid always playing the first video loaded each time
+        if ( core.detect.isDevice() ) {
+            this.$video[ 0 ].setAttribute( "poster", this.videoData.pictures.sizes[ this.videoData.pictures.sizes.length - 1 ].link );
+            this.$video[ 0 ].setAttribute( "controls", true );
+        }
+
+        this.$video[ 0 ].src = file;
+        this.$video[ 0 ].load();
+        this.$video[ 0 ].play();
     }
 };
 

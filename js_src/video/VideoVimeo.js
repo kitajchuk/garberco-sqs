@@ -49,27 +49,6 @@ class VideoVimeo {
      *
      * @public
      * @instance
-     * @method logVideoFiles
-     * @param {object} vData The api response from Vimeo
-     * @memberof VideoVimeo
-     * @description Organize the files array into something easier to use.
-     *
-     */
-    logVideoFiles ( vData ) {
-        let i = vData.files.length;
-
-        for ( i; i--; ) {
-            if ( !this._files[ vData.files[ i ].quality ] || (this._files[ vData.files[ i ].quality ] && vData.files[ i ].size > this._files[ vData.files[ i ].quality ].size) ) {
-                this._files[ vData.files[ i ].quality ] = vData.files[ i ];
-            }
-        }
-    }
-
-
-    /**
-     *
-     * @public
-     * @instance
      * @method handleVimeoData
      * @param {object} vData The response data from Vimeo's API
      * @memberof VideoVimeo
@@ -80,10 +59,10 @@ class VideoVimeo {
         this.vData = vData;
 
         // Organize video files
-        this.logVideoFiles( vData );
+        this._files = VideoVimeo.logVideoFiles( vData );
 
         // Assign source file to data
-        this.data.sourceUrl = (core.detect.isDevice() ? (this._files.mobile || this._files.sd) : (this._files.hd || this._files.sd)).link;
+        this.data.sourceUrl = VideoVimeo.getVideoFile( this._files );
 
         // Assign poster thumbnail
         this.data.posterUrl = this.vData.pictures.sizes[ this.vData.pictures.sizes.length - 1 ].link;
@@ -260,6 +239,48 @@ class VideoVimeo {
         }
     }
 }
+
+
+
+/**
+ *
+ * @public
+ * @static
+ * @method logVideoFiles
+ * @param {object} vData The api response from Vimeo
+ * @memberof VideoVimeo
+ * @description Organize the files array into something easier to use.
+ * @returns {object}
+ *
+ */
+VideoVimeo.logVideoFiles = function ( vData ) {
+    let i = vData.files.length;
+    const files = {};
+
+    for ( i; i--; ) {
+        if ( !files[ vData.files[ i ].quality ] || (files[ vData.files[ i ].quality ] && vData.files[ i ].size > files[ vData.files[ i ].quality ].size) ) {
+            files[ vData.files[ i ].quality ] = vData.files[ i ];
+        }
+    }
+
+    return files;
+};
+
+
+/**
+ *
+ * @public
+ * @static
+ * @method getVideoFile
+ * @param {object} files The logged video files
+ * @memberof VideoVimeo
+ * @description Get the file to play.
+ * @returns {string}
+ *
+ */
+VideoVimeo.getVideoFile = function ( files ) {
+    return (core.detect.isDevice() ? (files.mobile || files.sd) : (files.hd || files.sd)).link;
+};
 
 
 

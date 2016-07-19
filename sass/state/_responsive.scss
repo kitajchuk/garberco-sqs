@@ -75,7 +75,7 @@
 
 
 @media only screen and ( max-width: $break-tablet-small ) {
-    
+
 }
 
 
@@ -239,5 +239,8 @@
     .gallery__image {
         max-height: 100vh;
         max-width: 100vw;
+        }
+    .gallery__video {
+        width: 100vw;
         }
 }

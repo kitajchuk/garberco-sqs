@@ -23,6 +23,20 @@ const _gridItemTpl = `
 </div>
 `;
 
+// @vimeoVideoUrl
+const _gridVideoTpl = `
+<div class="listing__tile grid__item__small js-listing-tile">
+    <div class="grid__photo grid__photo--small animate animate--fade js-animate">
+        <figure class="figure">
+            <img class="figure__image image image--wide js-vimeo-image" />
+            <span class="icon icon--svg icon--playback _video__playback">
+                <svg class="icon__svg" xmlns="http://www.w3.org/2000/svg" version="1.1" x="0" y="0" viewBox="-188 216.1 261.3 209.9" xml:space="preserve"><polygon points="35.8 296.4 -86.3 216.1 -86.3 426 73.3 321.1 "/><rect x="-188" y="216.1" class="st0" width="59.2" height="209.9"/></svg>
+            </span>
+        </figure>
+    </div>
+</div>
+`;
+
 
 /**
  *
@@ -62,6 +76,7 @@ class IndexFull {
         this.$image = null;
         this.$target = core.dom.main.find( `.js-main--${this.data.target}` );
         this.$anims = null;
+        this.vimeos = {};
 
         this.bindEvents();
         this.loadIndex();
@@ -126,10 +141,12 @@ class IndexFull {
      */
     bindEvents () {
         this.$node.on( "click", ".js-listing-tile", ( e ) => {
-            const $target = $( e.target );
-            const $tile = $target.is( ".js-listing-tile" ) ? $target : $target.closest( ".js-listing-tile" );
+            if ( !gallery.menu.isActive() ) {
+                const $target = $( e.target );
+                const $tile = $target.is( ".js-listing-tile" ) ? $target : $target.closest( ".js-listing-tile" );
 
-            this.bindGallery( $tile );
+                this.bindGallery( $tile );
+            }
         });
     }
 
@@ -145,19 +162,54 @@ class IndexFull {
      *
      */
     bindGallery ( $elem ) {
+        console.log( "open" );
+        const data = $elem.data();
+
         this.$tile = $elem;
         this.$image = this.$tile.find( core.config.lazyImageSelector );
+
+        // @vimeoVideoUrl
+        if ( data.vimeoId ) {
+            gallery.setVideo( this.vimeos[ data.vimeoId ] );
+
+        } else {
+            gallery.setImage( this.$image );
+        }
 
         this._onKeyDown = this.onKeyDown.bind( this );
         this._onGalleryImage = this.onGalleryImage.bind( this );
         this._onGalleryBack = this.onGalleryBack.bind( this );
 
-        gallery.setImage( this.$image );
-
         core.emitter.on( "app--gallery-image", this._onGalleryImage );
         core.emitter.on( "app--gallery-background", this._onGalleryBack );
 
         core.dom.doc.on( "keydown", this._onKeyDown );
+    }
+
+
+    /**
+     *
+     * @public
+     * @instance
+     * @method nextTile
+     * @param {Hobo} $tile The tile element
+     * @memberof indexes.IndexFull
+     * @description Transition to the next tile in a project.
+     *
+     */
+    nextTile ( $tile ) {
+        const data = $tile.data();
+
+        this.$tile = $tile;
+        this.$image = this.$tile.find( core.config.lazyImageSelector );
+
+        // @vimeoVideoUrl
+        if ( data.vimeoId ) {
+            gallery.setVideo( this.vimeos[ data.vimeoId ] );
+
+        } else {
+            gallery.setImage( this.$image );
+        }
     }
 
 
@@ -239,27 +291,6 @@ class IndexFull {
      *
      * @public
      * @instance
-     * @method nextTile
-     * @param {Hobo} $tile The tile element
-     * @memberof indexes.IndexFull
-     * @description Transition to the next tile in a project.
-     *
-     */
-    nextTile ( $tile ) {
-        // Tile?
-        this.$tile = $tile;
-
-        // Image?
-        this.$image = this.$tile.find( core.config.lazyImageSelector );
-
-        gallery.setImage( this.$image );
-    }
-
-
-    /**
-     *
-     * @public
-     * @instance
      * @method loadIndex
      * @memberof indexes.IndexFull
      * @description Load the full Index JSON to build the UI.
@@ -269,6 +300,32 @@ class IndexFull {
         bar.load();
 
         router.loadFullIndex( this.onLoadFullIndex.bind( this ) );
+    }
+
+
+    /**
+     *
+     * @public
+     * @instance
+     * @method loadVideo
+     * @param {string} url The vimeo embed url
+     * @param {Hobo} $node The grid node in the index
+     * @memberof indexes.IndexFull
+     * @description Load the vimeo api data for a video injection.
+     *
+     */
+    loadVideo ( url, $node ) {
+        const vimeoId = url.split( "/" ).pop();
+
+        core.api.vimeo( vimeoId ).then(( vData ) => {
+            this.vimeos[ vimeoId ] = vData;
+
+            $node.data( "vimeoId", vimeoId ).find( ".js-vimeo-image" )
+                .removeAttr( "data-img-src" )
+                .removeAttr( "data-variants" )
+                .removeAttr( "data-original-size" )
+                .attr( "src", vData.pictures.sizes[ vData.pictures.sizes.length - 1 ].link );
+        });
     }
 
 
@@ -285,12 +342,23 @@ class IndexFull {
         json.collection.collections.forEach(( collection ) => {
             const $title = $( template( _gridTitleTpl.replace( /\n/g, "" ), { text: collection.title, title: (collection.description || collection.title) } ) );
             const $grid = $( _gridWrapTpl.replace( /\n/g, "" ) );
+            let $node = null;
 
             collection.items.forEach(( item ) => {
-                $grid.append( template( _gridItemTpl.replace( /\n/g, "" ), item ) );
+                // @vimeoVideoUrl
+                if ( item.customContent.vimeoVideoUrl ) {
+                    $node = $( _gridVideoTpl );
 
-                if ( item.customContent && item.customContent.diptychImage && item.customContent.diptychImage.systemDataVariants ) {
-                    $grid.append( template( _gridItemTpl.replace( /\n/g, "" ), item.customContent.diptychImage ) );
+                    $grid.append( $node );
+
+                    this.loadVideo( item.customContent.vimeoVideoUrl, $node );
+
+                } else {
+                    $grid.append( template( _gridItemTpl.replace( /\n/g, "" ), item ) );
+
+                    if ( item.customContent && item.customContent.diptychImage && item.customContent.diptychImage.systemDataVariants ) {
+                        $grid.append( template( _gridItemTpl.replace( /\n/g, "" ), item.customContent.diptychImage ) );
+                    }
                 }
             });
 
