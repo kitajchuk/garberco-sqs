@@ -39,10 +39,13 @@
 .-spacer {
     width: $spacer-padding;
     }
-
 .-valign-top {
     vertical-align: top;
     }
 .-topper {
     padding-top: ($expander-padding + 90px);
+    }
+.-nopad {
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
     }
