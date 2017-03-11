@@ -1,0 +1,3 @@
+<figure class="figure">
+    <img class="figure__image image js-lazy-image" data-img-src="{assetUrl}" data-variants="{systemDataVariants}" data-original-size="{originalSize}" />
+</figure>

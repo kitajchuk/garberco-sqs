@@ -1,0 +1,16 @@
+<div class="page js-page" data-type="offcanvas" data-id="{collection.id}" data-website-id="{website.id}" {.section collection}data-collection-id="{collection.id}" data-collection-title="{.if collection.homepage}{website.siteTitle}{.or}{collection.title} – {website.siteTitle}{.end}"{.end} {.section item}data-item-id="{item.id}" data-item-title="{item.title} – {collection.title} – {website.siteTitle}"{.end}>
+    <section class="about js-about wrapper" data-target="about" data-id="{collection.id}">
+        <div class="about__main animate animate--fade js-animate-in">
+            <h2 class="h2">{collection.description}</h2>
+            <div class="expander-top">
+                {.repeated section collection.collections}
+                    <div class="about__col -column -column--2of4 -valign-top">
+                        <h3 class="h3">
+                            {description}
+                        </h3>
+                    </div>
+                {.end}
+            </div>
+        </div>
+    </section>
+</div>

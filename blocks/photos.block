@@ -1,0 +1,142 @@
+{# These are all the unique layouts we can have for images #}
+{.if customContent.diptychSmallLeft}
+    <div class="project__diptych project__diptych--small-left js-project-plate animate animate--fade">
+        <div class="diptych__left -column">
+            {@|apply image.block}
+        </div>
+        {@|apply diptych.block}
+    </div>
+{.end}
+{.if customContent.diptychSmallRight}
+    <div class="project__diptych project__diptych--small-right js-project-plate animate animate--fade">
+        <div class="diptych__left -column">
+            {@|apply image.block}
+        </div>
+        {@|apply diptych.block}
+    </div>
+{.end}
+{.if customContent.diptychLeanLeft}
+    <div class="project__diptych project__diptych--lean-left js-project-plate animate animate--fade">
+        <div class="diptych__left -column">
+            {@|apply image.block}
+        </div>
+        {@|apply diptych.block}
+    </div>
+{.end}
+{.if customContent.diptychLeanRight}
+    <div class="project__diptych project__diptych--lean-right js-project-plate animate animate--fade">
+        <div class="diptych__left -column">
+            {@|apply image.block}
+        </div>
+        {@|apply diptych.block}
+    </div>
+{.end}
+{.if customContent.diptychGutterCenter}
+    <div class="project__diptych project__diptych--gutter-center js-project-plate animate animate--fade">
+        <div class="diptych__left -column">
+            {@|apply image.block}
+        </div>
+        {@|apply diptych.block}
+    </div>
+{.end}
+{.if customContent.diptychFullCenter}
+    <div class="project__diptych project__diptych--full-center js-project-plate animate animate--fade">
+        <div class="diptych__left -column">
+            {@|apply image.block}
+        </div>
+        {@|apply diptych.block}
+    </div>
+{.end}
+{.if customContent.diptychOverlapLeft}
+    <div class="project__diptych project__diptych--overlap-left js-project-plate animate animate--fade">
+        <div class="diptych__left -column">
+            {@|apply image.block}
+        </div>
+        {@|apply diptych.block}
+    </div>
+{.end}
+{.if customContent.diptychOverlapRight}
+    <div class="project__diptych project__diptych--overlap-right js-project-plate animate animate--fade">
+        <div class="diptych__left -column">
+            {@|apply image.block}
+        {@|apply diptych.block}
+    </div>
+{.end}
+{.if customContent.diptychGutterSmalls}
+    <div class="project__diptych project__diptych--gutter-thirds js-project-plate animate animate--fade">
+        <div class="diptych__left -column">
+            {@|apply image.block}
+        </div>
+        {@|apply diptych.block}
+    </div>
+{.end}
+{.if customContent.diptychGutterSmallsEven}
+    <div class="project__diptych project__diptych--gutters-even js-project-plate animate animate--fade {.if systemDataId}{.or}is-right{.end}">
+        {.if systemDataId}
+            <div class="diptych__left -column">
+                {@|apply image.block}
+            </div>
+        {.end}
+        {@|apply diptych.block}
+    </div>
+{.end}
+{.if customContent.SingleSmallRight}
+    <div class="project__image project__image--third-right js-project-plate animate animate--fade">
+        {@|apply image-single.block}
+    </div>
+{.end}
+{.if customContent.SingleSmallLeft}
+    <div class="project__image project__image--third-left js-project-plate animate animate--fade">
+        {@|apply image-single.block}
+    </div>
+{.end}
+{.if customContent.SingleSmallCenter}
+    <div class="project__image project__image--third js-project-plate animate animate--fade">
+        {@|apply image-single.block}
+    </div>
+{.end}
+{.if customContent.SingleHalfRightMargin}
+    <div class="project__image project__image--half-right-pad js-project-plate animate animate--fade">
+        {@|apply image-single.block}
+    </div>
+{.end}
+{.if customContent.SingleHalfLeftMargin}
+    <div class="project__image project__image--half-left-pad js-project-plate animate animate--fade">
+        {@|apply image-single.block}
+    </div>
+{.end}
+{.if customContent.SingleHalfRightEdge}
+    <div class="project__image project__image--half-right js-project-plate animate animate--fade">
+        {@|apply image-single.block}
+    </div>
+{.end}
+{.if customContent.SingleHalfLeftEdge}
+    <div class="project__image project__image--half-left js-project-plate animate animate--fade">
+        {@|apply image-single.block}
+    </div>
+{.end}
+{.if customContent.SingleHalfCenter}
+    <div class="project__image project__image--half js-project-plate animate animate--fade">
+        {@|apply image-single.block}
+    </div>
+{.end}
+{.if customContent.SingleThreeQuarterCenter}
+    <div class="project__image project__image--threeq js-project-plate animate animate--fade">
+        {@|apply image-single.block}
+    </div>
+{.end}
+{.if customContent.SingleThreeQuarterLeft}
+    <div class="project__image project__image--threeq-left js-project-plate animate animate--fade">
+        {@|apply image-single.block}
+    </div>
+{.end}
+{.if customContent.SingleThreeQuarterRight}
+    <div class="project__image project__image--threeq-right js-project-plate animate animate--fade">
+        {@|apply image-single.block}
+    </div>
+{.end}
+{.if customContent.SingleFullWidth}
+    <div class="project__image project__image--full js-project-plate animate animate--fade">
+        {@|apply image-single.block}
+    </div>
+{.end}

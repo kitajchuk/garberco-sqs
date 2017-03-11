@@ -1,0 +1,11 @@
+<div class="image">
+    <div class="_video js-video" data-id="{id}" data-vimeo-url="{customContent.vimeoVideoUrl}" {.if customContent.autoplayLoop}data-autoplay-loop="true"{.end} {.if customContent.clickToPlay}data-click-to-play="true"{.end}>
+        <video class="_video__element {.if customContent.clickToPlay}_video__cursor{.end} js-video-element" {.if customContent.autoplayLoop}loop{.end}></video>
+        {.if customContent.clickToPlay}
+            <div class="_video__poster js-video-poster -cover"></div>
+            <div class="_video__playback js-video-playback">
+                {@|apply icon--playback.block}
+            </div>
+        {.end}
+    </div>
+</div>

@@ -1,0 +1,12 @@
+{.if customContent.diptychImage}
+    {.if customContent.diptychGutterSmallsEven}
+        {.if systemDataId}
+            <div class="-spacer -column"></div>
+        {.end}
+    {.end}
+    {.if customContent.diptychImage.systemDataVariants}
+        <div class="diptych__right -column">
+            {customContent.diptychImage|apply image.block}
+        </div>
+    {.end}
+{.end}

@@ -1,4 +1,6 @@
 garberco
 ========
 
-> Photo site for Ryan Garber.
+> Website for Ryan Garber.
+
+[garberco.com](http://garberco.com)

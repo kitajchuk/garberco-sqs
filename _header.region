@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html class='is-clipped {.equal? collection.typeName "custom-photo"}is-offcanvas is-offcanvas--project{.end}{.equal? collection.urlId "about"}is-offcanvas is-offcanvas--about{.end}{.equal? collection.urlId "index"}is-offcanvas is-offcanvas--index{.end}'>
+    <head>
+        {@|apply head-credits.block}
+        <meta charset="utf-8" />
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="apple-mobile-web-app-title" content="GarberCo" />
+
+
+        <link rel="apple-touch-icon-precomposed" href="/assets/touch/icon.png" />
+
+
+        {squarespace-headers}
+    </head>
+    <body class="is-clipped">
+        <squarespace:navigation navigationId="projects" template="nav-projects" />
+        <squarespace:navigation navigationId="header" template="nav-header" />
+        {@|apply screens.block}

@@ -1,0 +1,3 @@
+<div class="page js-page" data-type="offcanvas" data-id="{collection.id}" data-website-id="{website.id}" {.section collection}data-collection-id="{collection.id}" data-collection-title="{.if collection.homepage}{website.siteTitle}{.or}{collection.title} – {website.siteTitle}{.end}"{.end} {.section item}data-item-id="{item.id}" data-item-title="{item.title} – {collection.title} – {website.siteTitle}"{.end}>
+    <section class="listing js-listing wrapper -topper" data-target="index" data-id="{collection.id}"></section>
+</div>

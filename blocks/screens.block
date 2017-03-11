@@ -1,0 +1,33 @@
+<div class='project-view js-project-view screen {.equal? collection.typeName "custom-photo"}is-active{.or}is-noscroll{.end}'>
+    <div class="project-view__pane js-project-view-pane -topper"></div>
+</div>
+
+
+
+<div class='overlay js-overlay screen -text--center ghost {.equal? collection.typeName "custom-photo"}is-active is-intro{.end}'>
+    <div class="ghost__child">
+        <h1 class="h1 js-overlay-title">
+            {.if collection.homepage}
+            {.or}
+                {collection.title}
+            {.end}
+        </h1>
+    </div>
+</div>
+
+
+
+<div class="gallery js-gallery screen -text--center ghost">
+    <figure class="gallery__figure ghost__child js-gallery-node"></figure>
+</div>
+
+
+
+{.equal? collection.typeName "custom-photo"}
+{.or}
+    <div class="intro js-intro screen -text--center ghost is-active">
+        <div class="icon icon--garberco icon--garberco--intro ghost__child">
+            {@|apply icon--garberco.block}
+        </div>
+    </div>
+{.end}

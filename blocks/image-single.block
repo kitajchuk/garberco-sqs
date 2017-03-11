@@ -1,0 +1,5 @@
+{.if customContent.vimeoVideoUrl}
+    {@|apply video.block}
+{.or}
+    {@|apply image.block}
+{.end}

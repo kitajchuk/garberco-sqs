@@ -6,16 +6,20 @@
 
 
 
+# Kitajchuk
 .DS_Store
 .sass-cache
-.sqs-cache
 .notes
+tmp
+local
+node_modules
+npm-debug.log
 
 
 
-/js_libs
-/sqs_template
-/node_modules
-/npm-debug.log
-/local
-/sandbox
+# Squarespace
+sftp-config.json
+build
+assets
+.npmrc
+.env
