@@ -1,7 +1,7 @@
 <div class="page js-page" data-type="project" data-id="{collection.id}" data-website-id="{website.id}" {.section collection}data-collection-id="{collection.id}" data-collection-title="{.if collection.homepage}{website.siteTitle}{.or}{collection.title} – {website.siteTitle}{.end}"{.end} {.section item}data-item-id="{item.id}" data-item-title="{item.title} – {collection.title} – {website.siteTitle}"{.end}>
     <div class="project js-project" data-target="project" data-id="{collection.id}">
         {.repeated section items}
-            {@|apply photos.block}
+            {@|apply custom-photo.block}
         {.end}
     </div>
     <div class="info js-info screen -text--center ghost">

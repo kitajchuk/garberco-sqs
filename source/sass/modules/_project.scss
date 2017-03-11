@@ -20,6 +20,15 @@
     padding-bottom: 0;
     }
 
+// Wide to match padding of ".project__diptych--gutters-even"
+.project__image--wide {
+    .image {
+        padding-left: $photos-padding;
+        padding-right: $photos-padding;
+        width: 100%;
+        }
+}
+
 // Three-quarter centered
 .project__image--threeq {
     text-align: center;
@@ -220,12 +229,33 @@
 
     .diptych__left,
     .diptych__right {
-        width: #{"calc( ~\"(100% - #{$photos-padding}) / 2\" )"};
+        width: 50%;
         }
     .diptych__left {
         padding-left: $photos-padding;
+        padding-right: #{"calc( ~\"#{$photos-padding} / 2\" )"};
         }
     .diptych__right {
+        padding-left: #{"calc( ~\"#{$photos-padding} / 2\" )"};
+        padding-right: $photos-padding;
+        }
+}
+
+// Diptychs with text
+.project__diptych--text {
+    .is-text {
+        padding-left: $photos-padding;
+        padding-right: $photos-padding;
+        }
+
+    .diptych__left,
+    .diptych__right {
+        width: 50%;
+        }
+}
+.project__diptych--text--pad {
+    .is-image {
+        padding-left: $photos-padding;
         padding-right: $photos-padding;
         }
 }

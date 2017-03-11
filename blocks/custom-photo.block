@@ -80,6 +80,55 @@
         {@|apply diptych.block}
     </div>
 {.end}
+{.if customContent.SingleWithText}
+    <div class="project__diptych project__diptych--text js-project-plate animate animate--fade {.if customContent.removePadding}-nopad{.end}">
+        <div class="diptych__left -column {.if customContent.textLeft}is-text -text--left{.or}is-image{.end}">
+            {.if customContent.textRight}
+                {@|apply image.block}
+            {.or}
+                <div class="h3">
+                    {body}
+                </div>
+            {.end}
+        </div>
+        <div class="diptych__right -column {.if customContent.textRight}is-text -text--left{.or}is-image{.end}">
+            {.if customContent.textLeft}
+                {@|apply image.block}
+            {.or}
+                <div class="h3">
+                    {body}
+                </div>
+            {.end}
+        </div>
+    </div>
+{.end}
+{.if customContent.SingleWithTextPadded}
+    <div class="project__diptych project__diptych--text project__diptych--text--pad js-project-plate animate animate--fade {.if customContent.removePadding}-nopad{.end}">
+        <div class="diptych__left -column {.if customContent.textLeft}is-text -text--left{.or}is-image{.end}">
+            {.if customContent.textRight}
+                {@|apply image.block}
+            {.or}
+                <div class="h3">
+                    {body}
+                </div>
+            {.end}
+        </div>
+        <div class="diptych__right -column {.if customContent.textRight}is-text -text--left{.or}is-image{.end}">
+            {.if customContent.textLeft}
+                {@|apply image.block}
+            {.or}
+                <div class="h3">
+                    {body}
+                </div>
+            {.end}
+        </div>
+    </div>
+{.end}
+{.if customContent.SingleMatchThreeEvenGutters}
+    <div class="project__image project__image--wide js-project-plate animate animate--fade {.if customContent.removePadding}-nopad{.end}">
+        {@|apply image-single.block}
+    </div>
+{.end}
 {.if customContent.SingleSmallRight}
     <div class="project__image project__image--third-right js-project-plate animate animate--fade {.if customContent.removePadding}-nopad{.end}">
         {@|apply image-single.block}

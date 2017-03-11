@@ -198,7 +198,7 @@
     }
 
     // 50% | 50%
-    .project__diptych {
+    .project__diptych:not( .project__diptych--text ) {
         .diptych__left,
         .diptych__right {
             margin: 0 !important;
@@ -211,6 +211,15 @@
         .diptych__right {
             padding-left: $grid-padding / 4 !important;
             padding-right: $grid-padding / 2 !important;
+            }
+    }
+    .project__diptych--text {
+        .diptych__left,
+        .diptych__right {
+            width: 100% !important;
+            }
+        .diptych__right {
+            margin-top: 40px;
             }
     }
 
