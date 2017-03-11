@@ -1,7 +1,11 @@
         </div>
 
 
-        <squarespace:script src="app.js" combo="{.if authenticatedAccount}false{.or}true{.end}" />
+        {.if authenticatedAccount}
+            <script type="text/javascript" src="/scripts/app.js"></script>
+        {.or}
+            <script type="text/javascript" src="/scripts/app.min.js"></script>
+        {.end}
 
 
         {squarespace-footers}
