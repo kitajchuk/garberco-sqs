@@ -164,8 +164,7 @@
             }
     }
 
-    .project__image,
-    .project__diptych {
+    .project__image {
         padding-bottom: 40px;
         padding-top: 40px;
 
@@ -197,22 +196,10 @@
             }
     }
 
-    // 50% | 50%
-    .project__diptych:not( .project__diptych--text ) {
-        .diptych__left,
-        .diptych__right {
-            margin: 0 !important;
-            width: 50% !important;
-            }
-        .diptych__left {
-            padding-left: $grid-padding / 2 !important;
-            padding-right: $grid-padding / 4 !important;
-            }
-        .diptych__right {
-            padding-left: $grid-padding / 4 !important;
-            padding-right: $grid-padding / 2 !important;
-            }
-    }
+    .project__diptych {
+        padding-bottom: 40px;
+        padding-top: 40px;
+        }
     .project__diptych--text {
         .diptych__left,
         .diptych__right {
