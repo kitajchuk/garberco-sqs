@@ -100,6 +100,13 @@
                 </div>
             {.end}
         </div>
+        {.if customContent.textLeft}
+            <div class="diptych__right diptych__mobile__text__right -column is-text -text--left">
+                <div class="h3">
+                    {body}
+                </div>
+            </div>
+        {.end}
     </div>
 {.end}
 {.if customContent.SingleWithTextPadded}
@@ -122,6 +129,13 @@
                 </div>
             {.end}
         </div>
+        {.if customContent.textLeft}
+            <div class="diptych__right diptych__mobile__text__right -column is-text -text--left">
+                <div class="h3">
+                    {body}
+                </div>
+            </div>
+        {.end}
     </div>
 {.end}
 {.if customContent.SingleMatchThreeEvenGutters}
