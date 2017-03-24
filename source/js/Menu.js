@@ -10,13 +10,16 @@ import * as core from "./core";
  *
  */
 class Menu {
-    constructor ( $node ) {
+    constructor ( $node, detached ) {
         this.$node = $node;
         this.tDuration = core.util.getTransitionDuration( this.$node[ 0 ] );
         this.isOpen = false;
+        this.isDetach = detached;
         //this.scrollPos = core.scroller.getScrollY();
 
-        this.$node.detach();
+        if ( this.isDetach ) {
+            this.$node.detach();
+        }
     }
 
 
@@ -33,7 +36,10 @@ class Menu {
         this.isOpen = true;
 
         core.dom.html.addClass( "is-menu-open" );
-        core.dom.body.append( this.$node );
+
+        if ( this.isDetach ) {
+            core.dom.body.append( this.$node );
+        }
 
         // 0.4 => Broadcast the open menu
         core.emitter.fire( "app--menu-opened" );
@@ -68,7 +74,10 @@ class Menu {
         setTimeout( () => {
             this.isOpen = false;
             core.dom.html.removeClass( "is-menu-open" );
-            this.$node.detach();
+
+            if ( this.isDetach ) {
+                this.$node.detach();
+            }
 
         }, (this.tDuration * 2) );
     }

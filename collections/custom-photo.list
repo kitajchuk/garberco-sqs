@@ -5,13 +5,8 @@
         {.end}
     </div>
     <div class="info js-info screen -text--center ghost">
-        <div class="info__text ghost__child h3 {.if authenticatedAccount}info__text--config{.end}">
-            <squarespace:block-field id="project-info--{collection.urlId}" columns="1" lock-layout="true" />
-            {.if authenticatedAccount}
-                <a href="{website.internalUrl}/config/pages/{collection.id}" target="_blank" class="icon-wrap">
-                    {@|apply icon--pencil.block}
-                </a>
-            {.end}
+        <div class="info__text ghost__child h3">
+            <squarespace:block-field id="project-info--{collection.urlId}" columns="1" />
         </div>
     </div>
 </div>

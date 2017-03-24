@@ -181,7 +181,11 @@ const router = {
      */
     initPage ( /* data */ ) {
         core.dom.nav.detach();
-        core.dom.page.detach();
+        // core.dom.page.detach();
+
+        if ( !core.env.isConfig() ) {
+            core.dom.page.detach();
+        }
 
         core.dom.html.removeClass( "is-clipped" );
         core.dom.body.removeClass( "is-clipped" );

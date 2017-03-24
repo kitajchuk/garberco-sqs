@@ -27,7 +27,7 @@ class Project {
         this.$node = $node;
         this.$infoScreen = $info;
         this.$infoButton = core.dom.header.find( ".js-project-info" );
-        this.menu = new Menu( this.$infoScreen );
+        this.menu = new Menu( this.$infoScreen, !core.env.isConfig() );
         this.data = data;
         this.$plates = this.$node.find( ".js-project-plate" );
         this.$images = this.$node.find( ".js-lazy-image" );

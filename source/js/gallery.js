@@ -29,7 +29,7 @@ const gallery = {
      */
     init () {
         this.tween = null;
-        this.menu = new Menu( core.dom.gallery.element );
+        this.menu = new Menu( core.dom.gallery.element, true );
 
         // Image
         this.$image = $( new Image() );

@@ -50,3 +50,13 @@
         background-color: $white;
         }
 }
+
+.is-config {
+    .page {
+        display: block;
+        }
+    .info__text .sqs-layout {
+        outline: 1px solid $white;
+        padding: 50px 0;
+        }
+}

@@ -34,6 +34,10 @@ class App {
             this.initModules();
         }
 
+        if ( core.env.isConfig() ) {
+            core.dom.html.addClass( "is-config" );
+        }
+
         core.log( "App", this );
     }
 
