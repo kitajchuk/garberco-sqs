@@ -1,13 +1,9 @@
         </div>
-
-
         {.if authenticatedAccount}
-            <script type="text/javascript" src="/scripts/app.js"></script>
+            <script type="text/javascript" src="/scripts/app.js?v={squarespace.template-revision}"></script>
         {.or}
-            <script type="text/javascript" src="/scripts/app.min.js"></script>
+            <script type="text/javascript" src="/scripts/app.min.js?v={squarespace.template-revision}"></script>
         {.end}
-
-
         {squarespace-footers}
     </body>
 </html>
