@@ -20,6 +20,6 @@ npm-debug.log
 # Squarespace
 sftp-config.json
 build
-assets
+#assets
 #.npmrc
 .env
