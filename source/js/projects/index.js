@@ -2,7 +2,6 @@ import * as core from "../core";
 import Project from "./Project";
 
 
-let $_jsInfo = null;
 let $_jsElement = null;
 let instance = null;
 
@@ -57,7 +56,7 @@ const projects = {
     onload () {
         const data = $_jsElement.data();
 
-        instance = new Project( $_jsElement, $_jsInfo, data );
+        instance = new Project( $_jsElement, data );
 
         core.emitter.on( "app--root", killProject );
         core.emitter.on( "app--project-ended", killProject );
@@ -86,7 +85,6 @@ const projects = {
      *
      */
     teardown () {
-        $_jsInfo = null;
         $_jsElement = null;
 
         if ( instance ) {
@@ -109,7 +107,6 @@ const projects = {
      *
      */
     getElements () {
-        $_jsInfo = core.dom.page.find( ".js-info" );
         $_jsElement = core.dom.page.find( ".js-project" );
 
         return ( $_jsElement.length );

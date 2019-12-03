@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class='is-clipped {.equal? collection.typeName "custom-photo"}is-offcanvas is-offcanvas--project{.end}{.equal? collection.urlId "about"}is-offcanvas is-offcanvas--about{.end}{.equal? collection.urlId "index"}is-offcanvas is-offcanvas--index{.end}'>
+<html class='is-clipped {.section item}is-offcanvas is-offcanvas--project{.end}{.equal? collection.typeName "custom-photo"}is-offcanvas is-offcanvas--project{.end}{.equal? collection.urlId "about"}is-offcanvas is-offcanvas--about{.end}{.equal? collection.urlId "index"}is-offcanvas is-offcanvas--index{.end}'>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

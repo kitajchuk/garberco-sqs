@@ -1,0 +1,1 @@
+<nav class="nav nav--products js-product" data-app-tree="{.if nodeServer}{items|json-pretty|htmlattr}{.or}{items|json|htmlattr}{.end}"></nav>

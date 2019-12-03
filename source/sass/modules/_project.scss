@@ -9,6 +9,10 @@
     padding-top: $expander-padding;
     text-align: center;
     }
+.project__text{
+    font-size: 0;
+    text-align: center;
+}
 .project__image:first-child,
 .project__diptych:first-child {
     padding-top: 0;
@@ -18,6 +22,12 @@
     }
 .project__image--full:last-child {
     padding-bottom: 0;
+    }
+
+.info__text{
+    padding-bottom: $expander-padding;
+    padding-top: $expander-padding;
+    text-align: center;
     }
 
 // Wide to match padding of ".project__diptych--gutters-even"
@@ -265,3 +275,65 @@
 .diptych__mobile__text__right {
     display: none;
     }
+
+
+
+
+
+// Product detail
+.product__feature_image{
+  cursor: default;
+  display: inline-block;
+  padding-bottom: 50%;
+  width: 75%;
+
+  .image{
+      cursor: pointer;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      transform: translate3d( -50%, -50%, 0 );
+      }
+  .image--tall {
+      height: #{"calc( ~\"100% - (#{$grid-padding} * 2)\" )"};
+      width: auto;
+      }
+  .image--wide {
+      height: auto;
+      width: #{"calc( ~\"100% - (#{$grid-padding} * 2)\" )"};
+      }
+}
+.product__excerpt{
+    max-width: 300px;
+    margin: 20px auto;
+    line-height: 1.5;
+
+    .product-price{
+        margin-top:20px;
+        }
+    }
+.product__description{
+    width:100%;
+    margin:0;
+    font-size: $p-size;
+    }
+
+
+
+// Overwriting SQS commerce styles
+body:not(.button-style-default) .sqs-editable-button{
+    background:$black;
+    }
+.sqs-add-to-cart-button-inner{
+    font-family:$sans-serif-text;
+    }
+.sqs-money-native:before{
+    content:'$';
+    }
+.product-quantity-input{
+    display: none;
+    }
+.sqs-add-to-cart-button-wrapper{
+    margin:0 auto;
+    }
+

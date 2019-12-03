@@ -68,10 +68,11 @@ $screen-wrap-delay: ($midi-duration / 2);
         }
     }
 .info__text {
-    color: $white;
+    color: $black;
     max-width: 700px;
     min-height: 50px;
     min-width: 320px;
+    margin:0 auto;
 
     p a {
         border-bottom: 2px solid $white;

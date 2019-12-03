@@ -22,6 +22,14 @@
         }
 }
 
+
+.hide-index{
+    .header__nav--index {
+      pointer-events: none;
+      visibility: hidden;
+      }
+}
+
 .is-offcanvas--index {
     .header__nav--about,
     .header__nav--index {

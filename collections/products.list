@@ -1,0 +1,16 @@
+<div class="page js-page" data-type="index" data-id="{collection.id}" data-website-id="{website.id}" {.section collection}data-collection-id="{collection.id}" data-collection-title="{.if collection.homepage}{website.siteTitle}{.or}{collection.title} – {website.siteTitle}{.end}"{.end} {.section item}data-item-id="{item.id}" data-item-title="{item.title} – {collection.title} – {website.siteTitle}"{.end}>
+    <section class="index js-index grid grid--garberco -topper" data-target="garberco" data-id="{collection.id}">
+          {.repeated section items}
+              <div class="grid__item expander-bottom">
+
+                  <a href="{fullUrl}" class="grid__photo js-index-tile animate animate--fade js-animate" data-title="{.if description}{description}{.or}{title}{.end}">
+                    <figure class="figure">
+                        <img class="figure__image image js-lazy-image" data-img-src="{assetUrl}" data-variants="{systemDataVariants}" data-original-size="{originalSize}" />
+                    </figure>
+                  </a>
+
+                  <h3 class="grid__title h3">{.if description}{description}{.or}{title}{.end}</h3>
+              </div>
+        {.end}
+    </section>
+</div>

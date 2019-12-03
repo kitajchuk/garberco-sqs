@@ -11,7 +11,6 @@
                 </a>
             {.end}
         {.end}
-        <div class="nav__back nav__back--left nav__back--info icon-wrap icon-wrap--left js-project-info h3">Info</div>
         <a class="nav__back nav__back--left nav__back--arrow-left icon-wrap icon-wrap--left js-controller js-controller--garberco js-root" href="/" data-target="garberco">
             {@|apply icon--arrow-right.block}
         </a>

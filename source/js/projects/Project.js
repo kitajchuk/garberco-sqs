@@ -21,13 +21,11 @@ const animator = new Controller();
  *
  */
 class Project {
-    constructor ( $node, $info, data ) {
+    constructor ( $node, data ) {
         isActive = true;
 
         this.$node = $node;
-        this.$infoScreen = $info;
-        this.$infoButton = core.dom.header.find( ".js-project-info" );
-        this.menu = new Menu( this.$infoScreen, !core.env.isConfig() );
+        this.menu = new Menu( !core.env.isConfig() );
         this.data = data;
         this.$plates = this.$node.find( ".js-project-plate" );
         this.$images = this.$node.find( ".js-lazy-image" );
@@ -52,10 +50,7 @@ class Project {
      *
      */
     bindEvents () {
-        this._onClickInfo = this.onClickInfo.bind( this );
 
-        this.$infoScreen.on( "click", this._onClickInfo );
-        this.$infoButton.on( "click", this._onClickInfo );
     }
 
 
@@ -117,27 +112,7 @@ class Project {
     }
 
 
-    /**
-     *
-     * @public
-     * @instance
-     * @method onClickInfo
-     * @memberof projects.Project
-     * @description Handle Info text/overlay interaction.
-     *
-     */
-    onClickInfo () {
-        if ( core.env.isConfig() && this.menu.isActive() ) {
-            return;
-        }
 
-        if ( this.menu.isActive() ) {
-            this.menu.close();
-
-        } else {
-            this.menu.open();
-        }
-    }
 
 
     /**
@@ -250,10 +225,6 @@ class Project {
      *
      */
     teardown () {
-        if ( this._onClickInfo ) {
-            this.$infoScreen.on( "click", this._onClickInfo );
-            this.$infoButton.on( "click", this._onClickInfo );
-        }
 
         this.killVideos();
 

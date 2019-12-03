@@ -1,13 +1,15 @@
-<div class='project-view js-project-view screen {.equal? collection.typeName "custom-photo"}is-active{.or}is-noscroll{.end}'>
+<div class='project-view js-project-view screen {.section item}is-active{.or equal? collection.typeName "custom-photo"}is-active{.or}is-noscroll{.end}'>
     <div class="project-view__pane js-project-view-pane -topper"></div>
 </div>
 
 
 
-<div class='overlay js-overlay screen -text--center ghost {.equal? collection.typeName "custom-photo"}is-active is-intro{.end}'>
+<div class='overlay js-overlay screen -text--center ghost {.section item}is-active is-intro{.or equal? collection.typeName "custom-photo"}is-active is-intro{.end}'>
     <div class="ghost__child">
         <h1 class="h1 js-overlay-title">
             {.if collection.homepage}
+            {.or equal? collection.typeName "products"}
+                 {.section item}{item.title}{.end}
             {.or}
                 {collection.title}
             {.end}
@@ -23,7 +25,9 @@
 
 
 
-{.equal? collection.typeName "custom-photo"}
+
+{.section item}
+{.or equal? collection.typeName "custom-photo"}
 {.or}
     <div class="intro js-intro screen -text--center ghost is-active">
         <div class="icon icon--garberco icon--garberco--intro ghost__child">

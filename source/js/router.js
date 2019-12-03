@@ -128,29 +128,51 @@ const router = {
     prepPage () {
         this.root = null;
 
+        const path = window.location.pathname.split( '/' );
+        const segmentOne = path [ 1 ];
+
         // Index?
+        // Shop?
         // Indexes will already have the root gridwall loaded
         // Offcanvas/Project paths will need to manually load the root index
         if ( this.pageData.type !== "index" ) {
-            if ( this.pageData.type === "offcanvas" ) {
-                this.root = "/";
+
+            //Shop?
+
+            if ( segmentOne === "shop" ) {
+
+                this.root = "/shop";
+                this.loadRootIndex();
 
             } else {
-                this.navData.appTree.forEach(( indexItem ) => {
-                    if ( indexItem.items ) {
-                        indexItem.items.forEach(( collectionItem ) => {
-                            if ( collectionItem.collection.id === this.pageData.id ) {
-                                this.root = indexItem.collection.fullUrl;
-                            }
-                        });
-                    }
-                });
+
+                if ( this.pageData.type === "offcanvas" ) {
+                    this.root = "/";
+
+                } else {
+                    this.navData.appTree.forEach(( indexItem ) => {
+                        if ( indexItem.items ) {
+                            indexItem.items.forEach(( collectionItem ) => {
+                                if ( collectionItem.collection.id === this.pageData.id ) {
+                                    this.root = indexItem.collection.fullUrl;
+                                }
+                            });
+                        }
+                    });
+                    core.dom.html.removeClass( "hide-index" );
+                }
+
+                this.root = (this.root || "/");
+                this.loadRootIndex();
+
             }
 
-            this.root = (this.root || "/");
-            this.loadRootIndex();
-
         } else {
+            // Hide index button on Shop and Design
+            if ( segmentOne === "shop" || segmentOne === "design") {
+                core.dom.html.addClass( "hide-index" );
+            }
+
             this.root = window.location.pathname;
         }
 

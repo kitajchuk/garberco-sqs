@@ -24,6 +24,8 @@
         max-width: 100%;
         }
 
+    .info__text,
+    .product__text,
     .project__image,
     .project__diptych {
         padding-bottom: 90px;
@@ -164,6 +166,23 @@
             }
     }
 
+    .product__feature_image{
+      .image {
+          left: auto;
+          position: relative;
+          top: auto;
+          transform: none;
+          }
+      .image--wide {
+          max-width: 100%;
+          width: 100%;
+          }
+      .image--tall {
+          height: 85vw;
+          }
+    }
+
+    .product__text,
     .project__image,
     .project__diptych {
         padding-bottom: 40px;

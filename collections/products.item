@@ -1,0 +1,49 @@
+
+<div class="page js-page" data-type="project" data-id="{collection.id}" data-website-id="{website.id}" {.section collection}data-collection-id="{collection.id}" data-collection-title="{.if collection.homepage}{website.siteTitle}{.or}{collection.title} – {website.siteTitle}{.end}"{.end} {.section item}data-item-id="{item.id}" data-item-title="{item.title} – {collection.title} – {website.siteTitle}"{.end}>
+    <div class="project js-project" data-target="project" data-id="{collection.id}">
+
+    {.section item}
+
+    <div class="project__image">
+      <div class="product__feature_image js-project-plate animate animate--fade">
+        <figure class="figure">
+            <img class="figure__image image js-lazy-image" data-img-src="{assetUrl}" data-variants="{systemDataVariants}" data-original-size="{originalSize}" />
+        </figure>
+      </div>
+    </div>
+
+
+    <div class="project__text -text--center">
+      {.section title}
+        <p class="h2">{@}</p>
+      {.end}
+
+      <div class="product__excerpt p">
+        {excerpt}
+        {@|product-price}
+      </div>
+
+      {@|product-checkout}
+
+    </div>
+
+
+    {.repeated section items}
+      {.image?}
+      <div class="project__image project__image--threeq js-project-plate animate animate--fade">
+        <figure class="figure">
+            <img class="figure__image image js-lazy-image image--wide" data-img-src="{assetUrl}" data-variants="{systemDataVariants}" data-original-size="{originalSize}" />
+        </figure>
+      </div>
+      {.end}
+    {.end}
+
+    {.section body}
+    <div class="project__text product__description -text--center js-project-plate animate animate--fade js-animate">
+        {@}
+    </div>
+    {.end}
+
+    {.end}
+
+</div>

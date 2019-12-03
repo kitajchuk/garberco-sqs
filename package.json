@@ -40,7 +40,7 @@
     "properjs-controller": "~0.2",
     "properjs-debounce": "^0.2.0",
     "properjs-easing": "~0.2",
-    "properjs-hobo": "^0.3.23",
+    "properjs-hobo": "^0.3.26",
     "properjs-imageloader": ">=0.3.1",
     "properjs-lager": "^0.1.2",
     "properjs-mediabox": "~0.3",

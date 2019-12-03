@@ -1,12 +1,14 @@
 <div class="page js-page" data-type="project" data-id="{collection.id}" data-website-id="{website.id}" {.section collection}data-collection-id="{collection.id}" data-collection-title="{.if collection.homepage}{website.siteTitle}{.or}{collection.title} – {website.siteTitle}{.end}"{.end} {.section item}data-item-id="{item.id}" data-item-title="{item.title} – {collection.title} – {website.siteTitle}"{.end}>
     <div class="project js-project" data-target="project" data-id="{collection.id}">
         {.repeated section items}
+            {.if equal? @index 2}
+              <div class="info__text h3 js-project-plate animate animate--fade">
+                  <squarespace:block-field id="project-info--{collection.urlId}" columns="1" />
+              </div>
+            {.end}
+
             {@|apply custom-photo.block}
         {.end}
-    </div>
-    <div class="info js-info screen -text--center ghost">
-        <div class="info__text ghost__child h3">
-            <squarespace:block-field id="project-info--{collection.urlId}" columns="1" />
-        </div>
+
     </div>
 </div>
