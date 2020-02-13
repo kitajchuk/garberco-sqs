@@ -2,9 +2,11 @@
     <div class="project js-project" data-target="project" data-id="{collection.id}">
         {.repeated section items}
             {@|apply custom-photo.block}
+            {.if body}
+            <div class="info__text h3 js-project-plate animate animate--fade">
+                {body}
+            </div>
+            {.end}
         {.end}
-        <div class="info__text h3 js-project-plate animate animate--fade">
-            <squarespace:block-field id="project-info--{collection.urlId}" columns="1" />
-        </div>
     </div>
 </div>
