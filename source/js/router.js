@@ -418,7 +418,21 @@ const router = {
      *
      */
     changePageIn ( /* data */ ) {
+        this.execSquarespace();
         core.dom.html.removeClass( "is-routing" );
+    },
+
+
+    /**
+     *
+     * @public
+     * @method execSquarespace
+     * @memberof router
+     * @description Initialize system-blocks after ProperJS PageController cycles.
+     *
+     */
+    execSquarespace () {
+        window.Squarespace.initializeCommerce( window.Y );
     }
 };
 

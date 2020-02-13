@@ -25,7 +25,7 @@
     }
 
 .info__text{
-    padding-bottom: $expander-padding;
+    padding-bottom: $expander-padding * 2;
     padding-top: $expander-padding;
     text-align: center;
     }
@@ -316,6 +316,7 @@
     width:100%;
     margin:0;
     font-size: $p-size;
+    padding-bottom: $expander-padding;
     }
 
 

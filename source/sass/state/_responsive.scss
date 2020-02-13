@@ -26,11 +26,13 @@
 
     .info__text,
     .product__text,
+    .product__description,
     .project__image,
     .project__diptych {
         padding-bottom: 90px;
         padding-top: 90px;
         }
+    .info__text{padding-bottom: 180px}
 }
 
 
@@ -167,19 +169,21 @@
     }
 
     .product__feature_image{
-      .image {
-          left: auto;
-          position: relative;
-          top: auto;
-          transform: none;
-          }
-      .image--wide {
-          max-width: 100%;
-          width: 100%;
-          }
-      .image--tall {
-          height: 85vw;
-          }
+        padding-bottom: 0;
+
+        .image {
+            left: auto;
+            position: relative;
+            top: auto;
+            transform: none;
+            }
+        .image--wide {
+            max-width: 100%;
+            width: 100%;
+            }
+        .image--tall {
+            height: 85vw;
+            }
     }
 
     .product__text,
@@ -233,5 +237,8 @@
         }
     .gallery__video {
         width: 100vw;
+        }
+    .product__description{
+        padding-bottom: 90px;
         }
 }
