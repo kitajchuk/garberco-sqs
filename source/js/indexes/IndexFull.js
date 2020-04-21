@@ -344,8 +344,11 @@ class IndexFull {
             let $node = null;
 
             collection.items.forEach(( item ) => {
-                // @vimeoVideoUrl
-                if ( item.customContent.vimeoVideoUrl ) {
+
+                if ( item.recordTypeLabel === "text" ) {
+                    // Ignore text posts
+                } else if ( item.customContent.vimeoVideoUrl ) {
+                    // @vimeoVideoUrl
                     $node = $( _gridVideoTpl );
 
                     $grid.append( $node );
