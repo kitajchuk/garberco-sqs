@@ -202,7 +202,7 @@ const api = {
             url: `https://api.vimeo.com/videos/${id}`,
             method: "GET",
             data: {
-                access_token: "15525e82c850ad4aa2ff9c55dd1fc052"
+                access_token: "4fe810e95b5a32a53133739750ef23e4"
             },
             dataType: "json"
         });

@@ -50,6 +50,8 @@ module.exports = ( env ) => {
 
         plugins,
 
+        node: {fs: 'empty' },
+
 
         resolve: {
             modules: [root, source, nodeModules],

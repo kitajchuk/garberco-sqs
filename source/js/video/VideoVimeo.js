@@ -2,6 +2,9 @@ import * as core from "../core";
 import mediabox from "./mediabox";
 import AutoplayHandler from "./AutoplayHandler";
 
+const Vimeo = require('vimeo').Vimeo;
+const client = new Vimeo("9d4f4417c518c95db3f8c0461eb7da3e59e7b289", "23AxUag/dzswqGCSY6rJdoWMsw2MnYadh4fecPP9JJiXEOS/cVaAkRrsh755tu4gEZPon9tS+j0eyN8x+2Orke5W0aGarrnfjONsurvJt8Wdv9mMQNPfz9AwpKGi+Onn", "15807db98b40203e65427ac71121c89a");
+
 
 /**
  *
@@ -24,6 +27,8 @@ class VideoVimeo {
         this._video = null;
 
         this.loadVimeoData();
+
+
     }
 
 
@@ -39,10 +44,17 @@ class VideoVimeo {
     loadVimeoData () {
         const vimeoId = this.data.vimeoUrl.split( "/" ).pop();
 
-        core.api.vimeo( vimeoId ).then( ( vData ) => {
-            this.handleVimeoData( vData );
+        const _this = this;
+
+        client.request({
+            method: 'GET',
+            path: `/videos/${vimeoId}`,
+        }, function (error, body, status_code, headers) {
+            _this.handleVimeoData( body );
         });
+
     }
+
 
 
     /**
@@ -253,7 +265,10 @@ class VideoVimeo {
  * @returns {object}
  *
  */
+
 VideoVimeo.logVideoFiles = function ( vData ) {
+
+    console.log(vData);
     let i = vData.files.length;
     const files = {};
 
