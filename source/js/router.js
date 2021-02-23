@@ -169,7 +169,7 @@ const router = {
 
         } else {
             // Hide index button on Shop and Design
-            if ( segmentOne === "shop" || segmentOne === "direction") {
+            if ( segmentOne === "shop" || segmentOne === "art-direction") {
                 core.dom.html.addClass( "hide-index" );
             }
 

@@ -8,7 +8,7 @@
                         <h3 class="h3">
                             {.equal? navigationTitle "Contact"}
                               <p><strong><a href="https://garberco.com/" onclick="window.location.href='https://www.garberco.com/'">Photography</strong></a></p>
-                              <p><strong><a href="https://garberco.com/direction-design" onclick="window.location.href='https://www.garberco.com/direction-design'">Direction & Design</a></strong></p>
+                              <p><strong><a href="https://garberco.com/art-direction" onclick="window.location.href='https://www.garberco.com/art-direction'">Art Direction</a></strong></p>
                               <p><strong><a href="https://garberco.com/shop" onclick="window.location.href='https://www.garberco.com/shop'">Shop</a></strong></p>
                             {.end}
                             {description}

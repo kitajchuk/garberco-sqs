@@ -2,12 +2,15 @@
     .h1 {
         font-size: 120px;
         }
-
-    .about__main {
-        max-width: 80%;
-        }
 }
 
+
+@media only screen and (min-width: $break-laptop-full){
+
+  .about__main {
+      max-width: 80%;
+      }
+}
 
 
 @media only screen and ( max-width: $break-laptop-medium ) {
@@ -20,9 +23,6 @@
         padding-right: 0;
         }
 
-    .h2 {
-        font-size: 90px;
-        }
 
     .about__main {
         max-width: 100%;
@@ -39,6 +39,14 @@
     .info__text{padding-bottom: 180px}
 }
 
+
+@media only screen and ( min-width: $break-laptop-medium ) {
+
+      .h2 {
+          font-size: 80px;
+          }
+
+}
 
 
 @media only screen and ( max-width: $break-tablet-full ) {
@@ -94,7 +102,7 @@
         font-weight: inherit;
         }
     .h2 {
-        font-size: 50px;
+        font-size: 25px;
         font-weight: inherit;
 
         a {
@@ -246,3 +254,4 @@
         padding-bottom: 90px;
         }
 }
+

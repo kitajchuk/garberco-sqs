@@ -374,6 +374,10 @@ class IndexFull {
                     // @vimeoVideoUrl
                     $node = $( _gridVideoTpl );
 
+                    if ( item.customContent.verticalVideo ) {
+                        $node.addClass( "vertical-video" );
+                    }
+
                     $grid.append( $node );
 
                     this.loadVideo( item.customContent.vimeoVideoUrl, $node );
